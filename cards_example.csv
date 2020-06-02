@@ -1,6 +1,6 @@
 ﻿imageId,name,power,defense,speed,dimension,rarity,primaryAbility,secondaryAbility,secondaryAbilityParameters/power,secondaryAbilityParameters/turn,description,secondaryAbilityParameters/strike
-aaaabb,Ingegärd,24,27,5,Dayongeel,Common,first-strike,power-unity,3,4,"She's intrepid, affectionate, generous and perhaps a little too timid. This isn't surprising considering for someone with his position.",
-aacabb,Gudfinna ,14,17,3,Dayongeel,Rare,last-stand,defense-unity,,4,"She was born in a decent family in an important port. She lived free of worries until she was about 14 years old, but at that point things changed.",
-baaabb,Freystein,30,60,4,Skelos,Legend,full-power,power-diversity,3,4,"He's funny, driven, reliable and perhaps a little too pompous. Which isn't out of the ordinary for someone with his position.",
-sjdfha,Ingifast,22,35,1,Skelos,Ultrarare,berserk,powermania,2,,He is currently searching for a higher purpose. He feels like there's more than what we get to know in this world. Luckily he has great parents to support him.,4
-askwoo,Svartbrand,10,45,1,Alphar,Epic,reckless,defender,,,"While haunted by memories of the past, he now works a small job with low pay. By doing so, he hopes to start life over on a good note and finally find friends he has never had.",
+aaaabb,Ingegärd,1,3,5,Dayongeel,Common,first-strike,power-unity,3,4,"She's intrepid, affectionate, generous and perhaps a little too timid. This isn't surprising considering for someone with his position.",
+aacabb,Gudfinna ,5,2,3,Dayongeel,Rare,last-stand,defense-unity,,4,"She was born in a decent family in an important port. She lived free of worries until she was about 14 years old, but at that point things changed.",
+baaabb,Freystein,6,8,4,Skelos,Legend,full-power,power-diversity,3,4,"He's funny, driven, reliable and perhaps a little too pompous. Which isn't out of the ordinary for someone with his position.",
+sjdfha,Ingifast,2,5,1,Skelos,Special,berserk,powermania,2,,He is currently searching for a higher purpose. He feels like there's more than what we get to know in this world. Luckily he has great parents to support him.,4
+askwoo,Svartbrand,2,9,1,Alphar,Epic,reckless,defender,,,"While haunted by memories of the past, he now works a small job with low pay. By doing so, he hopes to start life over on a good note and finally find friends he has never had.",

@@ -12,6 +12,64 @@
         var offset;
         var update = true;
 
+        const cardDrawingDefaults = {
+            template: {
+                width: 300,
+                height: 420
+            },
+            character: {
+                width: 256,
+                height: 256,
+                x: 22,
+                y: 34
+            },
+            dimension: {
+                width: 50,
+                height: 50,
+                x: 248,
+                y: 259
+            },
+            speed: {
+                x: 33,
+                y: 34,
+                fontSize: 36
+            },
+            attack: {
+                x: 36,
+                y: 385,
+                fontSize: 36
+            },
+            defense: {
+                x: 268,
+                y: 380,
+                fontSize: 36
+            },
+            name: {
+                x: 150,
+                y: 288,
+                fontSize: 24
+            },
+            description: {
+                x: 40,
+                y: 312,
+                fontSize: 12
+            },
+            primaryAbility: {
+                x: 150,
+                y: 378,
+                fontSize: 12
+            },
+            secondaryAbility: {
+                x: 150,
+                y: 398,
+                fontSize: 12
+            },
+            topbar: {
+                x: 150,
+                y: 36
+            }
+        }
+
         function init() {
             //examples.showDistractor();
             // create stage and point it to the canvas:
@@ -35,7 +93,7 @@
 
             //            for (i = 0; i < 25; i++) {
             var templateCard = new Image();
-            templateCard.src = "images/card_template_big.png";
+            templateCard.src = "images/card_templates/special.png ";
             templateCard.onload = handleImageLoad;
             // console.log(templateCard);
             //          }
@@ -56,17 +114,17 @@
             //console.log(container);
 
             var characterImage = new Image();
-            characterImage.src = "images/char002_big.png";
+            characterImage.src = "images/characters/baaabb.png";
             //console.log(characterImage);
             //characterImage.width
 
             bitmapCharacter = new createjs.Bitmap(characterImage);
             container.addChild(bitmapCharacter);
 
-            bitmapCharacter.x = 5;
-            bitmapCharacter.y = 5;
+            bitmapCharacter.x = cardDrawingDefaults.character.x;
+            bitmapCharacter.y = cardDrawingDefaults.character.y;
 
-            bitmapCharacter.scale = bitmapCharacter.originalScale = 1.5;
+            bitmapCharacter.scale = bitmapCharacter.originalScale = 1;
 
             bitmapCard = new createjs.Bitmap(templateCard);
             container.addChild(bitmapCard);
@@ -77,7 +135,7 @@
             //bitmapCard.rotation = 360 * Math.random() | 0;
             //bitmapCard.regX = bitmapCard.image.width / 2 | 0;
             //bitmapCard.regY = bitmapCard.image.height / 2 | 0;
-            bitmapCard.scale = bitmapCard.originalScale = 0.2;
+            bitmapCard.scale = bitmapCard.originalScale = 1;
             bitmapCard.name = "bmp_1";
             bitmapCard.cursor = "pointer";
 
@@ -86,39 +144,42 @@
             //container.addChild(hit);
             bitmapCard.hitArea = hit;
 
-            container.scale = container.originalScale = 0.4;
+            container.scale = container.originalScale = 0.8;
 
-            textSpeed = new createjs.Text(Math.round(Math.random() * 15) + 1, "36px Impact", "#0FF");
-            textSpeed.x = 40;
-            textSpeed.y = 43;
+            textSpeed = new createjs.Text(Math.round(Math.random() * 8) + 1, cardDrawingDefaults.speed.fontSize + "px Georgia", "#FFF");
+            textSpeed.x = cardDrawingDefaults.speed.x;
+            textSpeed.y = cardDrawingDefaults.speed.y;
             textSpeed.textAlign = "center"
             textSpeed.textBaseline = "middle"
+            textSpeed.shadow = new createjs.Shadow("#000000", 3, 3, 3);
             container.addChild(textSpeed);
 
-            textPower = new createjs.Text(Math.round(Math.random() * 25) + 1, "36px Impact", "#0F0");
-            textPower.x = 170;
-            textPower.y = 352;
+            textPower = new createjs.Text(Math.round(Math.random() * 8) + 1, cardDrawingDefaults.attack.fontSize + "px Georgia", "#FFF");
+            textPower.x = cardDrawingDefaults.attack.x;
+            textPower.y = cardDrawingDefaults.attack.y;
             textPower.textAlign = "center"
             textPower.textBaseline = "middle"
+            textPower.shadow = new createjs.Shadow("#000000", 3, 3, 3);
             container.addChild(textPower);
 
-            textDefence = new createjs.Text(Math.round(Math.random() * 50) + 1, "36px Impact", "#F00");
-            textDefence.x = 235;
-            textDefence.y = 352;
+            textDefence = new createjs.Text(Math.round(Math.random() * 8) + 1, cardDrawingDefaults.defense.fontSize + "px Georgia", "#FFF");
+            textDefence.x = cardDrawingDefaults.defense.x;
+            textDefence.y = cardDrawingDefaults.defense.y;
             textDefence.textAlign = "center"
             textDefence.textBaseline = "middle"
+            textDefence.shadow = new createjs.Shadow("#000000", 3, 3, 3);
             container.addChild(textDefence);
 
-            textName = new createjs.Text("Berghild, the Fire", "24px Arial", "#FF0");
-            textName.x = 35;
-            textName.y = 235;
-            textName.textAlign = "left"
+            textName = new createjs.Text("Ingifast", cardDrawingDefaults.name.fontSize + "px Georgia", "#FF0");
+            textName.x = cardDrawingDefaults.name.x;
+            textName.y = cardDrawingDefaults.name.y;
+            textName.textAlign = "center"
             textName.textBaseline = "middle"
             container.addChild(textName);
 
-            textDescription = new createjs.Text("She was born in the fire and fire\nnever stopped following her. She\nwill burn everyone and everything", "14px Verdana", "#FFF");
-            textDescription.x = 30;
-            textDescription.y = 275;
+            textDescription = new createjs.Text("She was born in the fire and fire\nnever stopped following her. She\nwill burn everyone and everything", cardDrawingDefaults.description.fontSize + "px Georgia", "#FFF");
+            textDescription.x = cardDrawingDefaults.description.x;
+            textDescription.y = cardDrawingDefaults.description.y;
             textDescription.textAlign = "left"
             textDescription.textBaseline = "middle"
             container.addChild(textDescription);
@@ -150,7 +211,7 @@
             bitmapCard.on("rollover", function(evt) {
                 //console.log(this.scale);
                 //console.log(this.originalScale);
-                this.parent.scale = this.parent.originalScale * 2;
+                this.parent.scale = this.parent.originalScale * 1.25;
                 this.parent.stop = true
                 update = true;
             });
@@ -164,15 +225,15 @@
             });
             container.x = Math.random() * 1500
             container.y = Math.random() * 800
-            container.xSpeed = Math.random() * 2 - 4
-            container.ySpeed = Math.random() * 2 - 4
-            container.rotation = Math.random() * 360
+                //container.xSpeed = Math.random() * 2 - 4
+                //container.ySpeed = Math.random() * 2 - 4
+                //container.rotation = Math.random() * 360
             container.regX = bitmapCard.image.width / 2 * 0.2
             container.regY = bitmapCard.image.height / 2 * 0.2
-            container.rotationSpeed = Math.random() * 10 - 5
+                //container.rotationSpeed = Math.random() * 10 - 5
             container.stop = false
             stage.addChild(container);
-            container.cache(bitmapCard.x, bitmapCard.y, bitmapCard.image.width * 0.2, bitmapCard.image.height * 0.2)
+            container.cache(bitmapCard.x, bitmapCard.y, bitmapCard.image.width, bitmapCard.image.height)
             createjs.Ticker.framerate = 30;
             createjs.Ticker.addEventListener("tick", tick);
         }
@@ -198,16 +259,16 @@
             //                update = false; // only update once
             //                stage.update(event);
             //            } else {
-            for (var i = 1; i < l; i++) {
-                var cont = stage.getChildAt(i);
-                if (!cont.stop) {
-                    cont.x += cont.xSpeed
-                    if (cont.x > 1450 || cont.x < 50) cont.xSpeed = -cont.xSpeed
-                    cont.y += cont.ySpeed
-                    if (cont.y > 750 || cont.y < 50) cont.ySpeed = -cont.ySpeed
-                    cont.rotation += cont.rotationSpeed
-                }
-            }
+            /*             for (var i = 1; i < l; i++) {
+                            var cont = stage.getChildAt(i);
+                            if (!cont.stop) {
+                                cont.x += cont.xSpeed
+                                if (cont.x > 1450 || cont.x < 50) cont.xSpeed = -cont.xSpeed
+                                cont.y += cont.ySpeed
+                                if (cont.y > 750 || cont.y < 50) cont.ySpeed = -cont.ySpeed
+                                cont.rotation += cont.rotationSpeed
+                            }
+                        } */
             stage.update(event);
             //           }
         }
@@ -236,7 +297,7 @@
         const socketOnOpen = (event) => {
             output.innerHTML += "Status: Connected\n";
             mySocket.send('{"operation":"getStartingHand","data":{"side":"owner","userId":"879879234"}}');
-            mySocket.send('{"operation":"getStartingHand","data":[{"name":"Ingegärd","power":"24","defense":"27","speed":"5","primaryAbility":"first-strike","secondaryAbility":"power-unity","secondaryAbilityParameters":[{"power":"3"},{"turn":"4"}],"description":"She\'s intrepid, affectionate, generous and perhaps a little too timid. This isn\'t surprising considering for someone with his position."},{"name":"Gudfinna ","power":"14","defense":"17","speed":"3","primaryAbility":"last-stand","secondaryAbility":"defense-unity","secondaryAbilityParameters":[{"turn":"4"}],"description":"She was born in a decent family in an important port. She lived free of worries until she was about 14 years old, but at that point things changed."},{"name":"Freystein","power":"19","defense":"30","speed":"4","primaryAbility":"full-power","secondaryAbility":"power-diversity","secondaryAbilityParameters":[{"power":"3"},{"turn":"4"}],"description":"He\'s funny, driven, reliable and perhaps a little too pompous. Which isn\'t out of the ordinary for someone with his position."},{"name":"Ingifast","power":"22","defense":"35","speed":"1","primaryAbility":"berserk","secondaryAbility":"powermania","secondaryAbilityParameters":[{"power":"2"},{"strike":"4"}],"description":"He is currently searching for a higher purpose. He feels like there\'s more than what we get to know in this world. Luckily he has great parents to support him."},{"name":"Svartbrand","power":"10","defense":"45","speed":"1","primaryAbility":"reckless","secondaryAbility":"defender","secondaryAbilityParameters":[],"description":"While haunted by memories of the past, he now works a small job with low pay. By doing so, he hopes to start life over on a good note and finally find friends he has never had."}]}');
+            mySocket.send('{"operation":"getStartingHand","data":[{"imageId":"aaaabb","name":"Ingegärd","power":"1","defense":"3","speed":"5","dimension":"Dayongeel","rarity":"Common","primaryAbility":"first-strike","secondaryAbility":"power-unity","secondaryAbilityParameters":{"power":"3","turn":"4"},"description":"She\'s intrepid, affectionate, generous and perhaps a little too timid. This isn\'t surprising considering for someone with his position."},{"imageId":"aacabb","name":"Gudfinna ","power":"5","defense":"2","speed":"3","dimension":"Dayongeel","rarity":"Rare","primaryAbility":"last-stand","secondaryAbility":"defense-unity","secondaryAbilityParameters":{"turn":"4"},"description":"She was born in a decent family in an important port. She lived free of worries until she was about 14 years old, but at that point things changed."},{"imageId":"baaabb","name":"Freystein","power":"6","defense":"8","speed":"4","dimension":"Skelos","rarity":"Legend","primaryAbility":"full-power","secondaryAbility":"power-diversity","secondaryAbilityParameters":{"power":"3","turn":"4"},"description":"He\'s funny, driven, reliable and perhaps a little too pompous. Which isn\'t out of the ordinary for someone with his position."},{"imageId":"sjdfha","name":"Ingifast","power":"2","defense":"5","speed":"1","dimension":"Skelos","rarity":"Special","primaryAbility":"berserk","secondaryAbility":"powermania","secondaryAbilityParameters":{"power":"2","strike":"4"},"description":"He is currently searching for a higher purpose. He feels like there\'s more than what we get to know in this world. Luckily he has great parents to support him."},{"imageId":"askwoo","name":"Svartbrand","power":"2","defense":"9","speed":"1","dimension":"Alphar","rarity":"Epic","primaryAbility":"reckless","secondaryAbility":"defender","description":"While haunted by memories of the past, he now works a small job with low pay. By doing so, he hopes to start life over on a good note and finally find friends he has never had."}]}');
         };
 
         const socketOnError = (event) => {

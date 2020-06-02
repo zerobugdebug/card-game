@@ -1,63 +1,74 @@
 {
     "result": "ok",
     "data": [{
+        "imageId": "aaaabb",
         "name": "Ingegärd",
-        "power": "24",
-        "defense": "27",
+        "power": "1",
+        "defense": "3",
         "speed": "5",
+        "dimension": "Dayongeel",
+        "rarity": "Common",
         "primaryAbility": "first-strike",
         "secondaryAbility": "power-unity",
-        "secondaryAbilityParameters": [{
-            "power": "3"
-        }, {
+        "secondaryAbilityParameters": {
+            "power": "3",
             "turn": "4"
-        }],
+        },
         "description": "She's intrepid, affectionate, generous and perhaps a little too timid. This isn't surprising considering for someone with his position."
     }, {
+        "imageId": "aacabb",
         "name": "Gudfinna ",
-        "power": "14",
-        "defense": "17",
+        "power": "5",
+        "defense": "2",
         "speed": "3",
+        "dimension": "Dayongeel",
+        "rarity": "Rare",
         "primaryAbility": "last-stand",
         "secondaryAbility": "defense-unity",
-        "secondaryAbilityParameters": [{
+        "secondaryAbilityParameters": {
             "turn": "4"
-        }],
+        },
         "description": "She was born in a decent family in an important port. She lived free of worries until she was about 14 years old, but at that point things changed."
     }, {
+        "imageId": "baaabb",
         "name": "Freystein",
-        "power": "19",
-        "defense": "30",
+        "power": "6",
+        "defense": "8",
         "speed": "4",
+        "dimension": "Skelos",
+        "rarity": "Legend",
         "primaryAbility": "full-power",
         "secondaryAbility": "power-diversity",
-        "secondaryAbilityParameters": [{
-            "power": "3"
-        }, {
+        "secondaryAbilityParameters": {
+            "power": "3",
             "turn": "4"
-        }],
+        },
         "description": "He's funny, driven, reliable and perhaps a little too pompous. Which isn't out of the ordinary for someone with his position."
     }, {
+        "imageId": "sjdfha",
         "name": "Ingifast",
-        "power": "22",
-        "defense": "35",
+        "power": "2",
+        "defense": "5",
         "speed": "1",
+        "dimension": "Skelos",
+        "rarity": "Special",
         "primaryAbility": "berserk",
         "secondaryAbility": "powermania",
-        "secondaryAbilityParameters": [{
-            "power": "2"
-        }, {
+        "secondaryAbilityParameters": {
+            "power": "2",
             "strike": "4"
-        }],
+        },
         "description": "He is currently searching for a higher purpose. He feels like there's more than what we get to know in this world. Luckily he has great parents to support him."
     }, {
+        "imageId": "askwoo",
         "name": "Svartbrand",
-        "power": "10",
-        "defense": "45",
+        "power": "2",
+        "defense": "9",
         "speed": "1",
+        "dimension": "Alphar",
+        "rarity": "Epic",
         "primaryAbility": "reckless",
         "secondaryAbility": "defender",
-        "secondaryAbilityParameters": [],
         "description": "While haunted by memories of the past, he now works a small job with low pay. By doing so, he hopes to start life over on a good note and finally find friends he has never had."
     }]
 }
