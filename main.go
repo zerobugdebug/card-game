@@ -472,7 +472,11 @@ func main() {
 
 	http.HandleFunc("/ws", serveWs)
 	http.HandleFunc("/", serveHome)
-	fs := http.FileServer(http.Dir("./images"))
-	http.Handle("/images/", http.StripPrefix("/images/", fs))
+	fsImages := http.FileServer(http.Dir("./images"))
+	http.Handle("/images/", http.StripPrefix("/images/", fsImages))
+	fsFonts := http.FileServer(http.Dir("./fonts"))
+	http.Handle("/fonts/", http.StripPrefix("/fonts/", fsFonts))
+	fsScripts := http.FileServer(http.Dir("./scripts"))
+	http.Handle("/scripts/", http.StripPrefix("/scripts/", fsScripts))
 	loggerInfo.Fatal(http.ListenAndServe(":8080", nil))
 }

@@ -3,7 +3,16 @@
 
 <head>
     <title>Websocket chat</title>
+    <style>
+        @font-face {
+            font-family: 'Postamt';
+            src: url('fonts/Postamt.ttf.woff') format('woff');
+            font-weight: normal;
+            font-style: normal;
+        }
+    </style>
     <script src="https://code.createjs.com/1.0.0/createjs.min.js"></script>
+    <script src="scripts/cards.js"></script>
     <script id="editable">
         var canvas, stage;
 
@@ -12,71 +21,18 @@
         var offset;
         var update = true;
 
-        const cardDrawingDefaults = {
-            template: {
-                width: 300,
-                height: 420
-            },
-            character: {
-                width: 256,
-                height: 256,
-                x: 22,
-                y: 34
-            },
-            dimension: {
-                width: 50,
-                height: 50,
-                x: 248,
-                y: 259
-            },
-            speed: {
-                x: 33,
-                y: 34,
-                fontSize: 36
-            },
-            attack: {
-                x: 36,
-                y: 385,
-                fontSize: 36
-            },
-            defense: {
-                x: 268,
-                y: 380,
-                fontSize: 36
-            },
-            name: {
-                x: 150,
-                y: 288,
-                fontSize: 24
-            },
-            description: {
-                x: 40,
-                y: 312,
-                fontSize: 12
-            },
-            primaryAbility: {
-                x: 150,
-                y: 378,
-                fontSize: 12
-            },
-            secondaryAbility: {
-                x: 150,
-                y: 398,
-                fontSize: 12
-            },
-            topbar: {
-                x: 150,
-                y: 36
-            }
-        }
+        //var junction_font = new FontFace('Cardfont', 'url(fonts/71c52b27a8f7380d4dca99f96e30a7fc.woff2)');
+
+
+
 
         function init() {
             //examples.showDistractor();
             // create stage and point it to the canvas:
             canvas = document.getElementById("playField");
             stage = new createjs.Stage(canvas);
-            console.log(canvas);
-            console.log(stage);
+            //console.log(canvas);
+            //console.log(stage);
             // enable touch interactions if supported on the current device:
             createjs.Touch.enable(stage);
 
@@ -90,11 +46,20 @@
             fpsLabel.x = 1000;
             fpsLabel.y = 0;
 
+            /*             const config = {
+                            src: "fonts/Postamt.ttf.woff"
+                        }
+             */
+            /*             var loader = new createjs.FontLoader({
+                            src: "fonts/Postamt.ttf.woff"
+                        }, true);
+                        loader.on("complete", fontsPreloaded);
+                        loader.load(); */
 
             //            for (i = 0; i < 25; i++) {
-            var templateCard = new Image();
-            templateCard.src = "images/card_templates/special.png ";
-            templateCard.onload = handleImageLoad;
+            /*             var templateCard = new Image();
+                        templateCard.src = "images/card_templates/special.png ";
+                        templateCard.onload = handleImageLoad; */
             // console.log(templateCard);
             //          }
 
@@ -105,153 +70,10 @@
             createjs.Ticker.removeEventListener("tick", tick);
         }
 
-        function handleImageLoad(event) {
-            var templateCard = event.target;
-            var bitmapCard;
-            var container = new createjs.Container();
-            container.width = templateCard.width;
-            container.height = templateCard.height;
-            //console.log(container);
-
-            var characterImage = new Image();
-            characterImage.src = "images/characters/baaabb.png";
-            //console.log(characterImage);
-            //characterImage.width
-
-            bitmapCharacter = new createjs.Bitmap(characterImage);
-            container.addChild(bitmapCharacter);
-
-            bitmapCharacter.x = cardDrawingDefaults.character.x;
-            bitmapCharacter.y = cardDrawingDefaults.character.y;
-
-            bitmapCharacter.scale = bitmapCharacter.originalScale = 1;
-
-            bitmapCard = new createjs.Bitmap(templateCard);
-            container.addChild(bitmapCard);
-
-            bitmapCard.x = 0;
-            bitmapCard.y = 0;
-
-            //bitmapCard.rotation = 360 * Math.random() | 0;
-            //bitmapCard.regX = bitmapCard.image.width / 2 | 0;
-            //bitmapCard.regY = bitmapCard.image.height / 2 | 0;
-            bitmapCard.scale = bitmapCard.originalScale = 1;
-            bitmapCard.name = "bmp_1";
-            bitmapCard.cursor = "pointer";
-
-            var hit = new createjs.Shape();
-            hit.graphics.beginFill("#000").drawRect(bitmapCard.x, bitmapCard.y, bitmapCard.image.width, bitmapCard.image.height);
-            //container.addChild(hit);
-            bitmapCard.hitArea = hit;
-
-            container.scale = container.originalScale = 0.8;
-
-            textSpeed = new createjs.Text(Math.round(Math.random() * 8) + 1, cardDrawingDefaults.speed.fontSize + "px Georgia", "#FFF");
-            textSpeed.x = cardDrawingDefaults.speed.x;
-            textSpeed.y = cardDrawingDefaults.speed.y;
-            textSpeed.textAlign = "center"
-            textSpeed.textBaseline = "middle"
-            textSpeed.shadow = new createjs.Shadow("#000000", 3, 3, 3);
-            container.addChild(textSpeed);
-
-            textPower = new createjs.Text(Math.round(Math.random() * 8) + 1, cardDrawingDefaults.attack.fontSize + "px Georgia", "#FFF");
-            textPower.x = cardDrawingDefaults.attack.x;
-            textPower.y = cardDrawingDefaults.attack.y;
-            textPower.textAlign = "center"
-            textPower.textBaseline = "middle"
-            textPower.shadow = new createjs.Shadow("#000000", 3, 3, 3);
-            container.addChild(textPower);
-
-            textDefence = new createjs.Text(Math.round(Math.random() * 8) + 1, cardDrawingDefaults.defense.fontSize + "px Georgia", "#FFF");
-            textDefence.x = cardDrawingDefaults.defense.x;
-            textDefence.y = cardDrawingDefaults.defense.y;
-            textDefence.textAlign = "center"
-            textDefence.textBaseline = "middle"
-            textDefence.shadow = new createjs.Shadow("#000000", 3, 3, 3);
-            container.addChild(textDefence);
-
-            textName = new createjs.Text("Ingifast", cardDrawingDefaults.name.fontSize + "px Georgia", "#FF0");
-            textName.x = cardDrawingDefaults.name.x;
-            textName.y = cardDrawingDefaults.name.y;
-            textName.textAlign = "center"
-            textName.textBaseline = "middle"
-            container.addChild(textName);
-
-            textDescription = new createjs.Text("She was born in the fire and fire\nnever stopped following her. She\nwill burn everyone and everything", cardDrawingDefaults.description.fontSize + "px Georgia", "#FFF");
-            textDescription.x = cardDrawingDefaults.description.x;
-            textDescription.y = cardDrawingDefaults.description.y;
-            textDescription.textAlign = "left"
-            textDescription.textBaseline = "middle"
-            container.addChild(textDescription);
-
-            bitmapCard.on("mousedown", function(evt) {
-                //this.parent.addChild(this);
-                this.parent.offset = {
-                    x: this.parent.x - evt.stageX,
-                    y: this.parent.y - evt.stageY
-                };
-
-            });
-
-
-
-            // the pressmove event is dispatched when the mouse moves after a mousedown on the target until the mouse is released.
-            bitmapCard.on("pressmove", function(evt) {
-                //console.log(evt)
-                this.parent.x = evt.stageX + this.parent.offset.x;
-                this.parent.y = evt.stageY + this.parent.offset.y;
-
-                //this.parent
-                //this.x += 10; //stage.mouseX - this.offset.x;
-                //this.y += 5 //stage.mouseY - this.offset.y;
-                // indicate that the stage should be updated on the next tick:
-                update = true;
-            });
-
-            bitmapCard.on("rollover", function(evt) {
-                //console.log(this.scale);
-                //console.log(this.originalScale);
-                this.parent.scale = this.parent.originalScale * 1.25;
-                this.parent.stop = true
-                update = true;
-            });
-
-            bitmapCard.on("rollout", function(evt) {
-                this.parent.scale = this.parent.originalScale;
-                this.parent.xSpeed = -(this.parent.x - evt.stageX) * 0.05
-                this.parent.ySpeed = -(this.parent.y - evt.stageY) * 0.05
-                this.parent.stop = false
-                update = true;
-            });
-            container.x = Math.random() * 1500
-            container.y = Math.random() * 800
-                //container.xSpeed = Math.random() * 2 - 4
-                //container.ySpeed = Math.random() * 2 - 4
-                //container.rotation = Math.random() * 360
-            container.regX = bitmapCard.image.width / 2 * 0.2
-            container.regY = bitmapCard.image.height / 2 * 0.2
-                //container.rotationSpeed = Math.random() * 10 - 5
-            container.stop = false
-            stage.addChild(container);
-            container.cache(bitmapCard.x, bitmapCard.y, bitmapCard.image.width, bitmapCard.image.height)
-            createjs.Ticker.framerate = 30;
-            createjs.Ticker.addEventListener("tick", tick);
-        }
-
-        function drawStartingHand(startingHandJSON) {
-            const cardWidth = 100
-            var startingCards = JSON.parse(startingHandJSON)
-            console.log(startingCards)
-            var templateCard = new Image();
-            templateCard.src = "images/card_template_big.png";
-            templateCard.onload = handleImageLoad;
-        }
-
 
         function tick(event) {
             // this set makes it so the stage only re-renders when an event handler indicates a change has happened.
             fpsLabel.text = Math.round(createjs.Ticker.getMeasuredFPS()) + " fps";
-            var l = stage.numChildren;
 
             // iterate through all the children and move them according to their velocity:
 
@@ -278,7 +100,8 @@
 <body onload="init();">
     <div>
         <canvas id="playField" width="1500" height="800"></canvas>
-    </div>
+        <!--         <div id="demo-text" style="font-family: Postamt"></div>
+ --></div>
 
     <input id="input" type="text" />
     <button onclick="send()">Send</button>
