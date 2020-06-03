@@ -4,11 +4,15 @@
 <head>
     <title>Websocket chat</title>
     <style>
-        @font-face {
-            font-family: 'Postamt';
-            src: url('fonts/Postamt.ttf.woff') format('woff');
-            font-weight: normal;
-            font-style: normal;
+        #playField {
+            border: 10px solid black;
+        }
+        
+        #selectedCard {
+            position: absolute;
+            right: 600px;
+            top: 50px;
+            border: 10px solid red;
         }
     </style>
     <script src="https://code.createjs.com/1.0.0/createjs.min.js"></script>
@@ -31,6 +35,9 @@
             // create stage and point it to the canvas:
             canvas = document.getElementById("playField");
             stage = new createjs.Stage(canvas);
+            //canvasCardSelected = document.getElementById("selectedCard");
+            //stageCardSelected = new createjs.Stage(canvasCardSelected);
+            //stageCardSelected.alpha = 0
             //console.log(canvas);
             //console.log(stage);
             // enable touch interactions if supported on the current device:
@@ -99,7 +106,9 @@
 
 <body onload="init();">
     <div>
-        <canvas id="playField" width="1500" height="800"></canvas>
+        <canvas id="playField" width="870" height="800"></canvas>
+        <!--         <canvas id="selectedCard" width="320" height="400"></canvas>
+ -->
         <!--         <div id="demo-text" style="font-family: Postamt"></div>
  --></div>
 
