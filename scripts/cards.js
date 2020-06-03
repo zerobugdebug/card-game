@@ -63,7 +63,7 @@ const cardDrawingDefaults = {
     }
 }
 
-function drawCard(cardX, cardY, cardScale, cardJSON) {
+function drawCard(cardX, cardY, cardJSON) {
     var containerCard = new createjs.Container();
     containerCard.x = cardX
     containerCard.y = cardY
@@ -106,8 +106,9 @@ function drawCard(cardX, cardY, cardScale, cardJSON) {
     hit.graphics.beginFill("#000").drawRect(0, 0, cardDrawingDefaults.template.width, cardDrawingDefaults.template.height);
     //containerCard.addChild(hit);
     bitmapCard.hitArea = hit;
+    bitmapCard.name = "cardHitArea"
 
-    containerCard.scale = containerCard.originalScale = cardScale;
+    containerCard.scale = containerCard.originalScale = 0.5;
 
     bitmapDimension = new createjs.Bitmap(globalImageLoader.getResult("dimensions." + cardJSON.dimension));
     //console.log(bitmapCard)
@@ -211,22 +212,102 @@ function drawCard(cardX, cardY, cardScale, cardJSON) {
     containerCard.cardJSON = cardJSON
 
     stage.addChild(containerCard);
-    containerCard.cache(0, 0, cardDrawingDefaults.template.width, cardDrawingDefaults.template.height)
+    containerCard.cache(-50, -50, cardDrawingDefaults.template.width + 50, cardDrawingDefaults.template.height + 50)
     createjs.Ticker.framerate = 30;
-
+    return containerCard
 }
 
 function selectCard(event) {
     console.log("Card selected")
-    console.log(event)
-    console.log(this)
-    console.log(this.parent)
-    drawCard(285, 100, 1, this.parent.cardJSON)
+        //console.log(event)
+        //console.log(this)
+        //console.log(this.parent)
+    if (stage.getChildByName("selectedCard")) {
+        console.log("already selected")
+        stage.removeChild(stage.getChildByName("selectedCard"))
+    }
+    containerSelectedCard = drawCard(285, 100, this.parent.cardJSON)
+    containerSelectedCard.scale = 1
+    containerSelectedCard.name = "selectedCard"
+        //console.log(stage)
+    console.log(containerSelectedCard)
+    cardHitArea = containerSelectedCard.getChildByName("cardHitArea")
+    console.log(cardHitArea)
+    cardHitArea.removeAllEventListeners()
+
+    //containerSelectedCard.removeChildAt(2)
+
+    textDefenseIncreaseBackground = new createjs.Shape();
+    textDefenseIncreaseBackground.graphics.setStrokeStyle(1);
+    textDefenseIncreaseBackground.graphics.beginStroke("#000000");
+    textDefenseIncreaseBackground.graphics.beginFill("green").drawCircle(0, 0, 15);
+    textDefenseIncreaseBackground.x = cardDrawingDefaults.defense.x - 25;
+    textDefenseIncreaseBackground.y = cardDrawingDefaults.defense.y;
+    containerSelectedCard.addChild(textDefenseIncreaseBackground);
+
+    textDefenseIncreaseOutline = new createjs.Text("+", cardDrawingDefaults.defense.font, "#000");
+    textDefenseIncreaseOutline.x = cardDrawingDefaults.defense.x - 25;
+    textDefenseIncreaseOutline.y = cardDrawingDefaults.defense.y;
+    textDefenseIncreaseOutline.textAlign = "center"
+    textDefenseIncreaseOutline.textBaseline = "middle"
+        //textDefense.shadow = new createjs.Shadow("#000000", 3, 3, 3);
+    textDefenseIncreaseOutline.outline = 3
+    containerSelectedCard.addChild(textDefenseIncreaseOutline);
+
+    textDefenseIncrease = new createjs.Text("+", cardDrawingDefaults.defense.font, "#FFF");
+    textDefenseIncrease.x = cardDrawingDefaults.defense.x - 25;
+    textDefenseIncrease.y = cardDrawingDefaults.defense.y;
+    textDefenseIncrease.textAlign = "center"
+    textDefenseIncrease.textBaseline = "middle"
+        //textDefense.shadow = new createjs.Shadow("#000000", 3, 3, 3);
+    containerSelectedCard.addChild(textDefenseIncrease);
+
+    textDefenseDecreaseBackground = new createjs.Shape();
+    textDefenseDecreaseBackground.graphics.setStrokeStyle(1);
+    textDefenseDecreaseBackground.graphics.beginStroke("#000000");
+    textDefenseDecreaseBackground.graphics.beginFill("red").drawCircle(0, 0, 15);
+    textDefenseDecreaseBackground.x = cardDrawingDefaults.defense.x + 25;
+    textDefenseDecreaseBackground.y = cardDrawingDefaults.defense.y;
+    containerSelectedCard.addChild(textDefenseDecreaseBackground);
+
+    textDefenseDecreaseOutline = new createjs.Text("-", cardDrawingDefaults.defense.font, "#000");
+    textDefenseDecreaseOutline.x = cardDrawingDefaults.defense.x + 25;
+    textDefenseDecreaseOutline.y = cardDrawingDefaults.defense.y;
+    textDefenseDecreaseOutline.textAlign = "center"
+    textDefenseDecreaseOutline.textBaseline = "middle"
+        //textDefense.shadow = new createjs.Shadow("#000000", 3, 3, 3);
+    textDefenseDecreaseOutline.outline = 3
+    containerSelectedCard.addChild(textDefenseDecreaseOutline);
+
+    textDefenseDecrease = new createjs.Text("-", cardDrawingDefaults.defense.font, "#FFF");
+    textDefenseDecrease.x = cardDrawingDefaults.defense.x + 25;
+    textDefenseDecrease.y = cardDrawingDefaults.defense.y;
+    textDefenseDecrease.textAlign = "center"
+    textDefenseDecrease.textBaseline = "middle"
+        //textDefense.shadow = new createjs.Shadow("#000000", 3, 3, 3);
+    containerSelectedCard.addChild(textDefenseDecrease);
+
+
+
+
+
+
+
+    containerSelectedCard.cache(-50, -50, cardDrawingDefaults.template.width + 50, cardDrawingDefaults.template.height + 50)
+
+    cardHitArea.on("click", deselectCard)
     stage.update()
-
-
 }
 
+function deselectCard(event) {
+    console.log("Card deselected")
+        //console.log(event)
+        //console.log(this)
+    console.log(this.parent)
+    console.log(this.parent.parent)
+    stage.removeChild(this.parent)
+    stage.update()
+}
 
 function fontsPreloaded(event) {
     console.log("Fonts preloaded")
@@ -287,7 +368,7 @@ function imagesPreloaded(event) {
         //console.log(globalImageLoader)
     globalStartingHand.forEach((element, index) => {
         console.log(element, index)
-        drawCard(20 + index * 170, 50, 0.5, element)
+        drawCard(20 + index * 170, 50, element)
     });
     stage.update()
 }
