@@ -1,8 +1,6 @@
 package main
 
 import (
-	"bytes"
-	"compress/flate"
 	"encoding/json"
 	"net/http"
 	"os"
@@ -139,9 +137,10 @@ func publishRabbitMQ(chanRabbitMQ *amqp.Channel, chanMessage chan []byte) {
 	for {
 		//message := <-chanMessage
 		var message map[string]interface{}
-		var messageContentEncoding string = ""
-		if err := json.Unmarshal(<-chanMessage, &message); err != nil {
+		err := json.Unmarshal(<-chanMessage, &message)
+		if err != nil {
 			loggerInfo.Error("Can't parse JSON. Error: ", err)
+			continue
 		}
 		//loggerInfo.Debug("Parsed JSON: ", message)
 		loggerInfo.Debug("Operation: ", message["operation"])
@@ -152,17 +151,17 @@ func publishRabbitMQ(chanRabbitMQ *amqp.Channel, chanMessage chan []byte) {
 			continue
 		}
 
-		loggerInfo.Debug("Full data size: ", len(dataJSON))
-		if len(dataJSON) > 100 {
-			compressedData := new(bytes.Buffer)
-			compressor, _ := flate.NewWriter(compressedData, 5)
-			compressor.Write(dataJSON)
-			compressor.Close()
-			dataJSON = compressedData.Bytes()
-			messageContentEncoding = "deflate"
-			loggerInfo.Debug("Compressed data size: ", len(dataJSON))
-		}
-
+		/* 		loggerInfo.Debug("Full data size: ", len(dataJSON))
+		   		if len(dataJSON) > 100 {
+		   			compressedData := new(bytes.Buffer)
+		   			compressor, _ := flate.NewWriter(compressedData, 5)
+		   			compressor.Write(dataJSON)
+		   			compressor.Close()
+		   			dataJSON = compressedData.Bytes()
+		   			messageContentEncoding = "deflate"
+		   			loggerInfo.Debug("Compressed data size: ", len(dataJSON))
+		   		}
+		*/
 		//loggerInfo.Debug("Data in JSON: ", dataJSON)
 		routingKey := message["operation"].(string)
 		err = chanRabbitMQ.Publish(
@@ -171,9 +170,9 @@ func publishRabbitMQ(chanRabbitMQ *amqp.Channel, chanMessage chan []byte) {
 			false,      // mandatory
 			false,      // immediate
 			amqp.Publishing{
-				ContentType:     "text/json",
-				ContentEncoding: messageContentEncoding,
-				Body:            dataJSON,
+				ContentType: "text/json",
+				Body:        dataJSON,
+				ReplyTo:     "amq.rabbitmq.reply-to",
 			})
 		loggerInfo.Debugf("Published to RabbitMQ. Routing key: %s, payload: %s", routingKey, string(dataJSON))
 		if err != nil {
@@ -209,15 +208,16 @@ func consumeRabbitMQ(chanRabbitMQ *amqp.Channel, chanMessage chan []byte) {
 	loggerInfo.Debug("Consumer started")
 
 	messagesRabbitMQ, err := chanRabbitMQ.Consume(
-		"WebsocketWorker", // queue
-		"",                // consumer
-		true,              // auto-ack
-		false,             // exclusive
-		false,             // no-local
-		false,             // no-wait
-		nil,               // args
+		"amq.rabbitmq.reply-to", // queue
+		"",                      // consumer
+		true,                    // auto-ack
+		false,                   // exclusive
+		false,                   // no-local
+		false,                   // no-wait
+		nil,                     // args
 	)
 	failOnError(err, "Failed to register a consumer")
+	loggerInfo.Debug("Consumer connected")
 
 	for d := range messagesRabbitMQ {
 		loggerInfo.Debugf("Consumed from RabbitMQ: %s", d.Body)
@@ -414,6 +414,7 @@ func serveWs(w http.ResponseWriter, r *http.Request) {
 	chanMesageFromRabbitMQ := make(chan []byte)
 	go consumeRabbitMQ(consumeChannelRabbitMQ, chanMesageFromRabbitMQ)
 	go writeWebsocket(ws, chanMesageFromRabbitMQ)
+	time.Sleep(time.Second)
 
 	//chanMesageFromRabbitMQ <- []byte(localAddress.Network())
 	//chanMesageFromRabbitMQ <- []byte(localAddress.String())
@@ -422,7 +423,7 @@ func serveWs(w http.ResponseWriter, r *http.Request) {
 	//chanMesageFromRabbitMQ <- []byte(remoteAddress.String())
 
 	chanMesageFromWebsocket := make(chan []byte)
-	go publishRabbitMQ(publishChannelRabbitMQ, chanMesageFromWebsocket)
+	go publishRabbitMQ(consumeChannelRabbitMQ, chanMesageFromWebsocket)
 	//go pumpStdout(ws, outr, stdoutDone)
 	readWebsocket(ws, chanMesageFromWebsocket)
 

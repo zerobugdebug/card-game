@@ -1,0 +1,1 @@
+Folder to store all the GO workers for all microservices

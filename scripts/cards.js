@@ -63,13 +63,34 @@ const cardDrawingDefaults = {
     }
 }
 
+function textWithOutline(id, x, y, text, font, color, container) {
+    textOutline = new createjs.Text(text, font, "#000");
+    textOutline.x = x;
+    textOutline.y = y;
+    textOutline.textAlign = "center"
+    textOutline.textBaseline = "middle"
+        //textPower.shadow = new createjs.Shadow("#000000", 3, 3, 3);
+    textOutline.outline = 3
+    textOutline.name = id + ".outline"
+    container.addChild(textOutline);
+
+    textBase = new createjs.Text(text, font, color);
+    textBase.x = x;
+    textBase.y = y;
+    textBase.textAlign = "center"
+    textBase.textBaseline = "middle"
+    textBase.name = id + ".base"
+        //textPower.shadow = new createjs.Shadow("#000000", 3, 3, 3);
+    container.addChild(textBase);
+
+}
+
+
 function drawCard(cardX, cardY, cardJSON) {
     var containerCard = new createjs.Container();
-    containerCard.x = cardX
-    containerCard.y = cardY
-        //            containerCard.width = templateCard.width;
-        //containerCard.height = templateCard.height;
-        //console.log(containerCard);
+    //            containerCard.width = templateCard.width;
+    //containerCard.height = templateCard.height;
+    //console.log(containerCard);
 
     //var characterImage = new Image();
     //characterImage.src = "images/characters/baaabb.png";
@@ -118,58 +139,61 @@ function drawCard(cardX, cardY, cardJSON) {
 
     console.log(bitmapDimension)
 
-    textSpeedOutline = new createjs.Text(cardJSON.speed, cardDrawingDefaults.speed.font, "#000");
-    textSpeedOutline.x = cardDrawingDefaults.speed.x;
-    textSpeedOutline.y = cardDrawingDefaults.speed.y;
-    textSpeedOutline.textAlign = "center"
-    textSpeedOutline.textBaseline = "middle"
-        //textSpeed.shadow = new createjs.Shadow("#000000", 3, 3, 3);
-    textSpeedOutline.outline = 3
-    containerCard.addChild(textSpeedOutline);
+    textWithOutline("speed", cardDrawingDefaults.speed.x, cardDrawingDefaults.speed.y, cardJSON.speed, cardDrawingDefaults.speed.font, "#FFF", containerCard)
+    textWithOutline("power", cardDrawingDefaults.power.x, cardDrawingDefaults.power.y, cardJSON.power, cardDrawingDefaults.power.font, "#FFF", containerCard)
+    textWithOutline("defense", cardDrawingDefaults.defense.x, cardDrawingDefaults.defense.y, cardJSON.defense, cardDrawingDefaults.defense.font, "#FFF", containerCard)
+        /*     textSpeedOutline = new createjs.Text(cardJSON.speed, cardDrawingDefaults.speed.font, "#000");
+            textSpeedOutline.x = cardDrawingDefaults.speed.x;
+            textSpeedOutline.y = cardDrawingDefaults.speed.y;
+            textSpeedOutline.textAlign = "center"
+            textSpeedOutline.textBaseline = "middle"
+                //textSpeed.shadow = new createjs.Shadow("#000000", 3, 3, 3);
+            textSpeedOutline.outline = 3
+            containerCard.addChild(textSpeedOutline);
 
-    textSpeed = new createjs.Text(cardJSON.speed, cardDrawingDefaults.speed.font, "#FFF");
-    textSpeed.x = cardDrawingDefaults.speed.x;
-    textSpeed.y = cardDrawingDefaults.speed.y;
-    textSpeed.textAlign = "center"
-    textSpeed.textBaseline = "middle"
-        //textSpeed.shadow = new createjs.Shadow("#000000", 3, 3, 3);
-        //textSpeed.outline = 2
-    containerCard.addChild(textSpeed);
+            textSpeed = new createjs.Text(cardJSON.speed, cardDrawingDefaults.speed.font, "#FFF");
+            textSpeed.x = cardDrawingDefaults.speed.x;
+            textSpeed.y = cardDrawingDefaults.speed.y;
+            textSpeed.textAlign = "center"
+            textSpeed.textBaseline = "middle"
+                //textSpeed.shadow = new createjs.Shadow("#000000", 3, 3, 3);
+                //textSpeed.outline = 2
+            containerCard.addChild(textSpeed);
+         */
+        /*     textPowerOutline = new createjs.Text(cardJSON.power, cardDrawingDefaults.power.font, "#000");
+            textPowerOutline.x = cardDrawingDefaults.power.x;
+            textPowerOutline.y = cardDrawingDefaults.power.y;
+            textPowerOutline.textAlign = "center"
+            textPowerOutline.textBaseline = "middle"
+                //textPower.shadow = new createjs.Shadow("#000000", 3, 3, 3);
+            textPowerOutline.outline = 3
+            containerCard.addChild(textPowerOutline);
 
-    textPowerOutline = new createjs.Text(cardJSON.power, cardDrawingDefaults.power.font, "#000");
-    textPowerOutline.x = cardDrawingDefaults.power.x;
-    textPowerOutline.y = cardDrawingDefaults.power.y;
-    textPowerOutline.textAlign = "center"
-    textPowerOutline.textBaseline = "middle"
-        //textPower.shadow = new createjs.Shadow("#000000", 3, 3, 3);
-    textPowerOutline.outline = 3
-    containerCard.addChild(textPowerOutline);
+            textPower = new createjs.Text(cardJSON.power, cardDrawingDefaults.power.font, "#FFF");
+            textPower.x = cardDrawingDefaults.power.x;
+            textPower.y = cardDrawingDefaults.power.y;
+            textPower.textAlign = "center"
+            textPower.textBaseline = "middle"
+                //textPower.shadow = new createjs.Shadow("#000000", 3, 3, 3);
+            containerCard.addChild(textPower);
 
-    textPower = new createjs.Text(cardJSON.power, cardDrawingDefaults.power.font, "#FFF");
-    textPower.x = cardDrawingDefaults.power.x;
-    textPower.y = cardDrawingDefaults.power.y;
-    textPower.textAlign = "center"
-    textPower.textBaseline = "middle"
-        //textPower.shadow = new createjs.Shadow("#000000", 3, 3, 3);
-    containerCard.addChild(textPower);
+            textDefenseOutline = new createjs.Text(cardJSON.defense, cardDrawingDefaults.defense.font, "#000");
+            textDefenseOutline.x = cardDrawingDefaults.defense.x;
+            textDefenseOutline.y = cardDrawingDefaults.defense.y;
+            textDefenseOutline.textAlign = "center"
+            textDefenseOutline.textBaseline = "middle"
+                //textDefense.shadow = new createjs.Shadow("#000000", 3, 3, 3);
+            textDefenseOutline.outline = 3
+            containerCard.addChild(textDefenseOutline);
 
-    textDefenseOutline = new createjs.Text(cardJSON.defense, cardDrawingDefaults.defense.font, "#000");
-    textDefenseOutline.x = cardDrawingDefaults.defense.x;
-    textDefenseOutline.y = cardDrawingDefaults.defense.y;
-    textDefenseOutline.textAlign = "center"
-    textDefenseOutline.textBaseline = "middle"
-        //textDefense.shadow = new createjs.Shadow("#000000", 3, 3, 3);
-    textDefenseOutline.outline = 3
-    containerCard.addChild(textDefenseOutline);
-
-    textDefense = new createjs.Text(cardJSON.defense, cardDrawingDefaults.defense.font, "#FFF");
-    textDefense.x = cardDrawingDefaults.defense.x;
-    textDefense.y = cardDrawingDefaults.defense.y;
-    textDefense.textAlign = "center"
-    textDefense.textBaseline = "middle"
-        //textDefense.shadow = new createjs.Shadow("#000000", 3, 3, 3);
-    containerCard.addChild(textDefense);
-
+            textDefense = new createjs.Text(cardJSON.defense, cardDrawingDefaults.defense.font, "#FFF");
+            textDefense.x = cardDrawingDefaults.defense.x;
+            textDefense.y = cardDrawingDefaults.defense.y;
+            textDefense.textAlign = "center"
+            textDefense.textBaseline = "middle"
+                //textDefense.shadow = new createjs.Shadow("#000000", 3, 3, 3);
+            containerCard.addChild(textDefense);
+         */
     textName = new createjs.Text(cardJSON.name, cardDrawingDefaults.name.font, "#FFF");
     textName.x = cardDrawingDefaults.name.x;
     textName.y = cardDrawingDefaults.name.y;
@@ -229,6 +253,9 @@ function selectCard(event) {
     containerSelectedCard = drawCard(285, 100, this.parent.cardJSON)
     containerSelectedCard.scale = 1
     containerSelectedCard.name = "selectedCard"
+    console.log(containerSelectedCard.getBounds())
+    stage.removeChild(stage.getChildByName("selectedCard"))
+    containerSelectedCard.uncache()
         //console.log(stage)
     console.log(containerSelectedCard)
     cardHitArea = containerSelectedCard.getChildByName("cardHitArea")
@@ -237,67 +264,163 @@ function selectCard(event) {
 
     //containerSelectedCard.removeChildAt(2)
 
-    textDefenseIncreaseBackground = new createjs.Shape();
-    textDefenseIncreaseBackground.graphics.setStrokeStyle(1);
-    textDefenseIncreaseBackground.graphics.beginStroke("#000000");
-    textDefenseIncreaseBackground.graphics.beginFill("green").drawCircle(0, 0, 15);
-    textDefenseIncreaseBackground.x = cardDrawingDefaults.defense.x - 25;
-    textDefenseIncreaseBackground.y = cardDrawingDefaults.defense.y;
-    containerSelectedCard.addChild(textDefenseIncreaseBackground);
+    /*     bitmapIncrease = new createjs.Bitmap(globalImageLoader.getResult("buttons.increase"));
+        bitmapIncrease.x = cardDrawingDefaults.defense.x - 15;
+        bitmapIncrease.y = cardDrawingDefaults.defense.y - 45
+        containerSelectedCard.addChild(bitmapIncrease);
+        //console.log(bitmapIncrease)
 
-    textDefenseIncreaseOutline = new createjs.Text("+", cardDrawingDefaults.defense.font, "#000");
-    textDefenseIncreaseOutline.x = cardDrawingDefaults.defense.x - 25;
-    textDefenseIncreaseOutline.y = cardDrawingDefaults.defense.y;
-    textDefenseIncreaseOutline.textAlign = "center"
-    textDefenseIncreaseOutline.textBaseline = "middle"
-        //textDefense.shadow = new createjs.Shadow("#000000", 3, 3, 3);
-    textDefenseIncreaseOutline.outline = 3
-    containerSelectedCard.addChild(textDefenseIncreaseOutline);
+        bitmapDecrease = new createjs.Bitmap(globalImageLoader.getResult("buttons.decrease"));
+        bitmapDecrease.x = cardDrawingDefaults.defense.x - 15;
+        bitmapDecrease.y = cardDrawingDefaults.defense.y + 10;
+        containerSelectedCard.addChild(bitmapDecrease);
 
-    textDefenseIncrease = new createjs.Text("+", cardDrawingDefaults.defense.font, "#FFF");
-    textDefenseIncrease.x = cardDrawingDefaults.defense.x - 25;
-    textDefenseIncrease.y = cardDrawingDefaults.defense.y;
-    textDefenseIncrease.textAlign = "center"
-    textDefenseIncrease.textBaseline = "middle"
-        //textDefense.shadow = new createjs.Shadow("#000000", 3, 3, 3);
-    containerSelectedCard.addChild(textDefenseIncrease);
+        bitmapIncrease = new createjs.Bitmap(globalImageLoader.getResult("buttons.increase"));
+        bitmapIncrease.x = cardDrawingDefaults.speed.x - 15;
+        bitmapIncrease.y = cardDrawingDefaults.speed.y - 45
+        containerSelectedCard.addChild(bitmapIncrease);
+        //console.log(bitmapIncrease)
 
-    textDefenseDecreaseBackground = new createjs.Shape();
-    textDefenseDecreaseBackground.graphics.setStrokeStyle(1);
-    textDefenseDecreaseBackground.graphics.beginStroke("#000000");
-    textDefenseDecreaseBackground.graphics.beginFill("red").drawCircle(0, 0, 15);
-    textDefenseDecreaseBackground.x = cardDrawingDefaults.defense.x + 25;
-    textDefenseDecreaseBackground.y = cardDrawingDefaults.defense.y;
-    containerSelectedCard.addChild(textDefenseDecreaseBackground);
+        bitmapDecrease = new createjs.Bitmap(globalImageLoader.getResult("buttons.decrease"));
+        bitmapDecrease.x = cardDrawingDefaults.speed.x - 15;
+        bitmapDecrease.y = cardDrawingDefaults.speed.y + 10;
+        containerSelectedCard.addChild(bitmapDecrease);
+        //console.log(bitmapDecrease) */
 
-    textDefenseDecreaseOutline = new createjs.Text("-", cardDrawingDefaults.defense.font, "#000");
-    textDefenseDecreaseOutline.x = cardDrawingDefaults.defense.x + 25;
-    textDefenseDecreaseOutline.y = cardDrawingDefaults.defense.y;
-    textDefenseDecreaseOutline.textAlign = "center"
-    textDefenseDecreaseOutline.textBaseline = "middle"
-        //textDefense.shadow = new createjs.Shadow("#000000", 3, 3, 3);
-    textDefenseDecreaseOutline.outline = 3
-    containerSelectedCard.addChild(textDefenseDecreaseOutline);
+    buttonDecreaseData = {
+        images: [globalImageLoader.getResult("buttons.decrease.anim")],
+        frames: { width: 30, height: 30 },
+        animations: {
+            out: 0,
+            over: 1,
+            down: 2
+        }
+    }
+    spritesheetButtonDecrease = new createjs.SpriteSheet(buttonDecreaseData);
 
-    textDefenseDecrease = new createjs.Text("-", cardDrawingDefaults.defense.font, "#FFF");
-    textDefenseDecrease.x = cardDrawingDefaults.defense.x + 25;
-    textDefenseDecrease.y = cardDrawingDefaults.defense.y;
-    textDefenseDecrease.textAlign = "center"
-    textDefenseDecrease.textBaseline = "middle"
-        //textDefense.shadow = new createjs.Shadow("#000000", 3, 3, 3);
-    containerSelectedCard.addChild(textDefenseDecrease);
+    buttonIncreaseData = {
+        images: [globalImageLoader.getResult("buttons.increase.anim")],
+        frames: { width: 30, height: 30 },
+        animations: {
+            out: 0,
+            over: 1,
+            down: 2
+        }
+    }
+    spritesheetButtonIncrease = new createjs.SpriteSheet(buttonIncreaseData);
+
+    buttonSpeedIncrease = new createjs.Sprite(spritesheetButtonIncrease);
+    buttonHelperSpeedIncrease = new createjs.ButtonHelper(buttonSpeedIncrease);
+    buttonSpeedIncrease.x = cardDrawingDefaults.speed.x - 15;
+    buttonSpeedIncrease.y = cardDrawingDefaults.speed.y - 50;
+    buttonSpeedIncrease.on("click", buttonSpeedIncreaseClick)
+    containerSelectedCard.addChild(buttonSpeedIncrease)
+
+    buttonPowerIncrease = new createjs.Sprite(spritesheetButtonIncrease);
+    buttonHelperPowerIncrease = new createjs.ButtonHelper(buttonPowerIncrease);
+    buttonPowerIncrease.x = cardDrawingDefaults.power.x - 15;
+    buttonPowerIncrease.y = cardDrawingDefaults.power.y - 50;
+    buttonPowerIncrease.on("click", buttonPowerIncreaseClick)
+    containerSelectedCard.addChild(buttonPowerIncrease)
+
+    buttonDefenseIncrease = new createjs.Sprite(spritesheetButtonIncrease);
+    buttonHelperDefenseIncrease = new createjs.ButtonHelper(buttonDefenseIncrease);
+    buttonDefenseIncrease.x = cardDrawingDefaults.defense.x - 15;
+    buttonDefenseIncrease.y = cardDrawingDefaults.defense.y - 50;
+    buttonDefenseIncrease.on("click", buttonDefenseIncreaseClick)
+    containerSelectedCard.addChild(buttonDefenseIncrease)
+
+    buttonSpeedDecrease = new createjs.Sprite(spritesheetButtonDecrease);
+    buttonHelperSpeedDecrease = new createjs.ButtonHelper(buttonSpeedDecrease);
+    buttonSpeedDecrease.x = cardDrawingDefaults.speed.x - 15;
+    buttonSpeedDecrease.y = cardDrawingDefaults.speed.y + 15;
+    buttonSpeedDecrease.on("click", buttonSpeedDecreaseClick)
+    containerSelectedCard.addChild(buttonSpeedDecrease)
+
+    buttonPowerDecrease = new createjs.Sprite(spritesheetButtonDecrease);
+    buttonHelperPowerDecrease = new createjs.ButtonHelper(buttonPowerDecrease);
+    buttonPowerDecrease.x = cardDrawingDefaults.power.x - 15;
+    buttonPowerDecrease.y = cardDrawingDefaults.power.y + 15;
+    buttonPowerDecrease.on("click", buttonPowerDecreaseClick)
+    containerSelectedCard.addChild(buttonPowerDecrease)
+
+    buttonDefenseDecrease = new createjs.Sprite(spritesheetButtonDecrease);
+    buttonHelperDefenseDecrease = new createjs.ButtonHelper(buttonDefenseDecrease);
+    buttonDefenseDecrease.x = cardDrawingDefaults.defense.x - 15;
+    buttonDefenseDecrease.y = cardDrawingDefaults.defense.y + 15;
+    buttonDefenseDecrease.on("click", buttonDefenseDecreaseClick)
+    containerSelectedCard.addChild(buttonDefenseDecrease)
+
+    boundsContainerSelectedCard = containerSelectedCard.getBounds()
+    console.log(boundsContainerSelectedCard)
+
+    // containerSelectedCard.cache(boundsContainerSelectedCard.x, boundsContainerSelectedCard.y, boundsContainerSelectedCard.width, boundsContainerSelectedCard.height)
+
+    stage.addChild(containerSelectedCard);
+    console.log(containerSelectedCard.getBounds())
 
 
 
-
-
-
-
-    containerSelectedCard.cache(-50, -50, cardDrawingDefaults.template.width + 50, cardDrawingDefaults.template.height + 50)
 
     cardHitArea.on("click", deselectCard)
     stage.update()
 }
+
+function buttonSpeedDecreaseClick(event) {
+    console.log("buttonSpeedDecreaseClick clicked")
+    this.parent.removeChild(this.parent.getChildByName("speed.outline"))
+    this.parent.removeChild(this.parent.getChildByName("speed.base"))
+    textWithOutline("speed", cardDrawingDefaults.speed.x, cardDrawingDefaults.speed.y, this.parent.cardJSON.speed--, cardDrawingDefaults.speed.font, "#FFF", this.parent)
+
+}
+
+function buttonSpeedIncreaseClick(event) {
+    console.log("buttonSpeedIncreaseClick clicked")
+    this.parent.removeChild(this.parent.getChildByName("speed.outline"))
+    this.parent.removeChild(this.parent.getChildByName("speed.base"))
+    textWithOutline("speed", cardDrawingDefaults.speed.x, cardDrawingDefaults.speed.y, this.parent.cardJSON.speed++, cardDrawingDefaults.speed.font, "#FFF", this.parent)
+
+}
+
+
+function buttonPowerDecreaseClick(event) {
+    console.log("buttonPowerDecreaseClick clicked")
+    this.parent.removeChild(this.parent.getChildByName("power.outline"))
+    this.parent.removeChild(this.parent.getChildByName("power.base"))
+    textWithOutline("power", cardDrawingDefaults.power.x, cardDrawingDefaults.power.y, this.parent.cardJSON.power--, cardDrawingDefaults.power.font, "#FFF", this.parent)
+
+}
+
+function buttonPowerIncreaseClick(event) {
+    console.log("buttonPowerIncreaseClick clicked")
+    this.parent.removeChild(this.parent.getChildByName("power.outline"))
+    this.parent.removeChild(this.parent.getChildByName("power.base"))
+    textWithOutline("power", cardDrawingDefaults.power.x, cardDrawingDefaults.power.y, this.parent.cardJSON.power++, cardDrawingDefaults.power.font, "#FFF", this.parent)
+
+}
+
+
+function buttonDefenseDecreaseClick(event) {
+    console.log("buttonDefenseDecreaseClick clicked")
+    this.parent.removeChild(this.parent.getChildByName("defense.outline"))
+    this.parent.removeChild(this.parent.getChildByName("defense.base"))
+    textWithOutline("defense", cardDrawingDefaults.defense.x, cardDrawingDefaults.defense.y, this.parent.cardJSON.defense--, cardDrawingDefaults.defense.font, "#FFF", this.parent)
+
+}
+
+function buttonDefenseIncreaseClick(event) {
+    console.log("buttonDefenseIncreaseClick clicked")
+    this.parent.removeChild(this.parent.getChildByName("defense.outline"))
+    this.parent.removeChild(this.parent.getChildByName("defense.base"))
+    textWithOutline("defense", cardDrawingDefaults.defense.x, cardDrawingDefaults.defense.y, this.parent.cardJSON.defense++, cardDrawingDefaults.defense.font, "#FFF", this.parent)
+
+}
+
+
+function handleClickDefense(event) {
+    console.log("clicked")
+}
+
 
 function deselectCard(event) {
     console.log("Card deselected")
@@ -315,31 +438,34 @@ function fontsPreloaded(event) {
         //var arrayPreloadImages
 
     console.log("Preloading images...");
+    buttonsPreloadManifest = [{ src: "ui/increase_button_anim.png", id: "buttons.increase.anim" }, { src: "ui/decrease_button_anim.png", id: "buttons.decrease.anim" }];
     imagePreloadManifest = imagePreloadManifest.concat(
             globalPreloadImages.characters.map(element => ({ src: "characters/" + element + ".png", id: "characters." + element })),
             globalPreloadImages.dimensions.map(element => ({ src: "dimensions/" + element + ".png", id: "dimensions." + element })),
-            globalPreloadImages.card_templates.map(element => ({ src: "card_templates/" + element + ".png", id: "card_templates." + element }))
+            globalPreloadImages.card_templates.map(element => ({ src: "card_templates/" + element + ".png", id: "card_templates." + element })),
+            buttonsPreloadManifest
+
         )
         //    arrayPreloadImages.forEach((element) => {
         //        imagePreloadManifest.push({ src: "characters/" + element + ".png", id: "characters." + element })
         //    });
-        //console.log(arrayPreloadImages);
-        /*
-            console.log("Preloading dimensions images...");
+    console.log(imagePreloadManifest);
+    /*
+        console.log("Preloading dimensions images...");
 
-            arrayPreloadImages = globalPreloadImages.dimensions
-            arrayPreloadImages.forEach((element) => {
-                imagePreloadManifest.push({ src: "dimensions/" + element + ".png", id: "dimensions." + element })
-            });
-            //console.log(imagePreloadManifest);
+        arrayPreloadImages = globalPreloadImages.dimensions
+        arrayPreloadImages.forEach((element) => {
+            imagePreloadManifest.push({ src: "dimensions/" + element + ".png", id: "dimensions." + element })
+        });
+        //console.log(imagePreloadManifest);
 
-            console.log("Preloading card templates images...");
-            arrayPreloadImages = globalPreloadImages.card_templates
-            arrayPreloadImages.forEach((element) => {
-                imagePreloadManifest.push({ src: "card_templates/" + element + ".png", id: "card_templates." + element })
-            });
-            //console.log(imagePreloadManifest);
-        */
+        console.log("Preloading card templates images...");
+        arrayPreloadImages = globalPreloadImages.card_templates
+        arrayPreloadImages.forEach((element) => {
+            imagePreloadManifest.push({ src: "card_templates/" + element + ".png", id: "card_templates." + element })
+        });
+        //console.log(imagePreloadManifest);
+    */
 
     /*    
         imageManifest = [{
@@ -376,6 +502,7 @@ function imagesPreloaded(event) {
 
 
 function drawStartingHand(startingHandJSON) {
+    createjs.Ticker.addEventListener("tick", handleTick);
     var startingHandJSONParsed = JSON.parse(startingHandJSON)
     if (startingHandJSONParsed.result == "ok") {
         globalStartingHand = startingHandJSONParsed.data
@@ -390,4 +517,9 @@ function drawStartingHand(startingHandJSON) {
     } else {
         console.log("Can't get starting hand")
     }
+}
+
+
+function handleTick(event) {
+    stage.update(event);
 }

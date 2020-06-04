@@ -5,7 +5,7 @@
     <title>Websocket chat</title>
     <style>
         #playField {
-            border: 10px solid black;
+            border: 2px solid black;
         }
         
         #selectedCard {
@@ -78,33 +78,35 @@
         }
 
 
-        function tick(event) {
-            // this set makes it so the stage only re-renders when an event handler indicates a change has happened.
-            fpsLabel.text = Math.round(createjs.Ticker.getMeasuredFPS()) + " fps";
+        //        function tick(event) {
+        // this set makes it so the stage only re-renders when an event handler indicates a change has happened.
+        //           fpsLabel.text = Math.round(createjs.Ticker.getMeasuredFPS()) + " fps";
 
-            // iterate through all the children and move them according to their velocity:
+        // iterate through all the children and move them according to their velocity:
 
-            //            if (update) {
-            //                update = false; // only update once
-            //                stage.update(event);
-            //            } else {
-            /*             for (var i = 1; i < l; i++) {
-                            var cont = stage.getChildAt(i);
-                            if (!cont.stop) {
-                                cont.x += cont.xSpeed
-                                if (cont.x > 1450 || cont.x < 50) cont.xSpeed = -cont.xSpeed
-                                cont.y += cont.ySpeed
-                                if (cont.y > 750 || cont.y < 50) cont.ySpeed = -cont.ySpeed
-                                cont.rotation += cont.rotationSpeed
-                            }
-                        } */
-            stage.update(event);
-            //           }
-        }
+        //            if (update) {
+        //                update = false; // only update once
+        //                stage.update(event);
+        //            } else {
+        /*             for (var i = 1; i < l; i++) {
+                        var cont = stage.getChildAt(i);
+                        if (!cont.stop) {
+                            cont.x += cont.xSpeed
+                            if (cont.x > 1450 || cont.x < 50) cont.xSpeed = -cont.xSpeed
+                            cont.y += cont.ySpeed
+                            if (cont.y > 750 || cont.y < 50) cont.ySpeed = -cont.ySpeed
+                            cont.rotation += cont.rotationSpeed
+                        }
+                    } */
+        //stage.update(event);
+        //           }
+        //}
     </script>
 </head>
 
 <body onload="init();">
+    <button onclick="startNewGame()" id="btnStartNewGame">Start New Game</button>
+
     <div>
         <canvas id="playField" width="870" height="800"></canvas>
         <!--         <canvas id="selectedCard" width="320" height="400"></canvas>
@@ -128,8 +130,8 @@
 
         const socketOnOpen = (event) => {
             output.innerHTML += "Status: Connected\n";
-            mySocket.send('{"operation":"getStartingHand","data":{"side":"owner","userId":"879879234"}}');
-            mySocket.send('{"operation":"getStartingHand","data":[{"imageId":"aaaabb","name":"Ingegärd","power":"1","defense":"3","speed":"5","dimension":"Dayongeel","rarity":"Common","primaryAbility":"first-strike","secondaryAbility":"power-unity","secondaryAbilityParameters":{"power":"3","turn":"4"},"description":"She\'s intrepid, affectionate, generous and perhaps a little too timid. This isn\'t surprising considering for someone with his position."},{"imageId":"aacabb","name":"Gudfinna ","power":"5","defense":"2","speed":"3","dimension":"Dayongeel","rarity":"Rare","primaryAbility":"last-stand","secondaryAbility":"defense-unity","secondaryAbilityParameters":{"turn":"4"},"description":"She was born in a decent family in an important port. She lived free of worries until she was about 14 years old, but at that point things changed."},{"imageId":"baaabb","name":"Freystein","power":"6","defense":"8","speed":"4","dimension":"Skelos","rarity":"Legend","primaryAbility":"full-power","secondaryAbility":"power-diversity","secondaryAbilityParameters":{"power":"3","turn":"4"},"description":"He\'s funny, driven, reliable and perhaps a little too pompous. Which isn\'t out of the ordinary for someone with his position."},{"imageId":"sjdfha","name":"Ingifast","power":"2","defense":"5","speed":"1","dimension":"Skelos","rarity":"Special","primaryAbility":"berserk","secondaryAbility":"powermania","secondaryAbilityParameters":{"power":"2","strike":"4"},"description":"He is currently searching for a higher purpose. He feels like there\'s more than what we get to know in this world. Luckily he has great parents to support him."},{"imageId":"askwoo","name":"Svartbrand","power":"2","defense":"9","speed":"1","dimension":"Alphar","rarity":"Epic","primaryAbility":"reckless","secondaryAbility":"defender","description":"While haunted by memories of the past, he now works a small job with low pay. By doing so, he hopes to start life over on a good note and finally find friends he has never had."}]}');
+            //mySocket.send('{"operation":"getStartingHand","data":{"side":"owner","userId":"879879234"}}');
+            //mySocket.send('{"operation":"getStartingHand","data":[{"imageId":"aaaabb","name":"Ingegärd","power":"1","defense":"3","speed":"5","dimension":"Dayongeel","rarity":"Common","primaryAbility":"first-strike","secondaryAbility":"power-unity","secondaryAbilityParameters":{"power":"3","turn":"4"},"description":"She\'s intrepid, affectionate, generous and perhaps a little too timid. This isn\'t surprising considering for someone with his position."},{"imageId":"aacabb","name":"Gudfinna ","power":"5","defense":"2","speed":"3","dimension":"Dayongeel","rarity":"Rare","primaryAbility":"last-stand","secondaryAbility":"defense-unity","secondaryAbilityParameters":{"turn":"4"},"description":"She was born in a decent family in an important port. She lived free of worries until she was about 14 years old, but at that point things changed."},{"imageId":"baaabb","name":"Freystein","power":"6","defense":"8","speed":"4","dimension":"Skelos","rarity":"Legend","primaryAbility":"full-power","secondaryAbility":"power-diversity","secondaryAbilityParameters":{"power":"3","turn":"4"},"description":"He\'s funny, driven, reliable and perhaps a little too pompous. Which isn\'t out of the ordinary for someone with his position."},{"imageId":"sjdfha","name":"Ingifast","power":"2","defense":"5","speed":"1","dimension":"Skelos","rarity":"Special","primaryAbility":"berserk","secondaryAbility":"powermania","secondaryAbilityParameters":{"power":"2","strike":"4"},"description":"He is currently searching for a higher purpose. He feels like there\'s more than what we get to know in this world. Luckily he has great parents to support him."},{"imageId":"askwoo","name":"Svartbrand","power":"2","defense":"9","speed":"1","dimension":"Alphar","rarity":"Epic","primaryAbility":"reckless","secondaryAbility":"defender","description":"While haunted by memories of the past, he now works a small job with low pay. By doing so, he hopes to start life over on a good note and finally find friends he has never had."}]}');
         };
 
         const socketOnError = (event) => {
@@ -152,6 +154,12 @@
         function send() {
             mySocket.send(input.value);
             input.value = "";
+        }
+
+        function startNewGame() {
+            mySocket.send('{ "operation": "getStartingHand", "data": { "side": "owner", "userId": "879879234" } }');
+            btnStartNewGame.disabled = true
+
         }
 
         socketOnClose();
