@@ -2,6 +2,8 @@ var globalFontLoader
 var globalImageLoader
 var globalStartingHand
 var globalContainerGameField
+var globalCardsArray
+
 
 const defaultCardScale = 0.8
 const cardDrawingDefaults = {
@@ -63,6 +65,32 @@ const cardDrawingDefaults = {
     }
 }
 
+var ability = {
+    name: "",
+    power: 0,
+    turn: 0,
+    speed: 0,
+    defense: 0,
+    strike: 0
+}
+
+var primaryAbility = secondaryAbility = ability
+
+
+var card = {
+    imageId: "",
+    name: "",
+    power: 0,
+    defense: 0,
+    speed: 0,
+    dimension: "",
+    rarity: "",
+    primaryAbility,
+    secondaryAbility,
+    description: ""
+}
+
+
 function textWithOutline(id, x, y, text, font, color, container) {
     textOutline = new createjs.Text(text, font, "#000");
     textOutline.x = x;
@@ -87,6 +115,8 @@ function textWithOutline(id, x, y, text, font, color, container) {
 
 
 function drawCard(cardX, cardY, cardJSON) {
+    console.log(card)
+
     var containerCard = new createjs.Container();
     //            containerCard.width = templateCard.width;
     //containerCard.height = templateCard.height;
@@ -137,7 +167,7 @@ function drawCard(cardX, cardY, cardJSON) {
     bitmapDimension.y = cardDrawingDefaults.dimension.y;
     containerCard.addChild(bitmapDimension);
 
-    console.log(bitmapDimension)
+    //console.log(bitmapDimension)
 
     textWithOutline("speed", cardDrawingDefaults.speed.x, cardDrawingDefaults.speed.y, cardJSON.speed, cardDrawingDefaults.speed.font, "#FFF", containerCard)
     textWithOutline("power", cardDrawingDefaults.power.x, cardDrawingDefaults.power.y, cardJSON.power, cardDrawingDefaults.power.font, "#FFF", containerCard)
@@ -253,13 +283,13 @@ function selectCard(event) {
     containerSelectedCard = drawCard(285, 100, this.parent.cardJSON)
     containerSelectedCard.scale = 1
     containerSelectedCard.name = "selectedCard"
-    console.log(containerSelectedCard.getBounds())
+        //console.log(containerSelectedCard.getBounds())
     stage.removeChild(stage.getChildByName("selectedCard"))
     containerSelectedCard.uncache()
         //console.log(stage)
-    console.log(containerSelectedCard)
+        //console.log(containerSelectedCard)
     cardHitArea = containerSelectedCard.getChildByName("cardHitArea")
-    console.log(cardHitArea)
+        //console.log(cardHitArea)
     cardHitArea.removeAllEventListeners()
 
     //containerSelectedCard.removeChildAt(2)
@@ -352,19 +382,31 @@ function selectCard(event) {
     containerSelectedCard.addChild(buttonDefenseDecrease)
 
     boundsContainerSelectedCard = containerSelectedCard.getBounds()
-    console.log(boundsContainerSelectedCard)
+        //console.log(boundsContainerSelectedCard)
 
     // containerSelectedCard.cache(boundsContainerSelectedCard.x, boundsContainerSelectedCard.y, boundsContainerSelectedCard.width, boundsContainerSelectedCard.height)
 
     stage.addChild(containerSelectedCard);
-    console.log(containerSelectedCard.getBounds())
+    //console.log(containerSelectedCard.getBounds())
 
 
 
 
     cardHitArea.on("click", deselectCard)
+
+    cardHitArea.on("rollover", e => {
+        console.log("rollover")
+        stage.canvas.title = '<h1>TOOLTIP</h1>';
+    })
+
+    cardHitArea.on("rollout", e => {
+        console.log("rollout")
+        stage.canvas.title = '';
+    })
     stage.update()
 }
+
+
 
 function buttonSpeedDecreaseClick(event) {
     console.log("buttonSpeedDecreaseClick clicked")
@@ -417,17 +459,12 @@ function buttonDefenseIncreaseClick(event) {
 }
 
 
-function handleClickDefense(event) {
-    console.log("clicked")
-}
-
-
 function deselectCard(event) {
     console.log("Card deselected")
         //console.log(event)
         //console.log(this)
-    console.log(this.parent)
-    console.log(this.parent.parent)
+        //console.log(this.parent)
+        //console.log(this.parent.parent)
     stage.removeChild(this.parent)
     stage.update()
 }
@@ -449,23 +486,23 @@ function fontsPreloaded(event) {
         //    arrayPreloadImages.forEach((element) => {
         //        imagePreloadManifest.push({ src: "characters/" + element + ".png", id: "characters." + element })
         //    });
-    console.log(imagePreloadManifest);
-    /*
-        console.log("Preloading dimensions images...");
-
-        arrayPreloadImages = globalPreloadImages.dimensions
-        arrayPreloadImages.forEach((element) => {
-            imagePreloadManifest.push({ src: "dimensions/" + element + ".png", id: "dimensions." + element })
-        });
         //console.log(imagePreloadManifest);
+        /*
+            console.log("Preloading dimensions images...");
 
-        console.log("Preloading card templates images...");
-        arrayPreloadImages = globalPreloadImages.card_templates
-        arrayPreloadImages.forEach((element) => {
-            imagePreloadManifest.push({ src: "card_templates/" + element + ".png", id: "card_templates." + element })
-        });
-        //console.log(imagePreloadManifest);
-    */
+            arrayPreloadImages = globalPreloadImages.dimensions
+            arrayPreloadImages.forEach((element) => {
+                imagePreloadManifest.push({ src: "dimensions/" + element + ".png", id: "dimensions." + element })
+            });
+            //console.log(imagePreloadManifest);
+
+            console.log("Preloading card templates images...");
+            arrayPreloadImages = globalPreloadImages.card_templates
+            arrayPreloadImages.forEach((element) => {
+                imagePreloadManifest.push({ src: "card_templates/" + element + ".png", id: "card_templates." + element })
+            });
+            //console.log(imagePreloadManifest);
+        */
 
     /*    
         imageManifest = [{
@@ -493,7 +530,7 @@ function imagesPreloaded(event) {
         //console.log(globalFontLoader)
         //console.log(globalImageLoader)
     globalStartingHand.forEach((element, index) => {
-        console.log(element, index)
+        //console.log(element, index)
         drawCard(20 + index * 170, 50, element)
     });
     stage.update()
