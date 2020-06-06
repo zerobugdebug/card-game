@@ -5,7 +5,7 @@ var globalContainerGameField
 var globalCardsArray
 
 
-const defaultCardScale = 0.8
+//const defaultCardScale = 0.8
 const cardDrawingDefaults = {
     template: {
         width: 300,
@@ -65,17 +65,100 @@ const cardDrawingDefaults = {
     }
 }
 
+var imageMini = {
+    scale: 0.5,
+    template: {
+        width: 300,
+        height: 420
+    },
+    character: {
+        width: 256,
+        height: 256,
+        x: 22,
+        y: 34
+    },
+    dimension: {
+        width: 40,
+        height: 40,
+        x: 251,
+        y: 262
+    },
+    speed: {
+        x: 33,
+        y: 34,
+        font: "32px canadian"
+    },
+    power: {
+        x: 36,
+        y: 385,
+        font: "32px canadian"
+    },
+    defense: {
+        x: 268,
+        y: 385,
+        font: "32px canadian"
+    },
+    name: {
+        x: 150,
+        y: 288,
+        font: "22px Georgia"
+    },
+    description: {
+        x: 30,
+        y: 330,
+        font: "22px Arial"
+    },
+    primaryAbility: {
+        x: 150,
+        y: 375,
+        font: "18px Arial"
+    },
+    secondaryAbility: {
+        x: 150,
+        y: 398,
+        font: "18px Arial"
+    },
+    topbar: {
+        x: 150,
+        y: 34,
+        font: "18px Georgia"
+    }
+}
+
+var text = {
+
+}
+
+
+var miniImage = [
+    { type: "text", x: 0, y: 0, font: "", align: "", baseline: "", name: "" },
+    { type: "bitmap", x: 0, y: 0, image: "", width: 0, height: 0, name: "" }
+]
+
+/* bitmapCharacter = new createjs.Bitmap(globalImageLoader.getResult("characters." + cardJSON.imageId));
+//console.log(bitmapCharacter)
+containerCard.addChild(bitmapCharacter);
+
+bitmapCharacter.x = cardDrawingDefaults.character.x;
+bitmapCharacter.y = cardDrawingDefaults.character.y;
+
+bitmapCharacter.scale = bitmapCharacter.originalScale = 1;
+ */
+
+
+
 var ability = {
     name: "",
     power: 0,
     turn: 0,
     speed: 0,
     defense: 0,
-    strike: 0
+    strike: 0,
+    description: "",
+    tooltip: ""
 }
 
 var primaryAbility = secondaryAbility = ability
-
 
 var card = {
     imageId: "",
@@ -83,11 +166,19 @@ var card = {
     power: 0,
     defense: 0,
     speed: 0,
+    energy: 0,
     dimension: "",
     rarity: "",
     primaryAbility,
     secondaryAbility,
-    description: ""
+    description: "",
+    graphics: {
+        containerMini: "",
+        containerFull: ""
+            //imageMini,
+            //imageFull
+    },
+    json: ""
 }
 
 
@@ -116,6 +207,10 @@ function textWithOutline(id, x, y, text, font, color, container) {
 
 function drawCard(cardX, cardY, cardJSON) {
     console.log(card)
+        //entries = Object.entries(card)
+        //console.log(entries)
+        //console.log(entries[8])
+        //console.log(entries[8][1].description)
 
     var containerCard = new createjs.Container();
     //            containerCard.width = templateCard.width;
@@ -268,6 +363,8 @@ function drawCard(cardX, cardY, cardJSON) {
     stage.addChild(containerCard);
     containerCard.cache(-50, -50, cardDrawingDefaults.template.width + 50, cardDrawingDefaults.template.height + 50)
     createjs.Ticker.framerate = 30;
+    console.log(containerCard.toJSON())
+
     return containerCard
 }
 
