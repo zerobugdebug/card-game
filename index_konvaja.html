@@ -1,0 +1,118 @@
+<html>
+  <head>
+    <script src="https://unpkg.com/konva@6.0.0/konva.min.js"></script>
+    <meta charset="utf-8" />
+    <title>Konva Text Demo</title>
+    <style>
+      body {
+        margin: 0;
+        padding: 0;
+        overflow: hidden;
+        background-color: #f0f0f0;
+      }
+        #container {
+            border: 2px solid black;
+        }
+    </style>
+  </head>
+  <body>
+    <div id="container"></div>
+    <script>
+      var stage = new Konva.Stage({
+        container: 'container',
+        width: 1500,
+        height: 800,
+      });
+
+      var layer = new Konva.Layer();
+
+      var simpleText = new Konva.Text({
+        x: stage.width() / 2,
+        y: 50,
+        text: 'Simple Text 2364897123648',
+        fontSize: 72,
+        fontFamily: 'canadian',
+        fill: 'white',
+stroke:'black',
+strokeWidth:1
+      });
+
+      // to align text in the middle of the screen, we can set the
+      // shape offset to the center of the text shape after instantiating it
+      simpleText.offsetX(simpleText.width() / 2);
+
+      // since this text is inside of a defined area, we can center it using
+      // align: 'center'
+      var complexText = new Konva.Text({
+        x: 20,
+        y: 160,
+        text:
+          "COMPLEX TEXT\n\nAll the world's a stage, and all the men and women merely players. They have their exits and their entrances.",
+        fontSize: 18,
+        fontFamily: 'Calibri',
+        fill: '#555',
+        width: 300,
+        padding: 20,
+        align: 'center',
+      });
+
+      var rect = new Konva.Rect({
+        x: 20,
+        y: 60,
+        stroke: '#555',
+        strokeWidth: 5,
+        fill: '#ddd',
+        width: 300,
+        height: complexText.height(),
+        shadowColor: 'black',
+        shadowBlur: 10,
+        shadowOffsetX: 10,
+        shadowOffsetY: 10,
+        shadowOpacity: 0.2,
+        cornerRadius: 10,
+      });
+
+
+
+var group = new Konva.Group({
+        x: 120,
+        y: 40,
+        rotation: 20,
+      });
+group.add(simpleText);
+group.add(rect);
+group.add(complexText);
+
+
+
+      Konva.Image.fromURL('/images/characters/askwoo.png', function (darthNode) {
+        darthNode.setAttrs({
+          x: 200,
+          y: 50,
+          scaleX: 1,
+          scaleY: 1,
+        });
+        group.add(darthNode);
+      });
+
+
+
+
+      // add the shapes to the layer
+//      layer.add(simpleText);
+//      layer.add(rect);
+  //    layer.add(complexText);
+console.log(group.toJSON());
+console.log(group);
+var group2 = Konva.Node.create(group.toJSON(), 'container');
+layer.add(group2);
+console.log(group2);
+
+      // add the layer to the stage
+      stage.add(layer);
+
+
+
+     </script>
+  </body>
+</html>
