@@ -653,10 +653,24 @@ function selectCard(event) {
 
     //stage.addChild(containerSelectedCard);
     //console.log(containerSelectedCard.getBounds())
+    //console.log(pxLoader.resources["buttons.increase"])
+    //console.log(px.utils.TextureCache)
+    var buttonIncreaseOut = new px.Sprite(pxLoader.resources["buttons.increase"].spritesheet.textures["out"]);
+    //var buttonIncreaseOut =  px.utils.TextureCache["out"];
+    var buttonIncreaseOver = new px.Sprite(pxLoader.resources["buttons.increase"].spritesheet.textures["over"]);
+    var buttonIncreaseDown = new px.Sprite(pxLoader.resources["buttons.increase"].spritesheet.textures["down"]);
 
+    //console.log(buttonIncreaseOut)
+    //var button = new px.Sprite(buttonIncreaseOut);
+    buttonIncreaseOut.buttonMode = true;
 
+    buttonIncreaseOut.anchor.set(0.5);
 
+    buttonIncreaseOut.position.x = 20;
+    buttonIncreaseOut.position.y = 450;
+    buttonIncreaseOut.interactive = true;
 
+    containerSelectedCard.addChild(buttonIncreaseOut)
     containerSelectedCard.on("click", deselectCard)
         /* 
             containerSelectedCard.on("pointerover", e => {
@@ -754,7 +768,8 @@ function fontsPreloaded() {
     //createjs.Ticker.addEventListener("tick", handleTick);
     console.log("Preloading images...");
     let imagePreloadManifest = []
-    buttonsPreloadManifest = [{ url: "images/ui/increase_button_anim.png", name: "buttons.increase.anim" }, { url: "images/ui/decrease_button_anim.png", name: "buttons.decrease.anim" }];
+        //buttonsPreloadManifest = [{ url: "images/ui/increase_button_anim.png", name: "buttons.increase.anim" }, { url: "images/ui/decrease_button_anim.png", name: "buttons.decrease.anim" }];
+    buttonsPreloadManifest = [{ url: "images/ui/increase_button.json", name: "buttons.increase" }, { url: "images/ui/decrease_button.json", name: "buttons.decrease" }];
     imagePreloadManifest = imagePreloadManifest.concat(
         globalPreloadImages.characters.map(element => ({ url: "images/characters/" + element + ".full.png", name: "characters." + element + ".full" })),
         globalPreloadImages.characters.map(element => ({ url: "images/characters/" + element + ".mini.png", name: "characters." + element + ".mini" })),
