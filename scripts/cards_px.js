@@ -135,31 +135,26 @@ var text = {
 
 
 var fullImage = {
-    character: { type: "sprite", x: 22, y: 34, texture: "characters.aaaaaa", width: 256, height: 256 },
-    template: { type: "sprite", x: 0, y: 0, texture: "card_templates.common", width: 300, height: 420 },
-    dimension: { type: "sprite", x: 251, y: 262, texture: "dimensions.alphar", width: 40, height: 40 },
+    character: { type: "sprite", position: { x: 22, y: 34 }, texture: "characters.aaaaaa.full", width: 256, height: 256 },
+    template: { type: "sprite", position: { x: 0, y: 0 }, texture: "card_templates.common.full", width: 300, height: 420 },
+    dimension: { type: "sprite", position: { x: 251, y: 262 }, texture: "dimensions.alphar.full", width: 40, height: 40 },
     speed: {
         type: "text",
-        position: {
-            x: 32,
-            y: 25
-        },
-        style: {
-            fontFamily: "canadian",
-            fontWeight: "bold",
-            fontSize: 32,
-            align: "center",
-            textBaseline: "middle",
-            fill: "white",
-            stroke: "black",
-            strokeThickness: 5
-        }
+        text: "5",
+        position: { x: 32, y: 25 },
+        anchor: { x: 0.5, y: 0.5 },
+        style: { fontFamily: "canadian", fontWeight: "bold", fontSize: 32, align: "center", textBaseline: "middle", fill: "white", stroke: "black", strokeThickness: 5 }
     },
     power: {
         type: "text",
+        text: "5",
         position: {
             x: 35,
             y: 374
+        },
+        anchor: {
+            x: 0.5,
+            y: 0.5
         },
         style: {
             fontFamily: "canadian",
@@ -174,9 +169,14 @@ var fullImage = {
     },
     defense: {
         type: "text",
+        text: "5",
         position: {
             x: 267,
             y: 374
+        },
+        anchor: {
+            x: 0.5,
+            y: 0.5
         },
         style: {
             fontFamily: "canadian",
@@ -191,9 +191,14 @@ var fullImage = {
     },
     name: {
         type: "text",
+        text: "Jane",
         position: {
             x: 152,
             y: 280
+        },
+        anchor: {
+            x: 0.5,
+            y: 0.5
         },
         style: {
             fontFamily: "Georgia",
@@ -202,14 +207,18 @@ var fullImage = {
             textBaseline: "middle",
             fill: "white",
             padding: 10
-
         }
     },
     description: {
         type: "text",
+        text: "Hi! My name is Jane",
         position: {
             x: 152,
             y: 328
+        },
+        anchor: {
+            x: 0.5,
+            y: 0.5
         },
         style: {
             fontFamily: "Arial",
@@ -218,30 +227,18 @@ var fullImage = {
             textBaseline: "middle",
             fill: "white",
             padding: 10
-
         }
     },
     primary: {
         type: "text",
+        text: "primary",
         position: {
             x: 154,
             y: 366
         },
-        style: {
-            fontFamily: "Arial",
-            fontSize: 18,
-            align: "center",
-            textBaseline: "middle",
-            fill: "white",
-            padding: 10
-
-        }
-    },
-    secondary: {
-        type: "text",
-        position: {
-            x: 154,
-            y: 388
+        anchor: {
+            x: 0.5,
+            y: 0.5
         },
         style: {
             fontFamily: "Arial",
@@ -250,17 +247,37 @@ var fullImage = {
             textBaseline: "middle",
             fill: "white",
             padding: 10
-
+        }
+    },
+    secondary: {
+        type: "text",
+        text: "secondary",
+        position: {
+            x: 154,
+            y: 388
+        },
+        anchor: {
+            x: 0.5,
+            y: 0.5
+        },
+        style: {
+            fontFamily: "Arial",
+            fontSize: 18,
+            align: "center",
+            textBaseline: "middle",
+            fill: "white",
+            padding: 10
         }
     }
 }
+
 
 var miniImage = {
     character: {
         type: "sprite",
         position: {
-            x: 17,
-            y: 59
+            x: 10,
+            y: 10
         },
         texture: "characters.aaaabb",
         width: 256,
@@ -273,8 +290,8 @@ var miniImage = {
             y: 0
         },
         texture: "card_templates.common",
-        width: 300,
-        height: 420
+        width: 200,
+        height: 280
     },
     dimension: {
         type: "sprite",
@@ -374,27 +391,6 @@ var miniImage = {
             textBaseline: "middle",
             fill: "white",
             padding: 10
-        }
-    },
-    description: {
-        text: "Hello, my name is Jane!",
-        type: "text",
-        position: {
-            x: 152,
-            y: 328
-        },
-        anchor: {
-            x: 0.5,
-            y: 0.5
-        },
-        style: {
-            fontFamily: "Arial",
-            fontSize: 22,
-            align: "left",
-            textBaseline: "middle",
-            fill: "white",
-            padding: 10
-
         }
     },
     primary: {
@@ -497,7 +493,7 @@ function drawComplexObject(container, complexObject) {
         //console.log(element, " - ", index)
         switch (element[1].type) {
             case "sprite":
-                console.log("sprite:", element[1])
+                //console.log("sprite:", element[1])
                 let sprite = new px.Sprite(pxLoader.resources[element[1].texture].texture);
                 sprite.position = element[1].position
                 sprite.name = element[0]
@@ -505,13 +501,13 @@ function drawComplexObject(container, complexObject) {
                 //createDragAndDropFor(sprite)
                 break;
             case "text":
-                console.log("text:", element[1])
+                //console.log("text:", element[1])
                 let text = new px.Text(element[1].text, element[1].style);
                 text.anchor = element[1].anchor
                 text.position = element[1].position;
                 text.name = element[0]
                 container.addChild(text);
-                createDragAndDropFor(text)
+                //createDragAndDropFor(text)
                 break;
             case "default":
                 console.log("UNKNOWN:", element[1])
@@ -542,6 +538,32 @@ function createDragAndDropFor(target) {
 
 
 function drawCard(cardX, cardY, cardJSON) {
+
+    let containerCard = new px.Container();
+    let cardImage = miniImage
+    cardImage.character.texture = "characters." + cardJSON.imageId + ".mini"
+    cardImage.template.texture = "card_templates." + cardJSON.rarity + ".mini"
+    cardImage.dimension.texture = "dimensions." + cardJSON.dimension + ".mini"
+    cardImage.name.text = cardJSON.name
+    cardImage.speed.text = cardJSON.speed
+    cardImage.power.text = cardJSON.power
+    cardImage.defense.text = cardJSON.defense
+    cardImage.primary.text = cardJSON.primaryAbility
+    cardImage.secondary.text = cardJSON.secondaryAbility
+    containerCard = drawComplexObject(containerCard, cardImage)
+
+    containerCard.x = cardX
+    containerCard.y = cardY
+    containerCard.cardJSON = cardJSON
+    containerCard.interactive = true
+    containerCard.cursor = "pointer"
+    containerCard.on("click", selectCard)
+
+    globalPXApp.stage.addChild(containerCard);
+    return containerCard
+}
+
+function drawSelectedCard(cardX, cardY, cardJSON) {
     //console.log(card)
     //entries = Object.entries(card)
     //console.log(entries)
@@ -549,10 +571,10 @@ function drawCard(cardX, cardY, cardJSON) {
     //console.log(entries[8][1].description)
 
     let containerCard = new px.Container();
-    let cardImage = miniImage
-    cardImage.character.texture = "characters." + cardJSON.imageId
-    cardImage.template.texture = "card_templates." + cardJSON.rarity
-    cardImage.dimension.texture = "dimensions." + cardJSON.dimension
+    let cardImage = fullImage
+    cardImage.character.texture = "characters." + cardJSON.imageId + ".full"
+    cardImage.template.texture = "card_templates." + cardJSON.rarity + ".full"
+    cardImage.dimension.texture = "dimensions." + cardJSON.dimension + ".full"
     cardImage.name.text = cardJSON.name
     cardImage.speed.text = cardJSON.speed
     cardImage.power.text = cardJSON.power
@@ -560,7 +582,7 @@ function drawCard(cardX, cardY, cardJSON) {
     cardImage.description.text = cardJSON.description
     cardImage.primary.text = cardJSON.primaryAbility
     cardImage.secondary.text = cardJSON.secondaryAbility
-    containerCard = drawComplexObject(containerCard, miniImage)
+    containerCard = drawComplexObject(containerCard, cardImage)
         //console.log(pxLoader.resources)
         //console.log(pxLoader.resources["ojjkjk." + cardJSON.imageId])
         //console.log(pxLoader.resources["bjkbmn." + cardJSON.imageId].texture)
@@ -577,8 +599,8 @@ function drawCard(cardX, cardY, cardJSON) {
     //containerCard.scale.y = 0.5
 
 
-    containerCard.interactive = false
-        //containerCard.on("click", selectCard)
+    containerCard.interactive = true
+    containerCard.on("click", selectCard)
 
     globalPXApp.stage.addChild(containerCard);
 
@@ -609,22 +631,23 @@ function selectCard(event) {
     console.log("Card selected")
         //console.log(event)
         //console.log(this)
-        //console.log(this.parent)
-    if (stage.getChildByName("selectedCard")) {
+        // console.log(this)
+
+
+    if (globalPXApp.stage.getChildByName("selectedCard")) {
         console.log("already selected")
-        stage.removeChild(stage.getChildByName("selectedCard"))
+        globalPXApp.stage.removeChild(globalPXApp.stage.getChildByName("selectedCard"))
     }
-    containerSelectedCard = drawCard(285, 100, this.parent.cardJSON)
-    containerSelectedCard.scale = 1
+    containerSelectedCard = drawSelectedCard(350, 100, this.cardJSON)
     containerSelectedCard.name = "selectedCard"
         //console.log(containerSelectedCard.getBounds())
-    stage.removeChild(stage.getChildByName("selectedCard"))
-    containerSelectedCard.uncache()
+        //stage.removeChild(stage.getChildByName("selectedCard"))
+        //containerSelectedCard.uncache()
         //console.log(stage)
         //console.log(containerSelectedCard)
-    cardHitArea = containerSelectedCard.getChildByName("cardHitArea")
+        //cardHitArea = containerSelectedCard.getChildByName("cardHitArea")
         //console.log(cardHitArea)
-    cardHitArea.removeAllEventListeners()
+        //cardHitArea.removeAllEventListeners()
 
     //containerSelectedCard.removeChildAt(2)
 
@@ -651,93 +674,97 @@ function selectCard(event) {
         containerSelectedCard.addChild(bitmapDecrease);
         //console.log(bitmapDecrease) */
 
-    buttonDecreaseData = {
-        images: [globalImageLoader.getResult("buttons.decrease.anim")],
-        frames: { width: 30, height: 30 },
-        animations: {
-            out: 0,
-            over: 1,
-            down: 2
+
+    //-----------------------BUTTONS--------------------------
+    /*     buttonDecreaseData = {
+            images: [globalImageLoader.getResult("buttons.decrease.anim")],
+            frames: { width: 30, height: 30 },
+            animations: {
+                out: 0,
+                over: 1,
+                down: 2
+            }
         }
-    }
-    spritesheetButtonDecrease = new createjs.SpriteSheet(buttonDecreaseData);
+        spritesheetButtonDecrease = new createjs.SpriteSheet(buttonDecreaseData);
 
-    buttonIncreaseData = {
-        images: [globalImageLoader.getResult("buttons.increase.anim")],
-        frames: { width: 30, height: 30 },
-        animations: {
-            out: 0,
-            over: 1,
-            down: 2
+        buttonIncreaseData = {
+            images: [globalImageLoader.getResult("buttons.increase.anim")],
+            frames: { width: 30, height: 30 },
+            animations: {
+                out: 0,
+                over: 1,
+                down: 2
+            }
         }
-    }
-    spritesheetButtonIncrease = new createjs.SpriteSheet(buttonIncreaseData);
+        spritesheetButtonIncrease = new createjs.SpriteSheet(buttonIncreaseData);
 
-    buttonSpeedIncrease = new createjs.Sprite(spritesheetButtonIncrease);
-    buttonHelperSpeedIncrease = new createjs.ButtonHelper(buttonSpeedIncrease);
-    buttonSpeedIncrease.x = cardDrawingDefaults.speed.x - 15;
-    buttonSpeedIncrease.y = cardDrawingDefaults.speed.y - 50;
-    buttonSpeedIncrease.on("click", buttonSpeedIncreaseClick)
-    containerSelectedCard.addChild(buttonSpeedIncrease)
+        buttonSpeedIncrease = new createjs.Sprite(spritesheetButtonIncrease);
+        buttonHelperSpeedIncrease = new createjs.ButtonHelper(buttonSpeedIncrease);
+        buttonSpeedIncrease.x = cardDrawingDefaults.speed.x - 15;
+        buttonSpeedIncrease.y = cardDrawingDefaults.speed.y - 50;
+        buttonSpeedIncrease.on("click", buttonSpeedIncreaseClick)
+        containerSelectedCard.addChild(buttonSpeedIncrease)
 
-    buttonPowerIncrease = new createjs.Sprite(spritesheetButtonIncrease);
-    buttonHelperPowerIncrease = new createjs.ButtonHelper(buttonPowerIncrease);
-    buttonPowerIncrease.x = cardDrawingDefaults.power.x - 15;
-    buttonPowerIncrease.y = cardDrawingDefaults.power.y - 50;
-    buttonPowerIncrease.on("click", buttonPowerIncreaseClick)
-    containerSelectedCard.addChild(buttonPowerIncrease)
+        buttonPowerIncrease = new createjs.Sprite(spritesheetButtonIncrease);
+        buttonHelperPowerIncrease = new createjs.ButtonHelper(buttonPowerIncrease);
+        buttonPowerIncrease.x = cardDrawingDefaults.power.x - 15;
+        buttonPowerIncrease.y = cardDrawingDefaults.power.y - 50;
+        buttonPowerIncrease.on("click", buttonPowerIncreaseClick)
+        containerSelectedCard.addChild(buttonPowerIncrease)
 
-    buttonDefenseIncrease = new createjs.Sprite(spritesheetButtonIncrease);
-    buttonHelperDefenseIncrease = new createjs.ButtonHelper(buttonDefenseIncrease);
-    buttonDefenseIncrease.x = cardDrawingDefaults.defense.x - 15;
-    buttonDefenseIncrease.y = cardDrawingDefaults.defense.y - 50;
-    buttonDefenseIncrease.on("click", buttonDefenseIncreaseClick)
-    containerSelectedCard.addChild(buttonDefenseIncrease)
+        buttonDefenseIncrease = new createjs.Sprite(spritesheetButtonIncrease);
+        buttonHelperDefenseIncrease = new createjs.ButtonHelper(buttonDefenseIncrease);
+        buttonDefenseIncrease.x = cardDrawingDefaults.defense.x - 15;
+        buttonDefenseIncrease.y = cardDrawingDefaults.defense.y - 50;
+        buttonDefenseIncrease.on("click", buttonDefenseIncreaseClick)
+        containerSelectedCard.addChild(buttonDefenseIncrease)
 
-    buttonSpeedDecrease = new createjs.Sprite(spritesheetButtonDecrease);
-    buttonHelperSpeedDecrease = new createjs.ButtonHelper(buttonSpeedDecrease);
-    buttonSpeedDecrease.x = cardDrawingDefaults.speed.x - 15;
-    buttonSpeedDecrease.y = cardDrawingDefaults.speed.y + 15;
-    buttonSpeedDecrease.on("click", buttonSpeedDecreaseClick)
-    containerSelectedCard.addChild(buttonSpeedDecrease)
+        buttonSpeedDecrease = new createjs.Sprite(spritesheetButtonDecrease);
+        buttonHelperSpeedDecrease = new createjs.ButtonHelper(buttonSpeedDecrease);
+        buttonSpeedDecrease.x = cardDrawingDefaults.speed.x - 15;
+        buttonSpeedDecrease.y = cardDrawingDefaults.speed.y + 15;
+        buttonSpeedDecrease.on("click", buttonSpeedDecreaseClick)
+        containerSelectedCard.addChild(buttonSpeedDecrease)
 
-    buttonPowerDecrease = new createjs.Sprite(spritesheetButtonDecrease);
-    buttonHelperPowerDecrease = new createjs.ButtonHelper(buttonPowerDecrease);
-    buttonPowerDecrease.x = cardDrawingDefaults.power.x - 15;
-    buttonPowerDecrease.y = cardDrawingDefaults.power.y + 15;
-    buttonPowerDecrease.on("click", buttonPowerDecreaseClick)
-    containerSelectedCard.addChild(buttonPowerDecrease)
+        buttonPowerDecrease = new createjs.Sprite(spritesheetButtonDecrease);
+        buttonHelperPowerDecrease = new createjs.ButtonHelper(buttonPowerDecrease);
+        buttonPowerDecrease.x = cardDrawingDefaults.power.x - 15;
+        buttonPowerDecrease.y = cardDrawingDefaults.power.y + 15;
+        buttonPowerDecrease.on("click", buttonPowerDecreaseClick)
+        containerSelectedCard.addChild(buttonPowerDecrease)
 
-    buttonDefenseDecrease = new createjs.Sprite(spritesheetButtonDecrease);
-    buttonHelperDefenseDecrease = new createjs.ButtonHelper(buttonDefenseDecrease);
-    buttonDefenseDecrease.x = cardDrawingDefaults.defense.x - 15;
-    buttonDefenseDecrease.y = cardDrawingDefaults.defense.y + 15;
-    buttonDefenseDecrease.on("click", buttonDefenseDecreaseClick)
-    containerSelectedCard.addChild(buttonDefenseDecrease)
+        buttonDefenseDecrease = new createjs.Sprite(spritesheetButtonDecrease);
+        buttonHelperDefenseDecrease = new createjs.ButtonHelper(buttonDefenseDecrease);
+        buttonDefenseDecrease.x = cardDrawingDefaults.defense.x - 15;
+        buttonDefenseDecrease.y = cardDrawingDefaults.defense.y + 15;
+        buttonDefenseDecrease.on("click", buttonDefenseDecreaseClick)
+        containerSelectedCard.addChild(buttonDefenseDecrease)
+     */
+    //-----------------------BUTTONS--------------------------
 
-    boundsContainerSelectedCard = containerSelectedCard.getBounds()
-        //console.log(boundsContainerSelectedCard)
+    //boundsContainerSelectedCard = containerSelectedCard.getBounds()
+    //console.log(boundsContainerSelectedCard)
 
     // containerSelectedCard.cache(boundsContainerSelectedCard.x, boundsContainerSelectedCard.y, boundsContainerSelectedCard.width, boundsContainerSelectedCard.height)
 
-    stage.addChild(containerSelectedCard);
+    //stage.addChild(containerSelectedCard);
     //console.log(containerSelectedCard.getBounds())
 
 
 
 
-    cardHitArea.on("click", deselectCard)
+    containerSelectedCard.on("click", deselectCard)
 
-    cardHitArea.on("rollover", e => {
-        console.log("rollover")
-        stage.canvas.title = '<h1>TOOLTIP</h1>';
+    containerSelectedCard.on("pointerover", e => {
+        console.log("pointerover")
+        globalPXApp.stage.canvas.title = '<h1>TOOLTIP</h1>';
     })
 
-    cardHitArea.on("rollout", e => {
-        console.log("rollout")
-        stage.canvas.title = '';
-    })
-    stage.update()
+    containerSelectedCard.on("pointerout", e => {
+            console.log("pointerout")
+            globalPXApp.stage.canvas.title = '';
+        })
+        // stage.update()
 }
 
 
@@ -813,7 +840,7 @@ function resourcesPreloaded(event) {
         //console.log(globalImageLoader)
     globalStartingHand.forEach((element, index) => {
         //console.log(element, index)
-        drawCard(20 + index * 300, 50, element)
+        drawCard(20 + index * 220, 50, element)
     });
     //stage.update()
 }
@@ -824,9 +851,12 @@ function fontsPreloaded() {
     let imagePreloadManifest = []
     buttonsPreloadManifest = [{ url: "images/ui/increase_button_anim.png", name: "buttons.increase.anim" }, { url: "images/ui/decrease_button_anim.png", name: "buttons.decrease.anim" }];
     imagePreloadManifest = imagePreloadManifest.concat(
-        globalPreloadImages.characters.map(element => ({ url: "images/characters/" + element + ".png", name: "characters." + element })),
-        globalPreloadImages.dimensions.map(element => ({ url: "images/dimensions/" + element + ".png", name: "dimensions." + element })),
-        globalPreloadImages.card_templates.map(element => ({ url: "images/card_templates/" + element + ".png", name: "card_templates." + element })),
+        globalPreloadImages.characters.map(element => ({ url: "images/characters/" + element + ".full.png", name: "characters." + element + ".full" })),
+        globalPreloadImages.characters.map(element => ({ url: "images/characters/" + element + ".mini.png", name: "characters." + element + ".mini" })),
+        globalPreloadImages.dimensions.map(element => ({ url: "images/dimensions/" + element + ".full.png", name: "dimensions." + element + ".full" })),
+        globalPreloadImages.dimensions.map(element => ({ url: "images/dimensions/" + element + ".mini.png", name: "dimensions." + element + ".mini" })),
+        globalPreloadImages.card_templates.map(element => ({ url: "images/card_templates/" + element + ".full.png", name: "card_templates." + element + ".full" })),
+        globalPreloadImages.card_templates.map(element => ({ url: "images/card_templates/" + element + ".mini.png", name: "card_templates." + element + ".mini" })),
         buttonsPreloadManifest
     )
 
