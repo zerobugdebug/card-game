@@ -8,139 +8,14 @@ var globalStartingHand
 var globalContainerGameField
 var globalCardsArray
 
-
-//const defaultCardScale = 0.8
-const cardDrawingDefaults = {
-    template: {
-        width: 300,
-        height: 420
-    },
-    character: {
-        width: 256,
-        height: 256,
-        x: 22,
-        y: 34
-    },
-    dimension: {
-        width: 40,
-        height: 40,
-        x: 251,
-        y: 262
-    },
-    speed: {
-        x: 33,
-        y: 34,
-        font: "32px canadian"
-    },
-    power: {
-        x: 36,
-        y: 385,
-        font: "32px canadian"
-    },
-    defense: {
-        x: 268,
-        y: 385,
-        font: "32px canadian"
-    },
-    name: {
-        x: 150,
-        y: 288,
-        font: "22px Georgia"
-    },
-    description: {
-        x: 30,
-        y: 330,
-        font: "22px Arial"
-    },
-    primaryAbility: {
-        x: 150,
-        y: 375,
-        font: "18px Arial"
-    },
-    secondaryAbility: {
-        x: 150,
-        y: 398,
-        font: "18px Arial"
-    },
-    topbar: {
-        x: 150,
-        y: 34,
-        font: "18px Georgia"
-    }
-}
-
-var imageMini = {
-    scale: 0.5,
-    template: {
-        width: 300,
-        height: 420
-    },
-    character: {
-        width: 256,
-        height: 256,
-        x: 22,
-        y: 34
-    },
-    dimension: {
-        width: 40,
-        height: 40,
-        x: 251,
-        y: 262
-    },
-    speed: {
-        x: 33,
-        y: 34,
-        font: "32px canadian"
-    },
-    power: {
-        x: 36,
-        y: 385,
-        font: "32px canadian"
-    },
-    defense: {
-        x: 268,
-        y: 385,
-        font: "32px canadian"
-    },
-    name: {
-        x: 150,
-        y: 288,
-        font: "22px Georgia"
-    },
-    description: {
-        x: 30,
-        y: 330,
-        font: "22px Arial"
-    },
-    primaryAbility: {
-        x: 150,
-        y: 375,
-        font: "18px Arial"
-    },
-    secondaryAbility: {
-        x: 150,
-        y: 398,
-        font: "18px Arial"
-    },
-    topbar: {
-        x: 150,
-        y: 34,
-        font: "18px Georgia"
-    }
-}
-
-var text = {
-
-}
-
-
 var fullImage = {
     character: { type: "sprite", position: { x: 22, y: 34 }, texture: "characters.aaaaaa.full", width: 256, height: 256 },
     template: { type: "sprite", position: { x: 0, y: 0 }, texture: "card_templates.common.full", width: 300, height: 420 },
-    dimension: { type: "sprite", position: { x: 251, y: 262 }, texture: "dimensions.alphar.full", width: 40, height: 40 },
+    dimension: { type: "sprite", position: { x: 251, y: 262 }, texture: "dimensions.alphar.full", tooltip: "Alphar", width: 40, height: 40 },
     speed: {
         type: "text",
         text: "5",
+        tooltip: "Speed of the card",
         position: { x: 32, y: 25 },
         anchor: { x: 0.5, y: 0.5 },
         style: { fontFamily: "canadian", fontWeight: "bold", fontSize: 32, align: "center", textBaseline: "middle", fill: "white", stroke: "black", strokeThickness: 5 }
@@ -148,6 +23,7 @@ var fullImage = {
     power: {
         type: "text",
         text: "5",
+        tooltip: "Power of the card",
         position: {
             x: 35,
             y: 374
@@ -170,6 +46,7 @@ var fullImage = {
     defense: {
         type: "text",
         text: "5",
+        tooltip: "Defense of the card",
         position: {
             x: 267,
             y: 374
@@ -192,6 +69,7 @@ var fullImage = {
     name: {
         type: "text",
         text: "Jane",
+        tooltip: "Name of the card",
         position: {
             x: 152,
             y: 280
@@ -212,6 +90,7 @@ var fullImage = {
     description: {
         type: "text",
         text: "Hi! My name is Jane",
+        tooltip: "Card slogan",
         position: {
             x: 152,
             y: 328
@@ -232,6 +111,7 @@ var fullImage = {
     primary: {
         type: "text",
         text: "primary",
+        tooltip: "Primary ability",
         position: {
             x: 154,
             y: 366
@@ -252,6 +132,7 @@ var fullImage = {
     secondary: {
         type: "text",
         text: "secondary",
+        tooltip: "Secondary ability",
         position: {
             x: 154,
             y: 388
@@ -498,6 +379,18 @@ function drawComplexObject(container, complexObject) {
                 sprite.position = element[1].position
                 sprite.name = element[0]
                 container.addChild(sprite);
+                if (element[1].tooltip) {
+                    sprite.interactive = true
+                    sprite.on("pointerover", e => {
+                        console.log("pointerover")
+                        globalPXApp.view.title = element[1].tooltip;
+                    })
+
+                    sprite.on("pointerout", e => {
+                        console.log("pointerout")
+                        globalPXApp.view.title = '';
+                    })
+                }
                 //createDragAndDropFor(sprite)
                 break;
             case "text":
@@ -507,7 +400,18 @@ function drawComplexObject(container, complexObject) {
                 text.position = element[1].position;
                 text.name = element[0]
                 container.addChild(text);
-                //createDragAndDropFor(text)
+                if (element[1].tooltip) {
+                    text.interactive = true
+                    text.on("pointerover", e => {
+                        console.log("pointerover")
+                        globalPXApp.view.title = element[1].tooltip;
+                    })
+
+                    text.on("pointerout", e => {
+                        console.log("pointerout")
+                        globalPXApp.view.title = '';
+                    })
+                } //createDragAndDropFor(text)
                 break;
             case "default":
                 console.log("UNKNOWN:", element[1])
@@ -754,17 +658,18 @@ function selectCard(event) {
 
 
     containerSelectedCard.on("click", deselectCard)
+        /* 
+            containerSelectedCard.on("pointerover", e => {
+                console.log("pointerover")
+                globalPXApp.view.title = '<h1>TOOLTIP</h1>';
+            })
 
-    containerSelectedCard.on("pointerover", e => {
-        console.log("pointerover")
-        globalPXApp.stage.canvas.title = '<h1>TOOLTIP</h1>';
-    })
-
-    containerSelectedCard.on("pointerout", e => {
-            console.log("pointerout")
-            globalPXApp.stage.canvas.title = '';
-        })
-        // stage.update()
+            containerSelectedCard.on("pointerout", e => {
+                    console.log("pointerout")
+                    globalPXApp.view.title = '';
+                })
+                // stage.update()
+                */
 }
 
 
