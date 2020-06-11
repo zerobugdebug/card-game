@@ -110,9 +110,9 @@ var fullImage = {
         textures: { out: "down_arrow_out", over: "down_arrow_over", down: "down_arrow_down" },
         tooltip: "Decrease defense.\nEvery 1 point of speed will give back 3 points of energy"
     },
-    energy_point_speed: { type: "sprite_array", count: 15, position: { x: 10, y: -20 }, delta: { x: 16, y: 0 }, texture: "energy_point" },
-    energy_point_power: { type: "sprite_array", count: 15, position: { x: 0, y: 400 }, delta: { x: 0, y: -16 }, texture: "energy_point" },
-    energy_point_defense: { type: "sprite_array", count: 15, position: { x: 270, y: 400 }, delta: { x: 0, y: -16 }, texture: "energy_point" }
+    energy_point_speed: { type: "sprite_array", count: 15, position: { x: 0, y: -16 }, delta: { x: 16, y: 0 }, texture: "energy_point" },
+    energy_point_power: { type: "sprite_array", count: 15, position: { x: -16, y: 400 }, delta: { x: 0, y: -16 }, texture: "energy_point" },
+    energy_point_defense: { type: "sprite_array", count: 15, position: { x: 300, y: 400 }, delta: { x: 0, y: -16 }, texture: "energy_point" }
     /*    energy_point_speed1: { type: "sprite", position: { x: 10, y: -20 }, texture: "energy_point" },
        energy_point_speed2: { type: "sprite", position: { x: 30, y: -20 }, texture: "energy_point" },
        energy_point_speed3: { type: "sprite", position: { x: 50, y: -20 }, texture: "energy_point" },
@@ -259,12 +259,12 @@ function drawComplexObject(container, complexObject) {
                 if (element[1].tooltip) {
                     text.interactive = true
                     text.on("pointerover", e => {
-                        console.log("pointerover")
+                        // console.log("pointerover")
                         globalPXApp.view.title = element[1].tooltip;
                     })
 
                     text.on("pointerout", e => {
-                        console.log("pointerout")
+                        //console.log("pointerout")
                         globalPXApp.view.title = "";
                     })
                 } //createDragAndDropFor(text)
@@ -288,41 +288,55 @@ function drawComplexObject(container, complexObject) {
 
                 button.on('mousedown', e => {
                     //e.stopPropagation()
-                    //   e.target.isdown = true;
-                    e.target.texture = buttonTextures.down;
+                    e.currentTarget.texture = buttonTextures.down;
                 })
 
                 button.on('mouseup', e => {
-                    e.target.texture = buttonTextures.over;
+                    e.currentTarget.texture = buttonTextures.over;
                     //e.stopPropagation()
-                    //e.target.isdown = false;
-                    //e.target.texture = buttonTextures[e.target.isOver]; //Switch to [0], if isOver=false or switch to [1] otherwise
                 })
 
                 button.on('mouseout', e => {
                     //e.stopPropagation()
-                    //e.currentTarget.isOver = false;
-                    //if (!e.currentTarget.isdown) {
                     e.currentTarget.texture = buttonTextures.out;
-                    //}
                     if (element[1].tooltip) {
                         globalPXApp.view.title = "";
                     }
                 })
 
                 button.on('mouseover', e => {
-                    //e.target.isOver = true;
-                    //if (!e.target.isdown) {
-                    e.target.texture = buttonTextures.over;
-                    //}
+                    e.currentTarget.texture = buttonTextures.over;
                     if (element[1].tooltip) {
                         globalPXApp.view.title = element[1].tooltip;
                     }
-
-                    //e.target.alpha = 1;
                 })
                 break;
-            case "default":
+            case "sprite_array":
+                console.log("sprite_array:", element[1])
+                let i = 0
+                for (i = 0; i < element[1].count; i++) {
+                    let sprite = new px.Sprite(pxLoader.resources[element[1].texture].texture);
+                    sprite.x = element[1].position.x + element[1].delta.x * i
+                    sprite.y = element[1].position.y + element[1].delta.y * i
+                    sprite.name = element[0] + "_" + i
+                    container.addChild(sprite);
+                    if (element[1].tooltip) {
+                        sprite.interactive = true
+                        sprite.on("pointerover", e => {
+                            //console.log("pointerover")
+                            globalPXApp.view.title = element[1].tooltip;
+                        })
+
+                        sprite.on("pointerout", e => {
+                            //console.log("pointerout")
+                            globalPXApp.view.title = '';
+                        })
+                    }
+
+                }
+                break;
+
+            default:
                 console.log("UNKNOWN:", element[1])
         }
     })
