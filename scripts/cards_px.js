@@ -24,131 +24,91 @@ var fullImage = {
         type: "text",
         text: "5",
         tooltip: "Power of the card",
-        position: {
-            x: 35,
-            y: 374
-        },
-        anchor: {
-            x: 0.5,
-            y: 0.5
-        },
-        style: {
-            fontFamily: "canadian",
-            fontWeight: "bold",
-            fontSize: 32,
-            align: "center",
-            textBaseline: "middle",
-            fill: "white",
-            stroke: "black",
-            strokeThickness: 5
-        }
+        position: { x: 35, y: 374 },
+        anchor: { x: 0.5, y: 0.5 },
+        style: { fontFamily: "canadian", fontWeight: "bold", fontSize: 32, align: "center", textBaseline: "middle", fill: "white", stroke: "black", strokeThickness: 5 }
     },
     defense: {
         type: "text",
         text: "5",
         tooltip: "Defense of the card",
-        position: {
-            x: 267,
-            y: 374
-        },
-        anchor: {
-            x: 0.5,
-            y: 0.5
-        },
-        style: {
-            fontFamily: "canadian",
-            fontWeight: "bold",
-            fontSize: 32,
-            align: "center",
-            textBaseline: "middle",
-            fill: "white",
-            stroke: "black",
-            strokeThickness: 5
-        }
+        position: { x: 267, y: 374 },
+        anchor: { x: 0.5, y: 0.5 },
+        style: { fontFamily: "canadian", fontWeight: "bold", fontSize: 32, align: "center", textBaseline: "middle", fill: "white", stroke: "black", strokeThickness: 5 }
     },
     name: {
         type: "text",
         text: "Jane",
         tooltip: "Name of the card",
-        position: {
-            x: 152,
-            y: 280
-        },
-        anchor: {
-            x: 0.5,
-            y: 0.5
-        },
-        style: {
-            fontFamily: "Georgia",
-            fontSize: 24,
-            align: "center",
-            textBaseline: "middle",
-            fill: "white",
-            padding: 10
-        }
+        position: { x: 152, y: 280 },
+        anchor: { x: 0.5, y: 0.5 },
+        style: { fontFamily: "Georgia", fontSize: 24, align: "center", textBaseline: "middle", fill: "white", padding: 10 }
     },
     description: {
         type: "text",
         text: "Hi! My name is Jane",
         tooltip: "Card slogan",
-        position: {
-            x: 152,
-            y: 328
-        },
-        anchor: {
-            x: 0.5,
-            y: 0.5
-        },
-        style: {
-            fontFamily: "Arial",
-            fontSize: 22,
-            align: "left",
-            textBaseline: "middle",
-            fill: "white",
-            padding: 10
-        }
+        position: { x: 152, y: 328 },
+        anchor: { x: 0.5, y: 0.5 },
+        style: { fontFamily: "Arial", fontSize: 22, align: "left", textBaseline: "middle", fill: "white", padding: 10 }
     },
     primary: {
         type: "text",
         text: "primary",
         tooltip: "Primary ability",
-        position: {
-            x: 154,
-            y: 366
-        },
-        anchor: {
-            x: 0.5,
-            y: 0.5
-        },
-        style: {
-            fontFamily: "Arial",
-            fontSize: 18,
-            align: "center",
-            textBaseline: "middle",
-            fill: "white",
-            padding: 10
-        }
+        position: { x: 154, y: 366 },
+        anchor: { x: 0.5, y: 0.5 },
+        style: { fontFamily: "Arial", fontSize: 18, align: "center", textBaseline: "middle", fill: "white", padding: 10 }
     },
     secondary: {
         type: "text",
         text: "secondary",
         tooltip: "Secondary ability",
-        position: {
-            x: 154,
-            y: 388
-        },
-        anchor: {
-            x: 0.5,
-            y: 0.5
-        },
-        style: {
-            fontFamily: "Arial",
-            fontSize: 18,
-            align: "center",
-            textBaseline: "middle",
-            fill: "white",
-            padding: 10
-        }
+        position: { x: 154, y: 388 },
+        anchor: { x: 0.5, y: 0.5 },
+        style: { fontFamily: "Arial", fontSize: 18, align: "center", textBaseline: "middle", fill: "white", padding: 10 }
+    },
+    power_up: {
+        type: "button",
+        position: { x: 21, y: 346 },
+        resource: "arrow_buttons",
+        textures: { out: "up_arrow_out", over: "up_arrow_over", down: "up_arrow_down" },
+        tooltip: "Increase power.\nEvery point of energy will multiple the power"
+    },
+    defense_up: {
+        type: "button",
+        position: { x: 253, y: 346 },
+        resource: "arrow_buttons",
+        textures: { out: "up_arrow_out", over: "up_arrow_over", down: "up_arrow_down" },
+        tooltip: "Increase defense.\nEvery point of energy will multiple the defense"
+    },
+    speed_up: {
+        type: "button",
+        position: { x: 19, y: -2 },
+        resource: "arrow_buttons",
+        textures: { out: "up_arrow_out", over: "up_arrow_over", down: "up_arrow_down" },
+        tooltip: "Increase defense.\nEvery 3 points of energy will increase speed by 1"
+    },
+    power_down: {
+        type: "button",
+        position: { x: 21, y: 400 },
+        resource: "arrow_buttons",
+        textures: { out: "down_arrow_out", over: "down_arrow_over", down: "down_arrow_down" },
+        tooltip: "Decrease power.\nEvery point of energy will multiple the power"
+    },
+    defense_down: {
+        type: "button",
+        position: { x: 253, y: 400 },
+        resource: "arrow_buttons",
+        textures: { out: "down_arrow_out", over: "down_arrow_over", down: "down_arrow_down" },
+        tooltip: "Decrease defense.\nEvery point of energy will multiple the defense"
+    },
+    speed_down: {
+        type: "button",
+        position: { x: 19, y: 52 },
+        resource: "arrow_buttons",
+        textures: { out: "down_arrow_out", over: "down_arrow_over", down: "down_arrow_down" },
+        tooltip: "Decrease defense.\nEvery 1 point of speed will give back 3 points of energy"
     }
 }
 
@@ -369,7 +329,7 @@ var card = {
 
 function drawComplexObject(container, complexObject) {
     entries = Object.entries(complexObject)
-    console.log(entries)
+        //console.log(entries)
     _.each(entries, (element, index) => {
         //console.log(element, " - ", index)
         switch (element[1].type) {
@@ -382,12 +342,12 @@ function drawComplexObject(container, complexObject) {
                 if (element[1].tooltip) {
                     sprite.interactive = true
                     sprite.on("pointerover", e => {
-                        console.log("pointerover")
+                        //console.log("pointerover")
                         globalPXApp.view.title = element[1].tooltip;
                     })
 
                     sprite.on("pointerout", e => {
-                        console.log("pointerout")
+                        //console.log("pointerout")
                         globalPXApp.view.title = '';
                     })
                 }
@@ -409,10 +369,100 @@ function drawComplexObject(container, complexObject) {
 
                     text.on("pointerout", e => {
                         console.log("pointerout")
-                        globalPXApp.view.title = '';
+                        globalPXApp.view.title = "";
                     })
                 } //createDragAndDropFor(text)
                 break;
+            case "button":
+                let buttonTextures = []
+                buttonTextures.push(pxLoader.resources[element[1].resource].textures[element[1].textures.out]);
+                buttonTextures.push(pxLoader.resources[element[1].resource].textures[element[1].textures.over]);
+                buttonTextures.push(pxLoader.resources[element[1].resource].textures[element[1].textures.down]);
+                //var buttonIncreaseOut =  px.utils.TextureCache["out"];
+
+                //console.log(buttonIncreaseOut)
+                let button = new px.Sprite(buttonTextures[0]);
+                button.buttonMode = true;
+                button.name = element[0]
+
+                button.position = element[1].position
+                button.interactive = true;
+
+                container.addChild(button)
+                    //createDragAndDropFor(button)
+                    //console.log(button)
+
+                button.on('mousedown', e => {
+                    console.log("Mouse down!")
+                        //console.log(e.target)
+                        //console.log(typeof e)
+                        //console.log(e)
+                        //console.log(e.target)
+                        //console.log(this)
+                        //e.stopPropagation()
+                    e.target.isdown = true;
+                    e.target.texture = buttonTextures[2];
+                    //e.target.alpha = 1;
+                })
+
+                button.on('mouseup', e => {
+                    console.log("Mouse up!")
+                        //console.log(e.target)
+
+                    //console.log(typeof e)
+                    //console.log(e)
+                    //console.log(e.target)
+                    //console.log(this)
+                    //e.stopPropagation()
+                    e.target.isdown = false;
+                    if (e.target.isOver) {
+                        e.target.texture = buttonTextures[1];
+                    } else {
+                        e.target.texture = buttonTextures[0];
+                    }
+                    //e.target.alpha = 1;
+                })
+
+                button.on('mouseout', e => {
+                    console.log("Mouse out!")
+                        // console.log(e.currentTarget)
+                        //console.log(this)
+                        //console.log(typeof e)
+                        //console.log(e)
+                        //console.log(e.target)
+                        //console.log(this)
+                        //e.stopPropagation()
+                    e.currentTarget.isOver = false;
+                    if (!e.currentTarget.isdown) {
+                        e.currentTarget.texture = buttonTextures[0];
+                    }
+                    if (element[1].tooltip) {
+                        globalPXApp.view.title = "";
+                    }
+                    //e.target.alpha = 1;
+                })
+
+                button.on('mouseover', e => {
+                    console.log("Mouse over!")
+                        // console.log(e.target)
+                        //  console.log(this)
+                    e.target.isOver = true;
+                    //console.log(typeof e)
+                    //console.log(e)
+                    //console.log(e.target)
+                    //console.log(this)
+                    // e.stopPropagation()
+                    //e.target.isdown = false;
+
+                    if (!e.target.isdown) {
+                        e.target.texture = buttonTextures[1];
+                    }
+                    if (element[1].tooltip) {
+                        globalPXApp.view.title = element[1].tooltip;
+                    }
+
+                    //e.target.alpha = 1;
+                })
             case "default":
                 console.log("UNKNOWN:", element[1])
         }
@@ -503,8 +553,8 @@ function drawSelectedCard(cardX, cardY, cardJSON) {
     //containerCard.scale.y = 0.5
 
 
-    containerCard.interactive = true
-    containerCard.on("click", selectCard)
+    //containerCard.interactive = true
+    //containerCard.on("click", selectCard)
 
     globalPXApp.stage.addChild(containerCard);
 
@@ -655,23 +705,25 @@ function selectCard(event) {
     //console.log(containerSelectedCard.getBounds())
     //console.log(pxLoader.resources["buttons.increase"])
     //console.log(px.utils.TextureCache)
-    var buttonIncreaseOut = new px.Sprite(pxLoader.resources["buttons.increase"].spritesheet.textures["out"]);
-    //var buttonIncreaseOut =  px.utils.TextureCache["out"];
-    var buttonIncreaseOver = new px.Sprite(pxLoader.resources["buttons.increase"].spritesheet.textures["over"]);
-    var buttonIncreaseDown = new px.Sprite(pxLoader.resources["buttons.increase"].spritesheet.textures["down"]);
 
-    //console.log(buttonIncreaseOut)
-    //var button = new px.Sprite(buttonIncreaseOut);
-    buttonIncreaseOut.buttonMode = true;
 
-    buttonIncreaseOut.anchor.set(0.5);
+    /* 
+        .on('touchstart', onButtonDown)
 
-    buttonIncreaseOut.position.x = 20;
-    buttonIncreaseOut.position.y = 450;
-    buttonIncreaseOut.interactive = true;
+        // set the mouseup and touchend callback...
+        .on('mouseup', onButtonUp)
+            .on('touchend', onButtonUp)
+            .on('mouseupoutside', onButtonUp)
+            .on('touchendoutside', onButtonUp)
 
-    containerSelectedCard.addChild(buttonIncreaseOut)
-    containerSelectedCard.on("click", deselectCard)
+        // set the mouseover callback...
+        .on('mouseover', onButtonOver)
+
+        // set the mouseout callback...
+        .on('mouseout', onButtonOut)
+     */
+    // containerSelectedCard.on("click", deselectCard)
+    containerSelectedCard.interactive = false
         /* 
             containerSelectedCard.on("pointerover", e => {
                 console.log("pointerover")
@@ -769,7 +821,8 @@ function fontsPreloaded() {
     console.log("Preloading images...");
     let imagePreloadManifest = []
         //buttonsPreloadManifest = [{ url: "images/ui/increase_button_anim.png", name: "buttons.increase.anim" }, { url: "images/ui/decrease_button_anim.png", name: "buttons.decrease.anim" }];
-    buttonsPreloadManifest = [{ url: "images/ui/increase_button.json", name: "buttons.increase" }, { url: "images/ui/decrease_button.json", name: "buttons.decrease" }];
+        //buttonsPreloadManifest = [{ url: "images/ui/increase_button.json", name: "buttons.increase" }, { url: "images/ui/decrease_button.json", name: "buttons.decrease" }];
+    buttonsPreloadManifest = [{ url: "images/ui/arrow_buttons.json", name: "arrow_buttons" }];
     imagePreloadManifest = imagePreloadManifest.concat(
         globalPreloadImages.characters.map(element => ({ url: "images/characters/" + element + ".full.png", name: "characters." + element + ".full" })),
         globalPreloadImages.characters.map(element => ({ url: "images/characters/" + element + ".mini.png", name: "characters." + element + ".mini" })),
@@ -801,9 +854,4 @@ function drawStartingHand(startingHandJSON) {
     } else {
         console.log("Can't get starting hand")
     }
-}
-
-
-function handleTick(event) {
-    stage.update(event);
 }
