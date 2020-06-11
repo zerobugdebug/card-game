@@ -110,17 +110,20 @@ var fullImage = {
         textures: { out: "down_arrow_out", over: "down_arrow_over", down: "down_arrow_down" },
         tooltip: "Decrease defense.\nEvery 1 point of speed will give back 3 points of energy"
     },
-    energy_point_speed1: { type: "sprite", position: { x: 10, y: -20 }, texture: "energy_point" },
-    energy_point_speed2: { type: "sprite", position: { x: 30, y: -20 }, texture: "energy_point" },
-    energy_point_speed3: { type: "sprite", position: { x: 50, y: -20 }, texture: "energy_point" },
-    energy_point_speed4: { type: "sprite", position: { x: 70, y: -20 }, texture: "energy_point" },
-    energy_point_speed5: { type: "sprite", position: { x: 90, y: -20 }, texture: "energy_point" },
-    energy_point_speed6: { type: "sprite", position: { x: 110, y: -20 }, texture: "energy_point" },
-    energy_point_speed7: { type: "sprite", position: { x: 130, y: -20 }, texture: "energy_point" },
-    energy_point_speed8: { type: "sprite", position: { x: 150, y: -20 }, texture: "energy_point" },
-    energy_point_speed9: { type: "sprite", position: { x: 170, y: -20 }, texture: "energy_point" },
-    energy_point_speed10: { type: "sprite", position: { x: 190, y: -20 }, texture: "energy_point" }
-
+    energy_point_speed: { type: "sprite_array", count: 15, position: { x: 10, y: -20 }, delta: { x: 16, y: 0 }, texture: "energy_point" },
+    energy_point_power: { type: "sprite_array", count: 15, position: { x: 0, y: 400 }, delta: { x: 0, y: -16 }, texture: "energy_point" },
+    energy_point_defense: { type: "sprite_array", count: 15, position: { x: 270, y: 400 }, delta: { x: 0, y: -16 }, texture: "energy_point" }
+    /*    energy_point_speed1: { type: "sprite", position: { x: 10, y: -20 }, texture: "energy_point" },
+       energy_point_speed2: { type: "sprite", position: { x: 30, y: -20 }, texture: "energy_point" },
+       energy_point_speed3: { type: "sprite", position: { x: 50, y: -20 }, texture: "energy_point" },
+       energy_point_speed4: { type: "sprite", position: { x: 70, y: -20 }, texture: "energy_point" },
+       energy_point_speed5: { type: "sprite", position: { x: 90, y: -20 }, texture: "energy_point" },
+       energy_point_speed6: { type: "sprite", position: { x: 110, y: -20 }, texture: "energy_point" },
+       energy_point_speed7: { type: "sprite", position: { x: 130, y: -20 }, texture: "energy_point" },
+       energy_point_speed8: { type: "sprite", position: { x: 150, y: -20 }, texture: "energy_point" },
+       energy_point_speed9: { type: "sprite", position: { x: 170, y: -20 }, texture: "energy_point" },
+       energy_point_speed10: { type: "sprite", position: { x: 190, y: -20 }, texture: "energy_point" }
+    */
 }
 
 
@@ -267,89 +270,51 @@ function drawComplexObject(container, complexObject) {
                 } //createDragAndDropFor(text)
                 break;
             case "button":
-                let buttonTextures = []
-                buttonTextures.push(pxLoader.resources[element[1].resource].textures[element[1].textures.out]);
-                buttonTextures.push(pxLoader.resources[element[1].resource].textures[element[1].textures.over]);
-                buttonTextures.push(pxLoader.resources[element[1].resource].textures[element[1].textures.down]);
-                //var buttonIncreaseOut =  px.utils.TextureCache["out"];
+                let buttonTextures = {}
+                buttonTextures.out = pxLoader.resources[element[1].resource].textures[element[1].textures.out]
+                buttonTextures.over = pxLoader.resources[element[1].resource].textures[element[1].textures.over]
+                buttonTextures.down = pxLoader.resources[element[1].resource].textures[element[1].textures.down]
+                    //buttonTextures.push(pxLoader.resources[element[1].resource].textures[element[1].textures.out]);
+                    //buttonTextures.push(pxLoader.resources[element[1].resource].textures[element[1].textures.over]);
+                    //buttonTextures.push(pxLoader.resources[element[1].resource].textures[element[1].textures.down]);
 
-                //console.log(buttonIncreaseOut)
-                let button = new px.Sprite(buttonTextures[0]);
+                let button = new px.Sprite(buttonTextures.out);
                 button.buttonMode = true;
                 button.name = element[0]
-
                 button.position = element[1].position
                 button.interactive = true;
 
                 container.addChild(button)
-                    //createDragAndDropFor(button)
-                    //console.log(button)
 
                 button.on('mousedown', e => {
-                    console.log("Mouse down!")
-                        //console.log(e.target)
-                        //console.log(typeof e)
-                        //console.log(e)
-                        //console.log(e.target)
-                        //console.log(this)
-                        //e.stopPropagation()
-                    e.target.isdown = true;
-                    e.target.texture = buttonTextures[2];
-                    //e.target.alpha = 1;
+                    //e.stopPropagation()
+                    //   e.target.isdown = true;
+                    e.target.texture = buttonTextures.down;
                 })
 
                 button.on('mouseup', e => {
-                    console.log("Mouse up!")
-                        //console.log(e.target)
-
-                    //console.log(typeof e)
-                    //console.log(e)
-                    //console.log(e.target)
-                    //console.log(this)
+                    e.target.texture = buttonTextures.over;
                     //e.stopPropagation()
-                    e.target.isdown = false;
-                    if (e.target.isOver) {
-                        e.target.texture = buttonTextures[1];
-                    } else {
-                        e.target.texture = buttonTextures[0];
-                    }
-                    //e.target.alpha = 1;
+                    //e.target.isdown = false;
+                    //e.target.texture = buttonTextures[e.target.isOver]; //Switch to [0], if isOver=false or switch to [1] otherwise
                 })
 
                 button.on('mouseout', e => {
-                    console.log("Mouse out!")
-                        // console.log(e.currentTarget)
-                        //console.log(this)
-                        //console.log(typeof e)
-                        //console.log(e)
-                        //console.log(e.target)
-                        //console.log(this)
-                        //e.stopPropagation()
-                    e.currentTarget.isOver = false;
-                    if (!e.currentTarget.isdown) {
-                        e.currentTarget.texture = buttonTextures[0];
-                    }
+                    //e.stopPropagation()
+                    //e.currentTarget.isOver = false;
+                    //if (!e.currentTarget.isdown) {
+                    e.currentTarget.texture = buttonTextures.out;
+                    //}
                     if (element[1].tooltip) {
                         globalPXApp.view.title = "";
                     }
-                    //e.target.alpha = 1;
                 })
 
                 button.on('mouseover', e => {
-                    console.log("Mouse over!")
-                        // console.log(e.target)
-                        //  console.log(this)
-                    e.target.isOver = true;
-                    //console.log(typeof e)
-                    //console.log(e)
-                    //console.log(e.target)
-                    //console.log(this)
-                    // e.stopPropagation()
-                    //e.target.isdown = false;
-
-                    if (!e.target.isdown) {
-                        e.target.texture = buttonTextures[1];
-                    }
+                    //e.target.isOver = true;
+                    //if (!e.target.isdown) {
+                    e.target.texture = buttonTextures.over;
+                    //}
                     if (element[1].tooltip) {
                         globalPXApp.view.title = element[1].tooltip;
                     }
