@@ -125,168 +125,50 @@ var fullImage = {
 
 
 var miniImage = {
-    character: {
-        type: "sprite",
-        position: {
-            x: 10,
-            y: 10
-        },
-        texture: "characters.aaaabb",
-        width: 256,
-        height: 256
-    },
-    template: {
-        type: "sprite",
-        position: {
-            x: 0,
-            y: 0
-        },
-        texture: "card_templates.common",
-        width: 200,
-        height: 280
-    },
-    dimension: {
-        type: "sprite",
-        position: {
-            x: 151,
-            y: 14
-        },
-        texture: "dimensions.alphar",
-        width: 40,
-        height: 40
-    },
+    character: { type: "sprite", position: { x: 10, y: 10 }, texture: "characters.aaaabb", width: 256, height: 256 },
+    template: { type: "sprite", position: { x: 0, y: 0 }, texture: "card_templates.common", width: 200, height: 280 },
+    dimension: { type: "sprite", position: { x: 151, y: 14 }, texture: "dimensions.alphar", width: 40, height: 40 },
     speed: {
         type: "text",
         text: "5",
-        position: {
-            x: 27,
-            y: 20
-        },
-        anchor: {
-            x: 0.5,
-            y: 0.5
-        },
-        style: {
-            fontFamily: "canadian",
-            fontWeight: "bold",
-            fontSize: 32,
-            align: "center",
-            textBaseline: "middle",
-            fill: "white",
-            stroke: "black",
-            strokeThickness: 5,
-            padding: 10
-
-        }
+        position: { x: 27, y: 20 },
+        anchor: { x: 0.5, y: 0.5 },
+        style: { fontFamily: "canadian", fontWeight: "bold", fontSize: 32, align: "center", textBaseline: "middle", fill: "white", stroke: "black", strokeThickness: 5, padding: 10 }
     },
     power: {
         type: "text",
         text: "5",
-        position: {
-            x: 36, //34
-            y: 184, //237
-        },
-        anchor: {
-            x: 0.5,
-            y: 0.5
-        },
-        style: {
-            fontFamily: "canadian",
-            fontWeight: "bold",
-            fontSize: 32,
-            align: "center",
-            textBaseline: "middle",
-            fill: "white",
-            stroke: "black",
-            strokeThickness: 5,
-            padding: 10
-        }
+        position: { x: 36, y: 184 },
+        anchor: { x: 0.5, y: 0.5 },
+        style: { fontFamily: "canadian", fontWeight: "bold", fontSize: 32, align: "center", textBaseline: "middle", fill: "white", stroke: "black", strokeThickness: 5, padding: 10 }
     },
     defense: {
         type: "text",
         text: "5",
-        position: {
-            x: 36, //170,
-            y: 239, //237
-        },
-        anchor: {
-            x: 0.5,
-            y: 0.5
-        },
-        style: {
-            fontFamily: "canadian",
-            fontWeight: "bold",
-            fontSize: 32,
-            align: "center",
-            textBaseline: "middle",
-            fill: "white",
-            stroke: "black",
-            strokeThickness: 5,
-            padding: 10
-        }
+        position: { x: 36, y: 239 },
+        anchor: { x: 0.5, y: 0.5 },
+        style: { fontFamily: "canadian", fontWeight: "bold", fontSize: 32, align: "center", textBaseline: "middle", fill: "white", stroke: "black", strokeThickness: 5, padding: 10 }
     },
     name: {
         type: "text",
         text: "Jane",
-        position: {
-            x: 102,
-            y: 152
-        },
-        anchor: {
-            x: 0.5,
-            y: 0.5
-        },
-        style: {
-            fontFamily: "Georgia",
-            fontSize: 24,
-            align: "center",
-            textBaseline: "middle",
-            fill: "white",
-            padding: 10
-        }
+        position: { x: 102, y: 152 },
+        anchor: { x: 0.5, y: 0.5 },
+        style: { fontFamily: "Georgia", fontSize: 24, align: "center", textBaseline: "middle", fill: "white", padding: 10 }
     },
     primary: {
         type: "text",
         text: "primary",
-        position: {
-            x: 121, //100,
-            y: 193, //186
-        },
-        anchor: {
-            x: 0.5,
-            y: 0.5
-        },
-        style: {
-            fontFamily: "Arial",
-            fontSize: 18,
-            fontWeight: "bold",
-            align: "center",
-            textBaseline: "middle",
-            fill: "green",
-            padding: 10
-
-        }
+        position: { x: 121, y: 193 },
+        anchor: { x: 0.5, y: 0.5 },
+        style: { fontFamily: "Arial", fontSize: 18, fontWeight: "bold", align: "center", textBaseline: "middle", fill: "green", padding: 10 }
     },
     secondary: {
         type: "text",
         text: "primary",
-        position: {
-            x: 121, //100,
-            y: 220, // 208
-        },
-        anchor: {
-            x: 0.5,
-            y: 0.5
-        },
-        style: {
-            fontFamily: "Arial",
-            fontSize: 18,
-            align: "center",
-            textBaseline: "middle",
-            fill: "red",
-            padding: 10
-
-        }
+        position: { x: 121, y: 220 },
+        anchor: { x: 0.5, y: 0.5 },
+        style: { fontFamily: "Arial", fontSize: 18, align: "center", textBaseline: "middle", fill: "red", padding: 10 }
     }
 }
 
@@ -474,6 +356,7 @@ function drawComplexObject(container, complexObject) {
 
                     //e.target.alpha = 1;
                 })
+                break;
             case "default":
                 console.log("UNKNOWN:", element[1])
         }
