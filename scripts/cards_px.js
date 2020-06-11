@@ -109,7 +109,18 @@ var fullImage = {
         resource: "arrow_buttons",
         textures: { out: "down_arrow_out", over: "down_arrow_over", down: "down_arrow_down" },
         tooltip: "Decrease defense.\nEvery 1 point of speed will give back 3 points of energy"
-    }
+    },
+    energy_point_speed1: { type: "sprite", position: { x: 10, y: -20 }, texture: "energy_point" },
+    energy_point_speed2: { type: "sprite", position: { x: 30, y: -20 }, texture: "energy_point" },
+    energy_point_speed3: { type: "sprite", position: { x: 50, y: -20 }, texture: "energy_point" },
+    energy_point_speed4: { type: "sprite", position: { x: 70, y: -20 }, texture: "energy_point" },
+    energy_point_speed5: { type: "sprite", position: { x: 90, y: -20 }, texture: "energy_point" },
+    energy_point_speed6: { type: "sprite", position: { x: 110, y: -20 }, texture: "energy_point" },
+    energy_point_speed7: { type: "sprite", position: { x: 130, y: -20 }, texture: "energy_point" },
+    energy_point_speed8: { type: "sprite", position: { x: 150, y: -20 }, texture: "energy_point" },
+    energy_point_speed9: { type: "sprite", position: { x: 170, y: -20 }, texture: "energy_point" },
+    energy_point_speed10: { type: "sprite", position: { x: 190, y: -20 }, texture: "energy_point" }
+
 }
 
 
@@ -592,7 +603,7 @@ function selectCard(event) {
         console.log("already selected")
         globalPXApp.stage.removeChild(globalPXApp.stage.getChildByName("selectedCard"))
     }
-    containerSelectedCard = drawSelectedCard(350, 100, this.cardJSON)
+    containerSelectedCard = drawSelectedCard(1200, 100, this.cardJSON)
     containerSelectedCard.name = "selectedCard"
         //console.log(containerSelectedCard.getBounds())
         //stage.removeChild(stage.getChildByName("selectedCard"))
@@ -822,7 +833,7 @@ function fontsPreloaded() {
     let imagePreloadManifest = []
         //buttonsPreloadManifest = [{ url: "images/ui/increase_button_anim.png", name: "buttons.increase.anim" }, { url: "images/ui/decrease_button_anim.png", name: "buttons.decrease.anim" }];
         //buttonsPreloadManifest = [{ url: "images/ui/increase_button.json", name: "buttons.increase" }, { url: "images/ui/decrease_button.json", name: "buttons.decrease" }];
-    buttonsPreloadManifest = [{ url: "images/ui/arrow_buttons.json", name: "arrow_buttons" }];
+    additionalPreloadManifest = [{ url: "images/ui/arrow_buttons.json", name: "arrow_buttons" }, { url: "images/ui/energy_point.png", name: "energy_point" }];
     imagePreloadManifest = imagePreloadManifest.concat(
         globalPreloadImages.characters.map(element => ({ url: "images/characters/" + element + ".full.png", name: "characters." + element + ".full" })),
         globalPreloadImages.characters.map(element => ({ url: "images/characters/" + element + ".mini.png", name: "characters." + element + ".mini" })),
@@ -830,7 +841,7 @@ function fontsPreloaded() {
         globalPreloadImages.dimensions.map(element => ({ url: "images/dimensions/" + element + ".mini.png", name: "dimensions." + element + ".mini" })),
         globalPreloadImages.card_templates.map(element => ({ url: "images/card_templates/" + element + ".full.png", name: "card_templates." + element + ".full" })),
         globalPreloadImages.card_templates.map(element => ({ url: "images/card_templates/" + element + ".mini.png", name: "card_templates." + element + ".mini" })),
-        buttonsPreloadManifest
+        additionalPreloadManifest
     )
 
     pxLoader.add(imagePreloadManifest)
