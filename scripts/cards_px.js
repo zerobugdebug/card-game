@@ -7,6 +7,8 @@ var globalImageLoader
 var globalStartingHand
 var globalContainerGameField
 var globalCardsArray
+var filterEnergyLevel = new PIXI.filters.ColorMatrixFilter();
+
 
 var fullImage = {
     character: { type: "sprite", position: { x: 22, y: 34 }, texture: "characters.aaaaaa.full", width: 256, height: 256 },
@@ -73,57 +75,154 @@ var fullImage = {
         position: { x: 21, y: 346 },
         resource: "arrow_buttons",
         textures: { out: "up_arrow_out", over: "up_arrow_over", down: "up_arrow_down" },
-        tooltip: "Increase power.\nEvery point of energy will multiple the power"
+        tooltip: "Increase power.\nEvery point of energy will multiple the power",
+        onClick: function(e) {
+            console.log("On Click!")
+            let button = e.currentTarget
+            let container = button.parent
+            let i = 0
+            let currentLevel
+            do {
+                console.log("i=", i)
+                currentLevel = container.getChildByName("energy_point_power_" + i)
+                console.log(currentLevel)
+                i++
+            }
+            while (currentLevel.alpha == 1)
+            currentLevel.alpha = 1
+            currentPower = container.getChildByName("power").text
+            container.getChildByName("power").text = currentPower / i * (i + 1)
+                //console.log(container.getChildByName("power"))
+        }
+
     },
     defense_up: {
         type: "button",
         position: { x: 253, y: 346 },
         resource: "arrow_buttons",
         textures: { out: "up_arrow_out", over: "up_arrow_over", down: "up_arrow_down" },
-        tooltip: "Increase defense.\nEvery point of energy will multiple the defense"
+        tooltip: "Increase defense.\nEvery point of energy will multiple the defense",
+        onClick: function(e) {
+            console.log("On Click!")
+            let button = e.currentTarget
+            let container = button.parent
+            let i = 0
+            let currentLevel
+            do {
+                console.log("i=", i)
+                currentLevel = container.getChildByName("energy_point_defense_" + i)
+                console.log(currentLevel)
+                i++
+            }
+            while (currentLevel.alpha == 1)
+            currentLevel.alpha = 1
+            currentDefense = container.getChildByName("defense").text
+            container.getChildByName("defense").text = currentDefense / i * (i + 1)
+        }
     },
     speed_up: {
         type: "button",
         position: { x: 19, y: -2 },
         resource: "arrow_buttons",
         textures: { out: "up_arrow_out", over: "up_arrow_over", down: "up_arrow_down" },
-        tooltip: "Increase defense.\nEvery 3 points of energy will increase speed by 1"
+        tooltip: "Increase defense.\nEvery 3 points of energy will increase speed by 1",
+        onClick: function(e) {
+            console.log("On Click!")
+            let button = e.currentTarget
+            let container = button.parent
+            let i = 0
+            let currentLevel
+            do {
+                console.log("i=", i)
+                currentLevel = container.getChildByName("energy_point_speed_" + i)
+                console.log(currentLevel)
+                i += 3
+            }
+            while (currentLevel.alpha == 1)
+            currentLevel.alpha = 1
+            container.getChildByName("energy_point_speed_" + (i - 2)).alpha = 1
+            container.getChildByName("energy_point_speed_" + (i - 1)).alpha = 1
+                //currentSpeed = container.getChildByName("speed").text
+            container.getChildByName("speed").text++
+        }
     },
     power_down: {
         type: "button",
         position: { x: 21, y: 400 },
         resource: "arrow_buttons",
         textures: { out: "down_arrow_out", over: "down_arrow_over", down: "down_arrow_down" },
-        tooltip: "Decrease power.\nEvery point of energy will multiple the power"
+        tooltip: "Decrease power.\nEvery point of energy will multiple the power",
+        onClick: function(e) {
+            console.log("On Click!")
+            let button = e.currentTarget
+            let container = button.parent
+            let i = 14
+            let currentLevel
+            do {
+                console.log("i=", i)
+                currentLevel = container.getChildByName("energy_point_power_" + i)
+                console.log(currentLevel)
+                i--
+            }
+            while (currentLevel.alpha == 0)
+            currentLevel.alpha = 0
+            currentPower = container.getChildByName("power").text
+            container.getChildByName("power").text = currentPower * (i + 2) / (i + 3)
+        }
     },
     defense_down: {
         type: "button",
         position: { x: 253, y: 400 },
         resource: "arrow_buttons",
         textures: { out: "down_arrow_out", over: "down_arrow_over", down: "down_arrow_down" },
-        tooltip: "Decrease defense.\nEvery point of energy will multiple the defense"
+        tooltip: "Decrease defense.\nEvery point of energy will multiple the defense",
+        onClick: function(e) {
+            console.log("On Click!")
+            let button = e.currentTarget
+            let container = button.parent
+            let i = 14
+            let currentLevel
+            do {
+                console.log("i=", i)
+                currentLevel = container.getChildByName("energy_point_defense_" + i)
+                console.log(currentLevel)
+                i--
+            }
+            while (currentLevel.alpha == 0)
+            currentLevel.alpha = 0
+            currentDefense = container.getChildByName("defense").text
+            container.getChildByName("defense").text = currentDefense * (i + 2) / (i + 3)
+        }
     },
     speed_down: {
         type: "button",
         position: { x: 19, y: 52 },
         resource: "arrow_buttons",
         textures: { out: "down_arrow_out", over: "down_arrow_over", down: "down_arrow_down" },
-        tooltip: "Decrease defense.\nEvery 1 point of speed will give back 3 points of energy"
+        tooltip: "Decrease defense.\nEvery 1 point of speed will give back 3 points of energy",
+        onClick: function(e) {
+            console.log("On Click!")
+            let button = e.currentTarget
+            let container = button.parent
+            let i = 12
+            let currentLevel
+            do {
+                console.log("i=", i)
+                currentLevel = container.getChildByName("energy_point_speed_" + i)
+                console.log(currentLevel)
+                i -= 3
+            }
+            while (currentLevel.alpha == 0)
+            currentLevel.alpha = 0
+            container.getChildByName("energy_point_speed_" + (i + 4)).alpha = 0
+            container.getChildByName("energy_point_speed_" + (i + 5)).alpha = 0
+                //currentSpeed = container.getChildByName("speed").text
+            container.getChildByName("speed").text--
+        }
     },
-    energy_point_speed: { type: "sprite_array", count: 15, position: { x: 0, y: -16 }, delta: { x: 16, y: 0 }, texture: "energy_point" },
-    energy_point_power: { type: "sprite_array", count: 15, position: { x: -16, y: 400 }, delta: { x: 0, y: -16 }, texture: "energy_point" },
-    energy_point_defense: { type: "sprite_array", count: 15, position: { x: 300, y: 400 }, delta: { x: 0, y: -16 }, texture: "energy_point" }
-    /*    energy_point_speed1: { type: "sprite", position: { x: 10, y: -20 }, texture: "energy_point" },
-       energy_point_speed2: { type: "sprite", position: { x: 30, y: -20 }, texture: "energy_point" },
-       energy_point_speed3: { type: "sprite", position: { x: 50, y: -20 }, texture: "energy_point" },
-       energy_point_speed4: { type: "sprite", position: { x: 70, y: -20 }, texture: "energy_point" },
-       energy_point_speed5: { type: "sprite", position: { x: 90, y: -20 }, texture: "energy_point" },
-       energy_point_speed6: { type: "sprite", position: { x: 110, y: -20 }, texture: "energy_point" },
-       energy_point_speed7: { type: "sprite", position: { x: 130, y: -20 }, texture: "energy_point" },
-       energy_point_speed8: { type: "sprite", position: { x: 150, y: -20 }, texture: "energy_point" },
-       energy_point_speed9: { type: "sprite", position: { x: 170, y: -20 }, texture: "energy_point" },
-       energy_point_speed10: { type: "sprite", position: { x: 190, y: -20 }, texture: "energy_point" }
-    */
+    energy_point_speed: { type: "sprite_array", count: 15, position: { x: 0, y: -16 }, delta: { x: 16, y: 0 }, alpha: 0, texture: "energy_point" },
+    energy_point_power: { type: "sprite_array", count: 15, position: { x: -16, y: 400 }, delta: { x: 0, y: -16 }, alpha: 0, texture: "energy_point" },
+    energy_point_defense: { type: "sprite_array", count: 15, position: { x: 300, y: 400 }, delta: { x: 0, y: -16 }, alpha: 0, texture: "energy_point" }
 }
 
 
@@ -223,6 +322,7 @@ var card = {
     json: ""
 }
 
+
 function drawComplexObject(container, complexObject) {
     entries = Object.entries(complexObject)
         //console.log(entries)
@@ -286,6 +386,13 @@ function drawComplexObject(container, complexObject) {
 
                 container.addChild(button)
 
+                button.on('click', e => {
+                    console.log("top on clik")
+                    if (element[1]["onClick"]) {
+                        element[1]["onClick"](e)
+                    }
+                })
+
                 button.on('mousedown', e => {
                     //e.stopPropagation()
                     e.currentTarget.texture = buttonTextures.down;
@@ -293,6 +400,7 @@ function drawComplexObject(container, complexObject) {
 
                 button.on('mouseup', e => {
                     e.currentTarget.texture = buttonTextures.over;
+
                     //e.stopPropagation()
                 })
 
@@ -319,6 +427,7 @@ function drawComplexObject(container, complexObject) {
                     sprite.x = element[1].position.x + element[1].delta.x * i
                     sprite.y = element[1].position.y + element[1].delta.y * i
                     sprite.name = element[0] + "_" + i
+                    sprite.alpha = element[1].alpha
                     container.addChild(sprite);
                     if (element[1].tooltip) {
                         sprite.interactive = true
