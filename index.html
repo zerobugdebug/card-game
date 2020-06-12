@@ -58,7 +58,7 @@
                 console.log('Socket is closed. Trying to reconnect...', event.reason);
                 output.innerHTML += "Status: Reconnecting...\n";
             }
-            mySocket = new WebSocket("ws://localhost:8080/ws");
+            mySocket = new WebSocket("ws://192.168.0.178:8080/ws");
             mySocket.addEventListener('open', socketOnOpen);
             mySocket.addEventListener('message', socketOnMessage);
             mySocket.addEventListener('close', socketOnClose);

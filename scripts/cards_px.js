@@ -7,7 +7,7 @@ var globalImageLoader
 var globalStartingHand
 var globalContainerGameField
 var globalCardsArray
-var filterEnergyLevel = new PIXI.filters.ColorMatrixFilter();
+    //var filterEnergyLevel = new PIXI.filters.ColorMatrixFilter();
 
 
 var fullImage = {
@@ -77,22 +77,11 @@ var fullImage = {
         textures: { out: "up_arrow_out", over: "up_arrow_over", down: "up_arrow_down" },
         tooltip: "Increase power.\nEvery point of energy will multiple the power",
         onClick: function(e) {
-            console.log("On Click!")
-            let button = e.currentTarget
-            let container = button.parent
-            let i = 0
-            let currentLevel
-            do {
-                console.log("i=", i)
-                currentLevel = container.getChildByName("energy_point_power_" + i)
-                console.log(currentLevel)
-                i++
-            }
-            while (currentLevel.alpha == 1)
-            currentLevel.alpha = 1
-            currentPower = container.getChildByName("power").text
-            container.getChildByName("power").text = currentPower / i * (i + 1)
-                //console.log(container.getChildByName("power"))
+            //            console.log("On Click!")
+            let container = e.currentTarget.parent
+            container.cardParams.energy.power += 1
+            container.getChildByName("energy_point_power_" + container.cardParams.energy.power).alpha = 1
+            container.getChildByName("power").text = container.cardParams.power * (container.cardParams.energy.power + 1)
         }
 
     },
@@ -103,21 +92,10 @@ var fullImage = {
         textures: { out: "up_arrow_out", over: "up_arrow_over", down: "up_arrow_down" },
         tooltip: "Increase defense.\nEvery point of energy will multiple the defense",
         onClick: function(e) {
-            console.log("On Click!")
-            let button = e.currentTarget
-            let container = button.parent
-            let i = 0
-            let currentLevel
-            do {
-                console.log("i=", i)
-                currentLevel = container.getChildByName("energy_point_defense_" + i)
-                console.log(currentLevel)
-                i++
-            }
-            while (currentLevel.alpha == 1)
-            currentLevel.alpha = 1
-            currentDefense = container.getChildByName("defense").text
-            container.getChildByName("defense").text = currentDefense / i * (i + 1)
+            let container = e.currentTarget.parent
+            container.cardParams.energy.defense += 1
+            container.getChildByName("energy_point_defense_" + container.cardParams.energy.defense).alpha = 1
+            container.getChildByName("defense").text = container.cardParams.defense * (container.cardParams.energy.defense + 1)
         }
     },
     speed_up: {
@@ -127,23 +105,14 @@ var fullImage = {
         textures: { out: "up_arrow_out", over: "up_arrow_over", down: "up_arrow_down" },
         tooltip: "Increase defense.\nEvery 3 points of energy will increase speed by 1",
         onClick: function(e) {
-            console.log("On Click!")
-            let button = e.currentTarget
-            let container = button.parent
-            let i = 0
-            let currentLevel
-            do {
-                console.log("i=", i)
-                currentLevel = container.getChildByName("energy_point_speed_" + i)
-                console.log(currentLevel)
-                i += 3
-            }
-            while (currentLevel.alpha == 1)
-            currentLevel.alpha = 1
-            container.getChildByName("energy_point_speed_" + (i - 2)).alpha = 1
-            container.getChildByName("energy_point_speed_" + (i - 1)).alpha = 1
-                //currentSpeed = container.getChildByName("speed").text
-            container.getChildByName("speed").text++
+            let container = e.currentTarget.parent
+            console.log("cardparams:", cardParams.energy)
+            console.log("cardparams:", container.cardParams.energy)
+            container.cardParams.energy.speed += 3
+            container.getChildByName("energy_point_speed_" + (container.cardParams.energy.speed - 2)).alpha = 1
+            container.getChildByName("energy_point_speed_" + (container.cardParams.energy.speed - 1)).alpha = 1
+            container.getChildByName("energy_point_speed_" + container.cardParams.energy.speed).alpha = 1
+            container.getChildByName("speed").text = (container.cardParams.speed * 1 + (container.cardParams.energy.speed / 3))
         }
     },
     power_down: {
@@ -153,21 +122,12 @@ var fullImage = {
         textures: { out: "down_arrow_out", over: "down_arrow_over", down: "down_arrow_down" },
         tooltip: "Decrease power.\nEvery point of energy will multiple the power",
         onClick: function(e) {
-            console.log("On Click!")
-            let button = e.currentTarget
-            let container = button.parent
-            let i = 14
-            let currentLevel
-            do {
-                console.log("i=", i)
-                currentLevel = container.getChildByName("energy_point_power_" + i)
-                console.log(currentLevel)
-                i--
+            let container = e.currentTarget.parent
+            if (container.cardParams.energy.power > 0) {
+                container.getChildByName("energy_point_power_" + container.cardParams.energy.power).alpha = 0
+                container.getChildByName("power").text = container.cardParams.power * container.cardParams.energy.power
+                container.cardParams.energy.power -= 1
             }
-            while (currentLevel.alpha == 0)
-            currentLevel.alpha = 0
-            currentPower = container.getChildByName("power").text
-            container.getChildByName("power").text = currentPower * (i + 2) / (i + 3)
         }
     },
     defense_down: {
@@ -177,21 +137,12 @@ var fullImage = {
         textures: { out: "down_arrow_out", over: "down_arrow_over", down: "down_arrow_down" },
         tooltip: "Decrease defense.\nEvery point of energy will multiple the defense",
         onClick: function(e) {
-            console.log("On Click!")
-            let button = e.currentTarget
-            let container = button.parent
-            let i = 14
-            let currentLevel
-            do {
-                console.log("i=", i)
-                currentLevel = container.getChildByName("energy_point_defense_" + i)
-                console.log(currentLevel)
-                i--
+            let container = e.currentTarget.parent
+            if (container.cardParams.energy.defense > 0) {
+                container.getChildByName("energy_point_defense_" + container.cardParams.energy.defense).alpha = 0
+                container.getChildByName("defense").text = container.cardParams.defense * container.cardParams.energy.defense
+                container.cardParams.energy.defense -= 1
             }
-            while (currentLevel.alpha == 0)
-            currentLevel.alpha = 0
-            currentDefense = container.getChildByName("defense").text
-            container.getChildByName("defense").text = currentDefense * (i + 2) / (i + 3)
         }
     },
     speed_down: {
@@ -201,23 +152,15 @@ var fullImage = {
         textures: { out: "down_arrow_out", over: "down_arrow_over", down: "down_arrow_down" },
         tooltip: "Decrease defense.\nEvery 1 point of speed will give back 3 points of energy",
         onClick: function(e) {
-            console.log("On Click!")
-            let button = e.currentTarget
-            let container = button.parent
-            let i = 12
-            let currentLevel
-            do {
-                console.log("i=", i)
-                currentLevel = container.getChildByName("energy_point_speed_" + i)
-                console.log(currentLevel)
-                i -= 3
+            let container = e.currentTarget.parent
+            console.log("cardparams:", cardParams)
+            if (container.cardParams.energy.speed > 0) {
+                container.getChildByName("energy_point_speed_" + (container.cardParams.energy.speed - 2)).alpha = 0
+                container.getChildByName("energy_point_speed_" + (container.cardParams.energy.speed - 1)).alpha = 0
+                container.getChildByName("energy_point_speed_" + container.cardParams.energy.speed).alpha = 0
+                container.cardParams.energy.speed -= 3
+                container.getChildByName("speed").text = container.cardParams.speed * 1 + (container.cardParams.energy.speed / 3)
             }
-            while (currentLevel.alpha == 0)
-            currentLevel.alpha = 0
-            container.getChildByName("energy_point_speed_" + (i + 4)).alpha = 0
-            container.getChildByName("energy_point_speed_" + (i + 5)).alpha = 0
-                //currentSpeed = container.getChildByName("speed").text
-            container.getChildByName("speed").text--
         }
     },
     energy_point_speed: { type: "sprite_array", count: 15, position: { x: 0, y: -16 }, delta: { x: 16, y: 0 }, alpha: 0, texture: "energy_point" },
@@ -274,54 +217,17 @@ var miniImage = {
     }
 }
 
-
-
-/* bitmapCharacter = new createjs.Bitmap(globalImageLoader.getResult("characters." + cardJSON.imageId));
-//console.log(bitmapCharacter)
-containerCard.addChild(bitmapCharacter);
-
-bitmapCharacter.x = cardDrawingDefaults.character.x;
-bitmapCharacter.y = cardDrawingDefaults.character.y;
-
-bitmapCharacter.scale = bitmapCharacter.originalScale = 1;
- */
-
-
-
-var ability = {
-    name: "",
-    power: 0,
-    turn: 0,
-    speed: 0,
-    defense: 0,
-    strike: 0,
-    description: "",
-    tooltip: ""
-}
-
-var primaryAbility = secondaryAbility = ability
-
-var card = {
-    imageId: "",
-    name: "",
-    power: 0,
-    defense: 0,
-    speed: 0,
-    energy: 0,
-    dimension: "",
-    rarity: "",
-    primaryAbility,
-    secondaryAbility,
-    description: "",
-    graphics: {
-        containerMini: "",
-        containerFull: ""
-            //imageMini,
-            //imageFull
+//current state of the card, including all abilities and added energy points
+var cardParams = {
+    energy: {
+        power: 0,
+        speed: 0,
+        defense: 0
     },
-    json: ""
+    power: 0,
+    speed: 0,
+    defense: 0
 }
-
 
 function drawComplexObject(container, complexObject) {
     entries = Object.entries(complexObject)
@@ -421,8 +327,8 @@ function drawComplexObject(container, complexObject) {
                 break;
             case "sprite_array":
                 console.log("sprite_array:", element[1])
-                let i = 0
-                for (i = 0; i < element[1].count; i++) {
+                let i = 1
+                for (i = 1; i <= element[1].count; i++) {
                     let sprite = new px.Sprite(pxLoader.resources[element[1].texture].texture);
                     sprite.x = element[1].position.x + element[1].delta.x * i
                     sprite.y = element[1].position.y + element[1].delta.y * i
@@ -473,24 +379,25 @@ function createDragAndDropFor(target) {
 }
 
 
-function drawCard(cardX, cardY, cardJSON) {
+function drawCard(cardX, cardY, cardData) {
 
     let containerCard = new px.Container();
     let cardImage = miniImage
-    cardImage.character.texture = "characters." + cardJSON.imageId + ".mini"
-    cardImage.template.texture = "card_templates." + cardJSON.rarity + ".mini"
-    cardImage.dimension.texture = "dimensions." + cardJSON.dimension + ".mini"
-    cardImage.name.text = cardJSON.name
-    cardImage.speed.text = cardJSON.speed
-    cardImage.power.text = cardJSON.power
-    cardImage.defense.text = cardJSON.defense
-    cardImage.primary.text = cardJSON.primaryAbility
-    cardImage.secondary.text = cardJSON.secondaryAbility
+    cardImage.character.texture = "characters." + cardData.imageId + ".mini"
+    cardImage.template.texture = "card_templates." + cardData.rarity + ".mini"
+    cardImage.dimension.texture = "dimensions." + cardData.dimension + ".mini"
+    cardImage.name.text = cardData.name
+    cardImage.speed.text = cardData.speed
+    cardImage.power.text = cardData.power
+    cardImage.defense.text = cardData.defense
+    cardImage.primary.text = cardData.primaryAbility
+    cardImage.secondary.text = cardData.secondaryAbility
     containerCard = drawComplexObject(containerCard, cardImage)
 
     containerCard.x = cardX
     containerCard.y = cardY
-    containerCard.cardJSON = cardJSON
+    containerCard.cardData = cardData
+    containerCard.cardImage = cardImage
     containerCard.interactive = true
     containerCard.cursor = "pointer"
     containerCard.on("click", selectCard)
@@ -499,36 +406,44 @@ function drawCard(cardX, cardY, cardJSON) {
     return containerCard
 }
 
-function drawSelectedCard(cardX, cardY, cardJSON) {
-    //console.log(card)
-    //entries = Object.entries(card)
-    //console.log(entries)
-    //console.log(entries[8])
-    //console.log(entries[8][1].description)
+function drawSelectedCard(cardX, cardY, cardData) {
+    console.log("New card: ", cardData)
+        //entries = Object.entries(card)
+        //console.log(entries)
+        //console.log(entries[8])
+        //console.log(entries[8][1].description)
 
     let containerCard = new px.Container();
+    console.log(containerCard);
     let cardImage = fullImage
-    cardImage.character.texture = "characters." + cardJSON.imageId + ".full"
-    cardImage.template.texture = "card_templates." + cardJSON.rarity + ".full"
-    cardImage.dimension.texture = "dimensions." + cardJSON.dimension + ".full"
-    cardImage.name.text = cardJSON.name
-    cardImage.speed.text = cardJSON.speed
-    cardImage.power.text = cardJSON.power
-    cardImage.defense.text = cardJSON.defense
-    cardImage.description.text = cardJSON.description
-    cardImage.primary.text = cardJSON.primaryAbility
-    cardImage.secondary.text = cardJSON.secondaryAbility
+    cardImage.character.texture = "characters." + cardData.imageId + ".full"
+    cardImage.template.texture = "card_templates." + cardData.rarity + ".full"
+    cardImage.dimension.texture = "dimensions." + cardData.dimension + ".full"
+    cardImage.name.text = cardData.name
+    cardImage.speed.text = cardData.speed
+    cardImage.power.text = cardData.power
+    cardImage.defense.text = cardData.defense
+    cardImage.description.text = cardData.description
+    cardImage.primary.text = cardData.primaryAbility
+    cardImage.secondary.text = cardData.secondaryAbility
     containerCard = drawComplexObject(containerCard, cardImage)
         //console.log(pxLoader.resources)
-        //console.log(pxLoader.resources["ojjkjk." + cardJSON.imageId])
-        //console.log(pxLoader.resources["bjkbmn." + cardJSON.imageId].texture)
+        //console.log(pxLoader.resources["ojjkjk." + cardData.imageId])
+        //console.log(pxLoader.resources["bjkbmn." + cardData.imageId].texture)
 
     //            containerCard.width = templateCard.width;
     //containerCard.height = templateCard.height;
-    //console.log(containerCard);
+    console.log(containerCard);
+    console.log(cardParams);
     containerCard.x = cardX
     containerCard.y = cardY
-    containerCard.cardJSON = cardJSON
+    containerCard.cardData = cardData
+    containerCard.cardParams = Object.assign({}, cardParams)
+    containerCard.cardParams.energy = Object.assign({}, cardParams.energy)
+    containerCard.cardParams.speed = cardData.speed
+    containerCard.cardParams.power = cardData.power
+    containerCard.cardParams.defense = cardData.defense
+    containerCard.cardImage = cardImage
 
     //console.log(globalPXApp)
     //containerCard.scale.x = 0.5
@@ -574,7 +489,7 @@ function selectCard(event) {
         console.log("already selected")
         globalPXApp.stage.removeChild(globalPXApp.stage.getChildByName("selectedCard"))
     }
-    containerSelectedCard = drawSelectedCard(1200, 100, this.cardJSON)
+    containerSelectedCard = drawSelectedCard(1200, 100, this.cardData)
     containerSelectedCard.name = "selectedCard"
         //console.log(containerSelectedCard.getBounds())
         //stage.removeChild(stage.getChildByName("selectedCard"))
@@ -719,59 +634,6 @@ function selectCard(event) {
                 // stage.update()
                 */
 }
-
-
-
-function buttonSpeedDecreaseClick(event) {
-    console.log("buttonSpeedDecreaseClick clicked")
-    this.parent.removeChild(this.parent.getChildByName("speed.outline"))
-    this.parent.removeChild(this.parent.getChildByName("speed.base"))
-    textWithOutline("speed", cardDrawingDefaults.speed.x, cardDrawingDefaults.speed.y, this.parent.cardJSON.speed--, cardDrawingDefaults.speed.font, "#FFF", this.parent)
-
-}
-
-function buttonSpeedIncreaseClick(event) {
-    console.log("buttonSpeedIncreaseClick clicked")
-    this.parent.removeChild(this.parent.getChildByName("speed.outline"))
-    this.parent.removeChild(this.parent.getChildByName("speed.base"))
-    textWithOutline("speed", cardDrawingDefaults.speed.x, cardDrawingDefaults.speed.y, this.parent.cardJSON.speed++, cardDrawingDefaults.speed.font, "#FFF", this.parent)
-
-}
-
-
-function buttonPowerDecreaseClick(event) {
-    console.log("buttonPowerDecreaseClick clicked")
-    this.parent.removeChild(this.parent.getChildByName("power.outline"))
-    this.parent.removeChild(this.parent.getChildByName("power.base"))
-    textWithOutline("power", cardDrawingDefaults.power.x, cardDrawingDefaults.power.y, this.parent.cardJSON.power--, cardDrawingDefaults.power.font, "#FFF", this.parent)
-
-}
-
-function buttonPowerIncreaseClick(event) {
-    console.log("buttonPowerIncreaseClick clicked")
-    this.parent.removeChild(this.parent.getChildByName("power.outline"))
-    this.parent.removeChild(this.parent.getChildByName("power.base"))
-    textWithOutline("power", cardDrawingDefaults.power.x, cardDrawingDefaults.power.y, this.parent.cardJSON.power++, cardDrawingDefaults.power.font, "#FFF", this.parent)
-
-}
-
-
-function buttonDefenseDecreaseClick(event) {
-    console.log("buttonDefenseDecreaseClick clicked")
-    this.parent.removeChild(this.parent.getChildByName("defense.outline"))
-    this.parent.removeChild(this.parent.getChildByName("defense.base"))
-    textWithOutline("defense", cardDrawingDefaults.defense.x, cardDrawingDefaults.defense.y, this.parent.cardJSON.defense--, cardDrawingDefaults.defense.font, "#FFF", this.parent)
-
-}
-
-function buttonDefenseIncreaseClick(event) {
-    console.log("buttonDefenseIncreaseClick clicked")
-    this.parent.removeChild(this.parent.getChildByName("defense.outline"))
-    this.parent.removeChild(this.parent.getChildByName("defense.base"))
-    textWithOutline("defense", cardDrawingDefaults.defense.x, cardDrawingDefaults.defense.y, this.parent.cardJSON.defense++, cardDrawingDefaults.defense.font, "#FFF", this.parent)
-
-}
-
 
 function deselectCard(event) {
     console.log("Card deselected")
