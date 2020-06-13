@@ -7,7 +7,13 @@ var globalImageLoader
 var globalStartingHand
 var globalContainerGameField
 var globalCardsArray
-    //var filterEnergyLevel = new PIXI.filters.ColorMatrixFilter();
+var globalPlayerHandContainer
+var globalEnemyHandContainer
+var globalSelectedCardContainer
+
+
+
+//var filterEnergyLevel = new PIXI.filters.ColorMatrixFilter();
 
 
 var fullImage = {
@@ -106,8 +112,8 @@ var fullImage = {
         tooltip: "Increase defense.\nEvery 3 points of energy will increase speed by 1",
         onClick: function(e) {
             let container = e.currentTarget.parent
-            console.log("cardparams:", cardParams.energy)
-            console.log("cardparams:", container.cardParams.energy)
+                //console.log("cardparams:", cardParams.energy)
+                //console.log("cardparams:", container.cardParams.energy)
             container.cardParams.energy.speed += 3
             container.getChildByName("energy_point_speed_" + (container.cardParams.energy.speed - 2)).alpha = 1
             container.getChildByName("energy_point_speed_" + (container.cardParams.energy.speed - 1)).alpha = 1
@@ -153,7 +159,7 @@ var fullImage = {
         tooltip: "Decrease defense.\nEvery 1 point of speed will give back 3 points of energy",
         onClick: function(e) {
             let container = e.currentTarget.parent
-            console.log("cardparams:", cardParams)
+                //console.log("cardparams:", cardParams)
             if (container.cardParams.energy.speed > 0) {
                 container.getChildByName("energy_point_speed_" + (container.cardParams.energy.speed - 2)).alpha = 0
                 container.getChildByName("energy_point_speed_" + (container.cardParams.energy.speed - 1)).alpha = 0
@@ -293,7 +299,7 @@ function drawComplexObject(container, complexObject) {
                 container.addChild(button)
 
                 button.on('click', e => {
-                    console.log("top on clik")
+                    //console.log("top on clik")
                     if (element[1]["onClick"]) {
                         element[1]["onClick"](e)
                     }
@@ -402,19 +408,20 @@ function drawCard(cardX, cardY, cardData) {
     containerCard.cursor = "pointer"
     containerCard.on("click", selectCard)
 
-    globalPXApp.stage.addChild(containerCard);
-    return containerCard
+    globalPlayerHandContainer.addChild(containerCard);
+
+    //return containerCard
 }
 
 function drawSelectedCard(cardX, cardY, cardData) {
-    console.log("New card: ", cardData)
-        //entries = Object.entries(card)
-        //console.log(entries)
-        //console.log(entries[8])
-        //console.log(entries[8][1].description)
+    //console.log("New card: ", cardData)
+    //entries = Object.entries(card)
+    //console.log(entries)
+    //console.log(entries[8])
+    //console.log(entries[8][1].description)
 
     let containerCard = new px.Container();
-    console.log(containerCard);
+    //console.log(containerCard);
     let cardImage = fullImage
     cardImage.character.texture = "characters." + cardData.imageId + ".full"
     cardImage.template.texture = "card_templates." + cardData.rarity + ".full"
@@ -433,8 +440,8 @@ function drawSelectedCard(cardX, cardY, cardData) {
 
     //            containerCard.width = templateCard.width;
     //containerCard.height = templateCard.height;
-    console.log(containerCard);
-    console.log(cardParams);
+    //console.log(containerCard);
+    // console.log(cardParams);
     containerCard.x = cardX
     containerCard.y = cardY
     containerCard.cardData = cardData
@@ -453,28 +460,37 @@ function drawSelectedCard(cardX, cardY, cardData) {
     //containerCard.interactive = true
     //containerCard.on("click", selectCard)
 
-    globalPXApp.stage.addChild(containerCard);
+    globalSelectedCardContainer.addChild(containerCard);
+    globalSelectedCardContainer.alpha = 1
+    globalPlayerHandContainer.alpha = 0.5
+        //globalPXApp.stage.alpha = 0.5
 
     //containerCard.cache(-50, -50, cardDrawingDefaults.template.width + 50, cardDrawingDefaults.template.height + 50)
     // createjs.Ticker.framerate = 30;
     //console.log(containerCard.toJSON())
 
-    return containerCard
+    // return containerCard
 }
 
 function init() {
     globalPXApp = new px.Application({
         width: 1800,
-        height: 800,
+        height: 1200,
         antialiasing: true,
         transparent: false,
         resolution: 1,
-        backgroundColor: 0x999999
+        backgroundColor: 0x999999,
+        view: document.getElementById("playField")
     });
-
-    //Add the canvas that Pixi automatically created for you to the HTML document
-    document.getElementById("playField").appendChild(globalPXApp.view);
-
+    globalPlayerHandContainer = new px.Container();
+    globalPlayerHandContainer.alpha = 0
+    globalPXApp.stage.addChild(globalPlayerHandContainer);
+    globalEnemyHandContainer = new px.Container();
+    globalEnemyHandContainer.alpha = 0
+    globalPXApp.stage.addChild(globalEnemyHandContainer);
+    globalSelectedCardContainer = new px.Container();
+    globalSelectedCardContainer.alpha = 0
+    globalPXApp.stage.addChild(globalSelectedCardContainer);
 }
 
 
@@ -655,9 +671,10 @@ function resourcesPreloaded(event) {
         //console.log(globalImageLoader)
     globalStartingHand.forEach((element, index) => {
         //console.log(element, index)
-        drawCard(20 + index * 220, 50, element)
+        drawCard(10 + index * 220, 10, element)
     });
-    //stage.update()
+    globalPlayerHandContainer.alpha = 1
+        //stage.update()
 }
 
 function fontsPreloaded() {
