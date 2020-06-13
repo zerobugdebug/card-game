@@ -245,6 +245,52 @@ var cardParams = {
     defense: 0
 }
 
+var cardCalculationBox = {
+    speed_label: {
+        type: "text",
+        text: "Speed:",
+        position: { x: 400, y: 20 },
+        anchor: { x: 0.5, y: 0.5 },
+        style: { fontFamily: "canadian", fontWeight: "bold", fontSize: 32, align: "center", textBaseline: "middle", fill: "white", stroke: "black", strokeThickness: 5, padding: 10 }
+    },
+    power_label: {
+        type: "text",
+        text: "Power:",
+        position: { x: 400, y: 50 },
+        anchor: { x: 0.5, y: 0.5 },
+        style: { fontFamily: "canadian", fontWeight: "bold", fontSize: 32, align: "center", textBaseline: "middle", fill: "white", stroke: "black", strokeThickness: 5, padding: 10 }
+    },
+    defense_label: {
+        type: "text",
+        text: "Defense:",
+        position: { x: 400, y: 80 },
+        anchor: { x: 0.5, y: 0.5 },
+        style: { fontFamily: "canadian", fontWeight: "bold", fontSize: 32, align: "center", textBaseline: "middle", fill: "white", stroke: "black", strokeThickness: 5, padding: 10 }
+    },
+    speed_value: {
+        type: "text",
+        text: "5",
+        position: { x: 500, y: 20 },
+        anchor: { x: 0.5, y: 0.5 },
+        style: { fontFamily: "canadian", fontWeight: "bold", fontSize: 32, align: "center", textBaseline: "middle", fill: "white", stroke: "black", strokeThickness: 5, padding: 10 }
+    },
+    power_value: {
+        type: "text",
+        text: "5",
+        position: { x: 500, y: 50 },
+        anchor: { x: 0.5, y: 0.5 },
+        style: { fontFamily: "canadian", fontWeight: "bold", fontSize: 32, align: "center", textBaseline: "middle", fill: "white", stroke: "black", strokeThickness: 5, padding: 10 }
+    },
+    defense_value: {
+        type: "text",
+        text: "5",
+        position: { x: 500, y: 80 },
+        anchor: { x: 0.5, y: 0.5 },
+        style: { fontFamily: "canadian", fontWeight: "bold", fontSize: 32, align: "center", textBaseline: "middle", fill: "white", stroke: "black", strokeThickness: 5, padding: 10 }
+    }
+}
+
+
 function drawComplexObject(container, complexObject) {
     entries = Object.entries(complexObject)
         //console.log(entries)
@@ -469,6 +515,31 @@ function drawSelectedCard(cardData) {
     return containerCard
 }
 
+function drawCalculationBox(boxData) {
+
+    console.log(boxData)
+    let containerCalculationBox = new px.Container();
+    let background = new px.Graphics();
+
+    background.lineStyle(2, 0x000000, 1);
+    background.beginFill(0xaaaaaa, 1);
+    background.drawRect(320, 0, 200, 420);
+    background.endFill();
+    containerCalculationBox.addChild(background)
+    let boxImage = cardCalculationBox
+    boxImage.power_value.text = boxData.power
+    boxImage.defense_value.text = boxData.defense
+    boxImage.speed_value.text = boxData.speed
+    containerCalculationBox = drawComplexObject(containerCalculationBox, boxImage)
+    containerCalculationBox.boxImage = boxImage
+
+
+
+    //globalPlayerHandContainer.addChild(containerCard);
+
+    return containerCalculationBox
+}
+
 function init() {
     globalPXApp = new px.Application({
         width: playFieldWidth,
@@ -524,7 +595,14 @@ function selectCard(event) {
         //    filterPlayerHandContainer.desaturate()
     globalPlayerHandContainer.filters = [filterPlayerHandContainer]
     globalPlayerHandContainer.interactiveChildren = false
-
+    let boxData = {
+        power: containerSelectedCard.cardParams.power,
+        defense: containerSelectedCard.cardParams.defense,
+        speed: containerSelectedCard.cardParams.speed
+    }
+    console.log(boxData)
+    containerCalculationBox = drawCalculationBox(boxData)
+    globalSelectedCardContainer.addChild(containerCalculationBox)
 
 }
 
