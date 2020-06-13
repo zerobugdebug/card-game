@@ -522,8 +522,8 @@ function drawCalculationBox(boxData) {
     let background = new px.Graphics();
 
     background.lineStyle(2, 0x000000, 1);
-    background.beginFill(0xaaaaaa, 1);
-    background.drawRect(320, 0, 200, 420);
+    background.beginFill(0x000000, 1);
+    background.drawRect(0, 0, 550, 420);
     background.endFill();
     containerCalculationBox.addChild(background)
     let boxImage = cardCalculationBox
@@ -573,6 +573,16 @@ function selectCard(event) {
                 globalPXApp.stage.removeChild(globalPXApp.stage.getChildByName("selectedCard"))
             }
          */
+    let boxData = {
+        power: this.cardData.power,
+        defense: this.cardData.defense,
+        speed: this.cardData.speed
+    }
+    console.log(boxData)
+    containerCalculationBox = drawCalculationBox(boxData)
+    globalSelectedCardContainer.addChild(containerCalculationBox)
+
+
     containerSelectedCard = drawSelectedCard(this.cardData)
     globalSelectedCardContainer.x = selectedCardX
     globalSelectedCardContainer.y = selectedCardY
@@ -595,14 +605,6 @@ function selectCard(event) {
         //    filterPlayerHandContainer.desaturate()
     globalPlayerHandContainer.filters = [filterPlayerHandContainer]
     globalPlayerHandContainer.interactiveChildren = false
-    let boxData = {
-        power: containerSelectedCard.cardParams.power,
-        defense: containerSelectedCard.cardParams.defense,
-        speed: containerSelectedCard.cardParams.speed
-    }
-    console.log(boxData)
-    containerCalculationBox = drawCalculationBox(boxData)
-    globalSelectedCardContainer.addChild(containerCalculationBox)
 
 }
 
