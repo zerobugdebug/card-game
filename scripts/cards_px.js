@@ -11,6 +11,16 @@ var globalPlayerHandContainer
 var globalEnemyHandContainer
 var globalSelectedCardContainer
 
+const playFieldWidth = 1800,
+    playFieldHeight = 1200,
+    playerHandX = 10,
+    playerHandY = 10,
+    playerHandInterval = 10,
+    enemyHandX = 10,
+    enemyHandY = 10,
+    enemyHandInterval = 10,
+    selectedCardX = 380,
+    selectedCardY = 100
 
 
 //var filterEnergyLevel = new PIXI.filters.ColorMatrixFilter();
@@ -300,6 +310,7 @@ function drawComplexObject(container, complexObject) {
 
                 button.on('click', e => {
                     //console.log("top on clik")
+                    e.stopPropagation()
                     if (element[1]["onClick"]) {
                         element[1]["onClick"](e)
                     }
@@ -385,7 +396,7 @@ function createDragAndDropFor(target) {
 }
 
 
-function drawCard(cardX, cardY, cardData) {
+function drawCard(cardData) {
 
     let containerCard = new px.Container();
     let cardImage = miniImage
@@ -399,21 +410,16 @@ function drawCard(cardX, cardY, cardData) {
     cardImage.primary.text = cardData.primaryAbility
     cardImage.secondary.text = cardData.secondaryAbility
     containerCard = drawComplexObject(containerCard, cardImage)
-
-    containerCard.x = cardX
-    containerCard.y = cardY
-    containerCard.cardData = cardData
     containerCard.cardImage = cardImage
-    containerCard.interactive = true
-    containerCard.cursor = "pointer"
-    containerCard.on("click", selectCard)
 
-    globalPlayerHandContainer.addChild(containerCard);
 
-    //return containerCard
+
+    //globalPlayerHandContainer.addChild(containerCard);
+
+    return containerCard
 }
 
-function drawSelectedCard(cardX, cardY, cardData) {
+function drawSelectedCard(cardData) {
     //console.log("New card: ", cardData)
     //entries = Object.entries(card)
     //console.log(entries)
@@ -442,14 +448,6 @@ function drawSelectedCard(cardX, cardY, cardData) {
     //containerCard.height = templateCard.height;
     //console.log(containerCard);
     // console.log(cardParams);
-    containerCard.x = cardX
-    containerCard.y = cardY
-    containerCard.cardData = cardData
-    containerCard.cardParams = Object.assign({}, cardParams)
-    containerCard.cardParams.energy = Object.assign({}, cardParams.energy)
-    containerCard.cardParams.speed = cardData.speed
-    containerCard.cardParams.power = cardData.power
-    containerCard.cardParams.defense = cardData.defense
     containerCard.cardImage = cardImage
 
     //console.log(globalPXApp)
@@ -457,25 +455,24 @@ function drawSelectedCard(cardX, cardY, cardData) {
     //containerCard.scale.y = 0.5
 
 
-    //containerCard.interactive = true
-    //containerCard.on("click", selectCard)
 
-    globalSelectedCardContainer.addChild(containerCard);
-    globalSelectedCardContainer.alpha = 1
-    globalPlayerHandContainer.alpha = 0.5
-        //globalPXApp.stage.alpha = 0.5
+
+    //globalSelectedCardContainer.addChild(containerCard);
+    //globalSelectedCardContainer.alpha = 1
+    //globalPlayerHandContainer.alpha = 0.5
+    //globalPXApp.stage.alpha = 0.5
 
     //containerCard.cache(-50, -50, cardDrawingDefaults.template.width + 50, cardDrawingDefaults.template.height + 50)
     // createjs.Ticker.framerate = 30;
     //console.log(containerCard.toJSON())
 
-    // return containerCard
+    return containerCard
 }
 
 function init() {
     globalPXApp = new px.Application({
-        width: 1800,
-        height: 1200,
+        width: playFieldWidth,
+        height: playFieldHeight,
         antialiasing: true,
         transparent: false,
         resolution: 1,
@@ -497,182 +494,69 @@ function init() {
 function selectCard(event) {
     console.log("Card selected")
         //console.log(event)
-        //console.log(this)
-        // console.log(this)
-
-
-    if (globalPXApp.stage.getChildByName("selectedCard")) {
-        console.log("already selected")
-        globalPXApp.stage.removeChild(globalPXApp.stage.getChildByName("selectedCard"))
-    }
-    containerSelectedCard = drawSelectedCard(1200, 100, this.cardData)
+        //console.log(this)sadfasdfasdfasdf
+        // console.log(this)asdfasdfasdfasdfasdfasdfasdf
+    globalSelectedCardContainer.removeChildren()
+        /*     if (globalPXApp.stage.getChildByName("selectedCard")) {
+                console.log("already selected")
+                globalPXApp.stage.removeChild(globalPXApp.stage.getChildByName("selectedCard"))
+            }
+         */
+    containerSelectedCard = drawSelectedCard(this.cardData)
+    globalSelectedCardContainer.x = selectedCardX
+    globalSelectedCardContainer.y = selectedCardY
+    globalSelectedCardContainer.addChild(containerSelectedCard)
     containerSelectedCard.name = "selectedCard"
-        //console.log(containerSelectedCard.getBounds())
-        //stage.removeChild(stage.getChildByName("selectedCard"))
-        //containerSelectedCard.uncache()
-        //console.log(stage)
-        //console.log(containerSelectedCard)
-        //cardHitArea = containerSelectedCard.getChildByName("cardHitArea")
-        //console.log(cardHitArea)
-        //cardHitArea.removeAllEventListeners()
-
-    //containerSelectedCard.removeChildAt(2)
-
-    /*     bitmapIncrease = new createjs.Bitmap(globalImageLoader.getResult("buttons.increase"));
-        bitmapIncrease.x = cardDrawingDefaults.defense.x - 15;
-        bitmapIncrease.y = cardDrawingDefaults.defense.y - 45
-        containerSelectedCard.addChild(bitmapIncrease);
-        //console.log(bitmapIncrease)
-
-        bitmapDecrease = new createjs.Bitmap(globalImageLoader.getResult("buttons.decrease"));
-        bitmapDecrease.x = cardDrawingDefaults.defense.x - 15;
-        bitmapDecrease.y = cardDrawingDefaults.defense.y + 10;
-        containerSelectedCard.addChild(bitmapDecrease);
-
-        bitmapIncrease = new createjs.Bitmap(globalImageLoader.getResult("buttons.increase"));
-        bitmapIncrease.x = cardDrawingDefaults.speed.x - 15;
-        bitmapIncrease.y = cardDrawingDefaults.speed.y - 45
-        containerSelectedCard.addChild(bitmapIncrease);
-        //console.log(bitmapIncrease)
-
-        bitmapDecrease = new createjs.Bitmap(globalImageLoader.getResult("buttons.decrease"));
-        bitmapDecrease.x = cardDrawingDefaults.speed.x - 15;
-        bitmapDecrease.y = cardDrawingDefaults.speed.y + 10;
-        containerSelectedCard.addChild(bitmapDecrease);
-        //console.log(bitmapDecrease) */
+    containerSelectedCard.cardData = this.cardData
+    containerSelectedCard.cardParams = Object.assign({}, cardParams)
+    containerSelectedCard.cardParams.energy = Object.assign({}, cardParams.energy)
+    containerSelectedCard.cardParams.speed = this.cardData.speed
+    containerSelectedCard.cardParams.power = this.cardData.power
+    containerSelectedCard.cardParams.defense = this.cardData.defense
+    containerSelectedCard.interactive = true
+    containerSelectedCard.cursor = "pointer"
+    containerSelectedCard.on("click", deselectCard)
 
 
-    //-----------------------BUTTONS--------------------------
-    /*     buttonDecreaseData = {
-            images: [globalImageLoader.getResult("buttons.decrease.anim")],
-            frames: { width: 30, height: 30 },
-            animations: {
-                out: 0,
-                over: 1,
-                down: 2
-            }
-        }
-        spritesheetButtonDecrease = new createjs.SpriteSheet(buttonDecreaseData);
-
-        buttonIncreaseData = {
-            images: [globalImageLoader.getResult("buttons.increase.anim")],
-            frames: { width: 30, height: 30 },
-            animations: {
-                out: 0,
-                over: 1,
-                down: 2
-            }
-        }
-        spritesheetButtonIncrease = new createjs.SpriteSheet(buttonIncreaseData);
-
-        buttonSpeedIncrease = new createjs.Sprite(spritesheetButtonIncrease);
-        buttonHelperSpeedIncrease = new createjs.ButtonHelper(buttonSpeedIncrease);
-        buttonSpeedIncrease.x = cardDrawingDefaults.speed.x - 15;
-        buttonSpeedIncrease.y = cardDrawingDefaults.speed.y - 50;
-        buttonSpeedIncrease.on("click", buttonSpeedIncreaseClick)
-        containerSelectedCard.addChild(buttonSpeedIncrease)
-
-        buttonPowerIncrease = new createjs.Sprite(spritesheetButtonIncrease);
-        buttonHelperPowerIncrease = new createjs.ButtonHelper(buttonPowerIncrease);
-        buttonPowerIncrease.x = cardDrawingDefaults.power.x - 15;
-        buttonPowerIncrease.y = cardDrawingDefaults.power.y - 50;
-        buttonPowerIncrease.on("click", buttonPowerIncreaseClick)
-        containerSelectedCard.addChild(buttonPowerIncrease)
-
-        buttonDefenseIncrease = new createjs.Sprite(spritesheetButtonIncrease);
-        buttonHelperDefenseIncrease = new createjs.ButtonHelper(buttonDefenseIncrease);
-        buttonDefenseIncrease.x = cardDrawingDefaults.defense.x - 15;
-        buttonDefenseIncrease.y = cardDrawingDefaults.defense.y - 50;
-        buttonDefenseIncrease.on("click", buttonDefenseIncreaseClick)
-        containerSelectedCard.addChild(buttonDefenseIncrease)
-
-        buttonSpeedDecrease = new createjs.Sprite(spritesheetButtonDecrease);
-        buttonHelperSpeedDecrease = new createjs.ButtonHelper(buttonSpeedDecrease);
-        buttonSpeedDecrease.x = cardDrawingDefaults.speed.x - 15;
-        buttonSpeedDecrease.y = cardDrawingDefaults.speed.y + 15;
-        buttonSpeedDecrease.on("click", buttonSpeedDecreaseClick)
-        containerSelectedCard.addChild(buttonSpeedDecrease)
-
-        buttonPowerDecrease = new createjs.Sprite(spritesheetButtonDecrease);
-        buttonHelperPowerDecrease = new createjs.ButtonHelper(buttonPowerDecrease);
-        buttonPowerDecrease.x = cardDrawingDefaults.power.x - 15;
-        buttonPowerDecrease.y = cardDrawingDefaults.power.y + 15;
-        buttonPowerDecrease.on("click", buttonPowerDecreaseClick)
-        containerSelectedCard.addChild(buttonPowerDecrease)
-
-        buttonDefenseDecrease = new createjs.Sprite(spritesheetButtonDecrease);
-        buttonHelperDefenseDecrease = new createjs.ButtonHelper(buttonDefenseDecrease);
-        buttonDefenseDecrease.x = cardDrawingDefaults.defense.x - 15;
-        buttonDefenseDecrease.y = cardDrawingDefaults.defense.y + 15;
-        buttonDefenseDecrease.on("click", buttonDefenseDecreaseClick)
-        containerSelectedCard.addChild(buttonDefenseDecrease)
-     */
-    //-----------------------BUTTONS--------------------------
-
-    //boundsContainerSelectedCard = containerSelectedCard.getBounds()
-    //console.log(boundsContainerSelectedCard)
-
-    // containerSelectedCard.cache(boundsContainerSelectedCard.x, boundsContainerSelectedCard.y, boundsContainerSelectedCard.width, boundsContainerSelectedCard.height)
-
-    //stage.addChild(containerSelectedCard);
-    //console.log(containerSelectedCard.getBounds())
-    //console.log(pxLoader.resources["buttons.increase"])
-    //console.log(px.utils.TextureCache)
+    globalSelectedCardContainer.alpha = 1
+    let filterPlayerHandContainer = new PIXI.filters.ColorMatrixFilter();
+    filterPlayerHandContainer.brightness(0.5)
+        //    filterPlayerHandContainer.desaturate()
+    globalPlayerHandContainer.filters = [filterPlayerHandContainer]
+    globalPlayerHandContainer.interactiveChildren = false
 
 
-    /* 
-        .on('touchstart', onButtonDown)
-
-        // set the mouseup and touchend callback...
-        .on('mouseup', onButtonUp)
-            .on('touchend', onButtonUp)
-            .on('mouseupoutside', onButtonUp)
-            .on('touchendoutside', onButtonUp)
-
-        // set the mouseover callback...
-        .on('mouseover', onButtonOver)
-
-        // set the mouseout callback...
-        .on('mouseout', onButtonOut)
-     */
-    // containerSelectedCard.on("click", deselectCard)
-    containerSelectedCard.interactive = false
-        /* 
-            containerSelectedCard.on("pointerover", e => {
-                console.log("pointerover")
-                globalPXApp.view.title = '<h1>TOOLTIP</h1>';
-            })
-
-            containerSelectedCard.on("pointerout", e => {
-                    console.log("pointerout")
-                    globalPXApp.view.title = '';
-                })
-                // stage.update()
-                */
 }
 
 function deselectCard(event) {
     console.log("Card deselected")
-        //console.log(event)
-        //console.log(this)
-        //console.log(this.parent)
-        //console.log(this.parent.parent)
-    stage.removeChild(this.parent)
-    stage.update()
+    globalSelectedCardContainer.removeChildren()
+    globalSelectedCardContainer.alpha = 0
+    globalPlayerHandContainer.filters = ""
+    globalPlayerHandContainer.interactiveChildren = true
 }
 
 function resourcesPreloaded(event) {
     console.log("Everything preloaded. Starting drawing...")
-        //console.log(globalStartingHand);
-        //console.log(canvas)
-        //console.log(stage)
-        //console.log("fontloader:")
-        //console.log(globalFontLoader)
-        //console.log(globalImageLoader)
-    globalStartingHand.forEach((element, index) => {
-        //console.log(element, index)
-        drawCard(10 + index * 220, 10, element)
+    let currentCardX = 0
+    globalStartingHand.forEach((element) => {
+        containerCard = drawCard(element)
+        containerCard.x = currentCardX
+        containerCard.y = 0
+        containerCard.cardData = element
+        containerCard.interactive = true
+        containerCard.cursor = "pointer"
+        containerCard.on("click", selectCard)
+        containerCard.cacheAsBitmap = true
+
+        globalPlayerHandContainer.addChild(containerCard)
+
+        currentCardX = currentCardX + containerCard.width + playerHandInterval
+
     });
+
+    globalPlayerHandContainer.x = playerHandX
+    globalPlayerHandContainer.y = playerHandY
     globalPlayerHandContainer.alpha = 1
         //stage.update()
 }
